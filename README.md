@@ -37,7 +37,7 @@ You must have node 16, jdk 11 and android studio downloaded and configured accor
 1. Clone the repository with:<br />
 
    ```
-   git clone https://github.com/N0-0NE-Dev/no-fasel
+   git clone https://github.com/N0-0NE-Dev/NoFasel
    ```
 
 2. Install the dependencies with:<br />
