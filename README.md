@@ -58,25 +58,25 @@ You must have node 16, jdk 11 and android studio downloaded and configured accor
 
 5. In `./android/app` create a file named `release.keystore` with the following content:
 
-```
-storePassword=PUT_YOUR_KEYSTORE_PASSWORD_HERE
-keyPassword=PUT_YOUR_KEYSTORE_PASSWORD_HERE
-keyAlias=PUT_YOUR_KEYSTORE_ALIAS_HERE
-storeFile=PUT_YOUR_KEYSTORE_FILE_NAME_HERE
-```
+   ```
+   storePassword=PUT_YOUR_KEYSTORE_PASSWORD_HERE
+   keyPassword=PUT_YOUR_KEYSTORE_PASSWORD_HERE
+   keyAlias=PUT_YOUR_KEYSTORE_ALIAS_HERE
+   storeFile=PUT_YOUR_KEYSTORE_FILE_NAME_HERE
+   ```
 
 6. Change the directory to the android folder and run:<br />
 
-```
-gradlew assembleRelease
-```
+   ```
+   gradlew assembleRelease
+   ```
 
-or
+   or
 
-```
-gradlew assembleDebug
-```
+   ```
+   gradlew assembleDebug
+   ```
 
 to build the development client.
 
-7. You can find the apk file in `./android/build/outputs/apk/release`.
+7. You can find the apk file in `./android/build/outputs/apk/release` or `./android/build/outputs/apk/debug` depending on which command you used
