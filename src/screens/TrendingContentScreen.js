@@ -11,7 +11,7 @@ const TrendingContentScreen = ({ navigation }) => {
 		FileSystem.readAsStringAsync(
 			FileSystem.documentDirectory + "trending-content.json"
 		).then((data) => setData(JSON.parse(data)));
-	});
+	}, []);
 
 	if (data) {
 		return (
@@ -22,6 +22,7 @@ const TrendingContentScreen = ({ navigation }) => {
 					data={Object.entries(data.movies)}
 					navigation={navigation}
 					horizontal={true}
+					formatted={false}
 				/>
 
 				<Text style={styles.sectionTitleStyle}>Series</Text>
@@ -29,6 +30,7 @@ const TrendingContentScreen = ({ navigation }) => {
 					data={Object.entries(data.series)}
 					navigation={navigation}
 					horizontal={true}
+					formatted={false}
 				/>
 
 				<Text style={styles.sectionTitleStyle}>Anime</Text>
@@ -36,6 +38,7 @@ const TrendingContentScreen = ({ navigation }) => {
 					data={Object.entries(data.anime)}
 					navigation={navigation}
 					horizontal={true}
+					formatted={false}
 				/>
 
 				<Text style={styles.sectionTitleStyle}>Asian Series</Text>
@@ -43,6 +46,7 @@ const TrendingContentScreen = ({ navigation }) => {
 					data={Object.entries(data["asian-series"])}
 					navigation={navigation}
 					horizontal={true}
+					formatted={false}
 				/>
 
 				<Text style={styles.sectionTitleStyle}>Arabic Series</Text>
@@ -50,6 +54,7 @@ const TrendingContentScreen = ({ navigation }) => {
 					data={Object.entries(data["arabic-series"])}
 					navigation={navigation}
 					horizontal={true}
+					formatted={false}
 				/>
 			</ScrollView>
 		);
