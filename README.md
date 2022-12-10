@@ -52,7 +52,7 @@ You must have node 16, jdk 11 and android studio downloaded and configured accor
    keytool -genkey -v -keystore your_key_name.keystore -alias your_key_alias -keyalg RSA -keysize 2048 -validity 10000
    ```
 
-   Change `your_key_name` and `your_key_alias` to whatever you want. If you already have a keystore you use to sign apps, skip this step.
+   Change `your_key_name` and `your_key_alias` to whatever you want. If you already have a keystore you use to sign apps skip this step.
 
 4. Move the generated (or existing) keystore to `./android/app`.
 
@@ -71,12 +71,12 @@ You must have node 16, jdk 11 and android studio downloaded and configured accor
    gradlew assembleRelease
    ```
 
-   or
+   to build the release apk or:
 
    ```
    gradlew assembleDebug
    ```
 
-to build the development client.
+   to build the development client.
 
 7. You can find the apk file in `./android/build/outputs/apk/release` or `./android/build/outputs/apk/debug` depending on which command you used
