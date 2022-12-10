@@ -1,4 +1,4 @@
-<h1 align="center">No Fasel</h1>
+<h1 align="center">NoFasel</h1>
 
 <p align="center" >
 <img src="https://i.imgur.com/NvLCO9U.png" width="100px" height="100px">
@@ -24,7 +24,7 @@ A streaming app with zero ads built in react native with [scrapers](https://gith
 
 Go to [releases](https://github.com/N0-0NE-Dev/no-fasel/releases) page and download the latest release.
 
-Note: The playstore might flag the app as "unsafe", eventhough No Fasel connects to no external servers. No Fasel only ever connects to GitHub to grab the [latest](https://github.com/N0-0NE-Dev/no-fasel-scrapers/tree/main/output) content files, imgur or imgpile to load the content posters and to fasel to get HLS sources. So, please choose install anyway when prompted. You can also check the VirusTotal report [here](https://www.virustotal.com/gui/file/47db01d2ed0aaf16812474aafa754e553dc7423e2b0bd3f0676cf9d9bf066fd6/behavior).
+Note: The playstore might flag the app as "unsafe", eventhough No Fasel connects to no external servers. No Fasel only ever connects to GitHub to grab the [latest](https://github.com/N0-0NE-Dev/no-fasel-scrapers/tree/main/output) content files, imgur or imgpile to load the content posters and to fasel or akwam to get the HLS sources. So, choose install anyway when prompted. You can also check the VirusTotal report [here](https://www.virustotal.com/gui/file/47db01d2ed0aaf16812474aafa754e553dc7423e2b0bd3f0676cf9d9bf066fd6/behavior).
 
 ## Building Instructions
 
@@ -65,10 +65,18 @@ keyAlias=PUT_YOUR_KEYSTORE_ALIAS_HERE
 storeFile=PUT_YOUR_KEYSTORE_FILE_NAME_HERE
 ```
 
-6. Change the directory to the android folder and run <br />
+6. Change the directory to the android folder and run:<br />
 
 ```
 gradlew assembleRelease
 ```
 
-8. You can find the apk file in `./android/build/outputs/apk/release`.
+or
+
+```
+gradlew assembleDebug
+```
+
+to build the development client.
+
+7. You can find the apk file in `./android/build/outputs/apk/release`.

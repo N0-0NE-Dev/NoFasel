@@ -64,3 +64,4 @@ buck-out/
 /vendor/bundle/
 
 android/keystore.properties
+.prettierrc
