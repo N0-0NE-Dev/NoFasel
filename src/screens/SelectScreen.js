@@ -148,6 +148,8 @@ const SelectScreen = ({ navigation, route }) => {
 			setQualities(null);
 			setContentSource(selectedEpisode);
 		} else if (selectedEpisode && category == "arabic-series") {
+			setQualities(null);
+			setSelectedQuality(null);
 			fetch(`https://api.codetabs.com/v1/proxy?quest=${selectedEpisode}`)
 				.then((resp) => resp.text())
 				.then((text) => {
