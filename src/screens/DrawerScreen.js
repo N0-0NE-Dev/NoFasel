@@ -4,15 +4,15 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import TrendingContentScreen from "./TrendingContentScreen";
 import { Storage } from "../components/Storage";
 import SettingsScreen from "./SettingsScreen";
-import SearchScreen from "./SearchScreen";
 import AllContentScreen from "./AllContentScreen";
 import WatchlistScreen from "./WatchlistScreen";
 import * as FileSystem from "expo-file-system";
 import { StatusBar } from "expo-status-bar";
+import HeaderSearchIcon from "../components/HeaderSearchIcon";
 
 const Drawer = createDrawerNavigator();
 
-const DrawerScreen = () => {
+const DrawerScreen = ({ navigation }) => {
 	const [contentUpdated, setContentUpdated] = useState(false);
 
 	const fileUrls = [
@@ -93,14 +93,28 @@ const DrawerScreen = () => {
 
 	if (contentUpdated) {
 		return (
-			<Drawer.Navigator initialRouteName="Trending Content">
+			<Drawer.Navigator initialRouteName="Trending">
 				<Drawer.Screen
-					name="Trending Content"
+					name="Trending"
 					component={TrendingContentScreen}
+					options={{
+						headerRight: () => <HeaderSearchIcon navigation={navigation} />,
+					}}
 				/>
-				<Drawer.Screen name="All Content" component={AllContentScreen} />
-				<Drawer.Screen name="Search" component={SearchScreen} />
-				<Drawer.Screen name="Watchlist" component={WatchlistScreen} />
+				<Drawer.Screen
+					name="All Content"
+					component={AllContentScreen}
+					options={{
+						headerRight: () => <HeaderSearchIcon navigation={navigation} />,
+					}}
+				/>
+				<Drawer.Screen
+					name="Watchlist"
+					component={WatchlistScreen}
+					options={{
+						headerRight: () => <HeaderSearchIcon navigation={navigation} />,
+					}}
+				/>
 				<Drawer.Screen name="Settings" component={SettingsScreen} />
 			</Drawer.Navigator>
 		);

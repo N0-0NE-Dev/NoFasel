@@ -15,10 +15,16 @@ const SearchScreen = ({ navigation }) => {
 		).then((data) => setAllData(JSON.parse(data)));
 	}, []);
 
-	const data = jsonQuery(`content[*Title~/^.*${searchTerm}.*$/i]`, {
+	let data = jsonQuery(`content[*Title~/^.*${searchTerm}.*$/i]`, {
 		data: allData,
 		allowRegexp: true,
 	}).value;
+
+	if (searchTerm === "") {
+		data = [];
+	} else {
+		// pass
+	}
 
 	if (allData) {
 		return (

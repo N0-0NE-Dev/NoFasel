@@ -7,6 +7,7 @@ import DrawerScreen from "./src/screens/DrawerScreen";
 import SelectScreen from "./src/screens/SelectScreen";
 import WatchScreen from "./src/screens/WatchScreen";
 import LoadingScreen from "./src/screens/LoadingScreen";
+import SearchScreen from "./src/screens/SearchScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -32,6 +33,11 @@ const MyStack = () => {
 				name="Loading"
 				component={LoadingScreen}
 				options={{ headerShown: false, orientation: "all" }}
+			/>
+			<Stack.Screen
+				name="Search"
+				component={SearchScreen}
+				options={{ orientation: "all" }}
 			/>
 		</Stack.Navigator>
 	);
