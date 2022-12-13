@@ -135,6 +135,7 @@ const AllContentScreen = ({ navigation }) => {
 					onChange={(option) => setContentData(option)}
 					style={styles.modalSelectorStyle}
 					initValueTextStyle={styles.initValueTextStyle}
+					backdropPressToClose={true}
 				/>
 				<ContentCardsList
 					horizontal={false}

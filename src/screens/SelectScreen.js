@@ -196,6 +196,7 @@ const SelectScreen = ({ navigation, route }) => {
 					initValueTextStyle={styles.initValueTextStyle}
 					style={styles.modalSelectorStyle}
 					selectedKey={selectedSeason}
+					backdropPressToClose={true}
 				/>
 			);
 		} else {
@@ -213,6 +214,7 @@ const SelectScreen = ({ navigation, route }) => {
 					initValueTextStyle={styles.initValueTextStyle}
 					style={styles.modalSelectorStyle}
 					selectedKey={selectedEpisode}
+					backdropPressToClose={true}
 				/>
 			);
 		} else {
@@ -230,6 +232,7 @@ const SelectScreen = ({ navigation, route }) => {
 					initValueTextStyle={styles.initValueTextStyle}
 					style={styles.modalSelectorStyle}
 					selectedKey={selectedQuality}
+					backdropPressToClose={true}
 				/>
 			);
 		} else if (contentSource && category != "arabic-series") {
