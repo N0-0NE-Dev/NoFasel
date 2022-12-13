@@ -18,16 +18,18 @@ A streaming app with zero ads built in react native with [scrapers](https://gith
 
 ## Screenshots:
 
-   <img src="https://i.imgur.com/SwPY24el.png" /> 
-   <img src="https://i.imgur.com/aCm9vOWl.png" /> 
-   <img src="https://i.imgur.com/SY76kbKl.png" /> 
-   <img src="https://i.imgur.com/5l3L5Mvl.png" /> 
-   <img src="https://i.imgur.com/CATSRhLl.png" /> 
-   <img src="https://i.imgur.com/hWfGkWal.png" /> 
-   <img src="https://i.imgur.com/tSySR0fl.png" /> 
-   <img src="https://i.imgur.com/pIDzfW0l.png" /> 
-   <img src="https://i.imgur.com/bEkYPZBl.png" /> 
-   <img src="https://i.imgur.com/7A7fDtml.png" />
+   <p float="left">
+      <img src="https://i.imgur.com/SwPY24el.png" /> 
+      <img src="https://i.imgur.com/aCm9vOWl.png" /> 
+      <img src="https://i.imgur.com/SY76kbKl.png" /> 
+      <img src="https://i.imgur.com/5l3L5Mvl.png" /> 
+      <img src="https://i.imgur.com/CATSRhLl.png" /> 
+      <img src="https://i.imgur.com/hWfGkWal.png" /> 
+      <img src="https://i.imgur.com/tSySR0fl.png" /> 
+      <img src="https://i.imgur.com/pIDzfW0l.png" /> 
+      <img src="https://i.imgur.com/bEkYPZBl.png" /> 
+      <img src="https://i.imgur.com/7A7fDtml.png" />
+   </p>
 
 ## Download:
 
