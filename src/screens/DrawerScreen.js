@@ -35,6 +35,12 @@ const DrawerScreen = ({ navigation }) => {
 		// pass
 	}
 
+	if (!Storage.contains("useProxy")) {
+		Storage.set("useProxy", true);
+	} else {
+		// pass
+	}
+
 	const contentAutoupdate = Storage.getBoolean("contentAutoupdate");
 
 	const updateContent = () => {

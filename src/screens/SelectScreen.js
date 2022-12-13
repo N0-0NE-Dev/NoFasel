@@ -12,12 +12,15 @@ import { WebView } from "react-native-webview";
 import ModalSelector from "react-native-modal-selector";
 import * as FileSystem from "expo-file-system";
 import { StatusBar } from "expo-status-bar";
+import { Storage } from "../components/Storage";
 
 const SelectScreen = ({ navigation, route }) => {
 	const { id, category } = route.params;
 	const contentWithSeasons = ["series", "tvshows", "asian-series"];
 	const jsCode =
 		"window.ReactNativeWebView.postMessage(document.documentElement.innerHTML)";
+
+	const useProxy = Storage.getBoolean("useProxy");
 
 	const [data, setData] = useState(null);
 
@@ -150,7 +153,11 @@ const SelectScreen = ({ navigation, route }) => {
 		} else if (selectedEpisode && category == "arabic-series") {
 			setQualities(null);
 			setSelectedQuality(null);
-			fetch(`https://api.codetabs.com/v1/proxy?quest=${selectedEpisode}`)
+			fetch(
+				useProxy
+					? `https://api.codetabs.com/v1/proxy?quest=${selectedEpisode}`
+					: selectedEpisode
+			)
 				.then((resp) => resp.text())
 				.then((text) => {
 					let HTMLParser = require("fast-html-parser");
@@ -179,6 +186,70 @@ const SelectScreen = ({ navigation, route }) => {
 		}
 	}, [pageSource]);
 
+	const SeasonSelector = () => {
+		if (contentWithSeasons.includes(category) && seasons) {
+			return (
+				<ModalSelector
+					data={seasons}
+					initValue="Select A Season"
+					onChange={(option) => setSelectedSeason(option.key)}
+					initValueTextStyle={styles.initValueTextStyle}
+					style={styles.modalSelectorStyle}
+					selectedKey={selectedSeason}
+				/>
+			);
+		} else {
+			// pass
+		}
+	};
+
+	const EpisodeSelector = () => {
+		if (episodes) {
+			return (
+				<ModalSelector
+					data={episodes}
+					initValue="Select An Episode"
+					onChange={(option) => setSelectedEpisode(option.key)}
+					initValueTextStyle={styles.initValueTextStyle}
+					style={styles.modalSelectorStyle}
+					selectedKey={selectedEpisode}
+				/>
+			);
+		} else {
+			// pass
+		}
+	};
+
+	const QualitySelector = () => {
+		if (qualities) {
+			return (
+				<ModalSelector
+					data={qualities}
+					initValue="Select A Quality"
+					onChange={(option) => setSelectedQuality(option.key)}
+					initValueTextStyle={styles.initValueTextStyle}
+					style={styles.modalSelectorStyle}
+					selectedKey={selectedQuality}
+				/>
+			);
+		} else if (contentSource && category != "arabic-series") {
+			return (
+				<View>
+					<ActivityIndicator size={50} />
+					<WebView
+						source={{ uri: contentSource }}
+						injectedJavaScript={jsCode}
+						onMessage={(event) => setPageSource(event.nativeEvent.data)}
+					/>
+				</View>
+			);
+		} else if (selectedEpisode) {
+			return <ActivityIndicator size={50} />;
+		} else {
+			// pass
+		}
+	};
+
 	const WatchButton = () => {
 		if (selectedQuality) {
 			return (
@@ -205,66 +276,15 @@ const SelectScreen = ({ navigation, route }) => {
 					source={{ uri: content["Image Source"] }}
 				/>
 				<Text style={styles.titleStyle}>{content["Title"]}</Text>
-				{contentWithSeasons.includes(category) && seasons ? (
-					<ModalSelector
-						data={seasons}
-						initValue="Select A Season"
-						onChange={(option) => setSelectedSeason(option.key)}
-						initValueTextStyle={styles.initValueTextStyle}
-						style={styles.modalSelectorStyle}
-					/>
-				) : (
-					<View></View>
-				)}
-				{episodes ? (
-					<ModalSelector
-						data={episodes}
-						initValue="Select An Episode"
-						onChange={(option) => setSelectedEpisode(option.key)}
-						initValueTextStyle={styles.initValueTextStyle}
-						style={styles.modalSelectorStyle}
-					/>
-				) : (
-					<View></View>
-				)}
-				{qualities ? (
-					<View>
-						<ModalSelector
-							data={qualities}
-							initValue="Select A Quality"
-							onChange={(option) => setSelectedQuality(option.key)}
-							initValueTextStyle={styles.initValueTextStyle}
-							style={styles.modalSelectorStyle}
-						/>
-					</View>
-				) : (
-					<View>
-						{contentSource && category != "arabic-series" ? (
-							<View>
-								<ActivityIndicator size={50} />
-								<WebView
-									source={{ uri: contentSource }}
-									injectedJavaScript={jsCode}
-									onMessage={(event) => setPageSource(event.nativeEvent.data)}
-								/>
-							</View>
-						) : (
-							<View>
-								{!selectedEpisode ? (
-									<View></View>
-								) : (
-									<ActivityIndicator size={50} />
-								)}
-							</View>
-						)}
-					</View>
-				)}
+				<SeasonSelector />
+				<EpisodeSelector />
+				<QualitySelector />
 				<WatchButton />
 			</ScrollView>
 		);
 	} else {
 		return (
-			<View>
+			<View style={styles.indicatorParentStyle}>
 				<StatusBar style="dark" />
 				<ActivityIndicator size={50} />
 			</View>
@@ -299,6 +319,10 @@ const styles = StyleSheet.create({
 		width: 125,
 		alignSelf: "center",
 		margin: 10,
+	},
+	indicatorParentStyle: {
+		flex: 1,
+		justifyContent: "center",
 	},
 });
 

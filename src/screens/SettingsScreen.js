@@ -8,15 +8,23 @@ const SettingsScreen = ({ navigation }) => {
 		Storage.getBoolean("contentAutoupdate")
 	);
 
+	const [useProxy, setUseProxy] = useState(Storage.getBoolean("useProxy"));
+
 	const handleContentUpdates = () => {
 		Storage.set("contentAutoupdate", !automaticContentUpdates);
 		setAutomaticContentUpdates(!automaticContentUpdates);
 	};
 
+	const handleUseProxy = () => {
+		Storage.set("useProxy", !useProxy);
+		setUseProxy(!useProxy);
+	};
+
 	return (
 		<View>
 			<StatusBar style="dark" />
-			<View style={styles.parentStyle}>
+
+			<View style={styles.switchParentStyle}>
 				<Text style={styles.textStyle}>Automatic Content Updates</Text>
 				<Switch
 					onValueChange={handleContentUpdates}
@@ -24,7 +32,17 @@ const SettingsScreen = ({ navigation }) => {
 				/>
 			</View>
 
-			<View style={{ width: 150, margin: 20, alignSelf: "center" }}>
+			<View style={styles.switchParentStyle}>
+				<View>
+					<Text style={styles.textStyle}>Use Proxy For Akwam</Text>
+					<Text style={{ fontSize: 11, padding: 5, color: "grey" }}>
+						Bypasses akwam blocking in certain regions.
+					</Text>
+				</View>
+				<Switch onValueChange={handleUseProxy} value={useProxy} />
+			</View>
+
+			<View style={styles.buttonParentStyle}>
 				<Button
 					title="Update Content"
 					onPress={() => navigation.navigate("Loading")}
@@ -40,7 +58,7 @@ const styles = StyleSheet.create({
 		margin: 5,
 		color: "black",
 	},
-	parentStyle: {
+	switchParentStyle: {
 		flexDirection: "row",
 		justifyContent: "space-between",
 		borderWidth: 1,
@@ -52,6 +70,11 @@ const styles = StyleSheet.create({
 	indicatorParentStyle: {
 		flex: 1,
 		justifyContent: "center",
+	},
+	buttonParentStyle: {
+		width: 150,
+		margin: 20,
+		alignSelf: "center",
 	},
 });
 
