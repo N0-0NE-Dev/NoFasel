@@ -18,17 +18,17 @@ A streaming app with zero ads built in react native with [scrapers](https://gith
 
 ## Screenshots:
 
-<ul style="list-style-type: none; overflow: hidden;">
-   <li > <img src="https://i.imgur.com/SwPY24el.png" /> </li>
-   <li > <img src="https://i.imgur.com/aCm9vOWl.png" /> </li>
-   <li > <img src="https://i.imgur.com/SY76kbKl.png" /> </li>
-   <li > <img src="https://i.imgur.com/5l3L5Mvl.png" /> </li>
-   <li > <img src="https://i.imgur.com/CATSRhLl.png" /> </li>
-   <li > <img src="https://i.imgur.com/hWfGkWal.png" /> </li>
-   <li > <img src="https://i.imgur.com/tSySR0fl.png" /> </li>
-   <li > <img src="https://i.imgur.com/pIDzfW0l.png" /> </li>
-   <li > <img src="https://i.imgur.com/bEkYPZBl.png" /> </li>
-   <li > <img src="https://i.imgur.com/7A7fDtml.png" /> </li>
+<ul style="overflow: hidden;">
+   <li style="list-style-type: none;"> <img src="https://i.imgur.com/SwPY24el.png" /> </li>
+   <li style="list-style-type: none;"> <img src="https://i.imgur.com/aCm9vOWl.png" /> </li>
+   <li style="list-style-type: none;"> <img src="https://i.imgur.com/SY76kbKl.png" /> </li>
+   <li style="list-style-type: none;"> <img src="https://i.imgur.com/5l3L5Mvl.png" /> </li>
+   <li style="list-style-type: none;"> <img src="https://i.imgur.com/CATSRhLl.png" /> </li>
+   <li style="list-style-type: none;"> <img src="https://i.imgur.com/hWfGkWal.png" /> </li>
+   <li style="list-style-type: none;"> <img src="https://i.imgur.com/tSySR0fl.png" /> </li>
+   <li style="list-style-type: none;"> <img src="https://i.imgur.com/pIDzfW0l.png" /> </li>
+   <li style="list-style-type: none;"> <img src="https://i.imgur.com/bEkYPZBl.png" /> </li>
+   <li style="list-style-type: none;"> <img src="https://i.imgur.com/7A7fDtml.png" /> </li>
 </ul>
 
 ## Download:
