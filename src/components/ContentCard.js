@@ -1,5 +1,8 @@
 import React from "react";
 import { Pressable, Image, Text, StyleSheet } from "react-native";
+import { Storage } from "./Storage";
+
+const darkTheme = Storage.getBoolean("darkTheme");
 
 const ContentCard = ({ navigation, imageSource, title, id, category }) => {
 	return (
@@ -29,7 +32,7 @@ const styles = StyleSheet.create({
 	textStyle: {
 		textAlign: "center",
 		fontSize: 16,
-		color: "black",
+		color: darkTheme ? "white" : "black",
 	},
 });
 

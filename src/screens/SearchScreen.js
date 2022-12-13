@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { View, TextInput, StyleSheet, ActivityIndicator } from "react-native";
 import ContentCardsList from "../components/ContentCardsList";
 import * as FileSystem from "expo-file-system";
-import { StatusBar } from "expo-status-bar";
 import ModalSelector from "react-native-modal-selector";
+import { Storage } from "../components/Storage";
+
+const darkTheme = Storage.getBoolean("darkTheme");
 
 const SearchScreen = ({ navigation }) => {
 	let jsonQuery = require("json-query");
@@ -47,7 +49,6 @@ const SearchScreen = ({ navigation }) => {
 	if (allData) {
 		return (
 			<View style={styles.parentStyle}>
-				<StatusBar style="dark" />
 				<TextInput
 					style={styles.textInputStyle}
 					placeholder="Search"
@@ -56,12 +57,24 @@ const SearchScreen = ({ navigation }) => {
 				/>
 				<ModalSelector
 					data={selectorData}
-					initValue="Filter"
 					onChange={(option) => setFilter(option.key)}
 					style={styles.modalSelectorStyle}
-					initValueTextStyle={styles.initValueTextStyle}
 					backdropPressToClose={true}
 					selectedKey={filter}
+					selectTextStyle={{ color: darkTheme ? "white" : "black" }}
+					optionContainerStyle={{
+						backgroundColor: darkTheme ? "black" : "white",
+						borderColor: darkTheme ? "white" : "black",
+						borderWidth: 1,
+					}}
+					optionTextStyle={{ color: darkTheme ? "#add8e6" : "blue" }}
+					cancelText="Cancel"
+					cancelStyle={{
+						backgroundColor: darkTheme ? "black" : "white",
+						borderWidth: 1,
+						borderColor: darkTheme ? "white" : "black",
+					}}
+					cancelTextStyle={{ color: darkTheme ? "white" : "black" }}
 				/>
 				<ContentCardsList
 					navigation={navigation}
@@ -74,7 +87,6 @@ const SearchScreen = ({ navigation }) => {
 	} else {
 		return (
 			<View>
-				<StatusBar style="dark" />
 				<ActivityIndicator size={50} />
 			</View>
 		);
@@ -87,21 +99,19 @@ const styles = StyleSheet.create({
 		padding: 10,
 		textAlign: "center",
 		margin: 10,
-		color: "black",
+		color: darkTheme ? "white" : "black",
+		borderColor: darkTheme ? "white" : "black",
 	},
 	parentStyle: {
 		flex: 1,
 	},
 	modalSelectorStyle: {
-		borderColor: "black",
+		borderColor: darkTheme ? "white" : "black",
 		borderWidth: 1,
 		width: 250,
 		alignSelf: "center",
 		borderRadius: 5,
 		marginBottom: 5,
-	},
-	initValueTextStyle: {
-		color: "blue",
 	},
 });
 

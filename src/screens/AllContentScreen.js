@@ -6,7 +6,9 @@ import PageNumberEntryModal from "../components/PageNumberEntryModal";
 import ContentCardsList from "../components/ContentCardsList";
 import { isTablet } from "react-native-device-info";
 import * as FileSystem from "expo-file-system";
-import { StatusBar } from "expo-status-bar";
+import { Storage } from "../components/Storage";
+
+const darkTheme = Storage.getBoolean("darkTheme");
 
 const AllContentScreen = ({ navigation }) => {
 	const [data, setData] = useState();
@@ -120,7 +122,6 @@ const AllContentScreen = ({ navigation }) => {
 	if (data) {
 		return (
 			<View style={styles.parentStyle}>
-				<StatusBar style="dark" />
 				<PageNumberEntryModal
 					modalVisible={modalVisible}
 					setPageNumberInput={setPageNumberInput}
@@ -131,11 +132,25 @@ const AllContentScreen = ({ navigation }) => {
 				/>
 				<ModalSelector
 					data={selectorData}
-					initValue={contentData.label}
+					selectedKey={contentData.key}
 					onChange={(option) => setContentData(option)}
 					style={styles.modalSelectorStyle}
 					initValueTextStyle={styles.initValueTextStyle}
 					backdropPressToClose={true}
+					selectTextStyle={{ color: darkTheme ? "white" : "black" }}
+					optionContainerStyle={{
+						backgroundColor: darkTheme ? "black" : "white",
+						borderColor: darkTheme ? "white" : "black",
+						borderWidth: 1,
+					}}
+					optionTextStyle={{ color: darkTheme ? "#add8e6" : "blue" }}
+					cancelText="Cancel"
+					cancelStyle={{
+						backgroundColor: darkTheme ? "black" : "white",
+						borderWidth: 1,
+						borderColor: darkTheme ? "white" : "black",
+					}}
+					cancelTextStyle={{ color: darkTheme ? "white" : "black" }}
 				/>
 				<ContentCardsList
 					horizontal={false}
@@ -157,8 +172,7 @@ const AllContentScreen = ({ navigation }) => {
 		);
 	} else {
 		return (
-			<View>
-				<StatusBar style="dark" />
+			<View style={styles.parentStyle}>
 				<ActivityIndicator size={50} />
 			</View>
 		);
@@ -167,7 +181,7 @@ const AllContentScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
 	modalSelectorStyle: {
-		borderColor: "black",
+		borderColor: darkTheme ? "white" : "black",
 		borderWidth: 1,
 		width: 250,
 		alignSelf: "center",
@@ -179,6 +193,7 @@ const styles = StyleSheet.create({
 	},
 	parentStyle: {
 		flex: 1,
+		justifyContent: "center",
 	},
 });
 

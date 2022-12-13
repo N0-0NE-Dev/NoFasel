@@ -7,9 +7,9 @@ import SettingsScreen from "./SettingsScreen";
 import AllContentScreen from "./AllContentScreen";
 import WatchlistScreen from "./WatchlistScreen";
 import * as FileSystem from "expo-file-system";
-import { StatusBar } from "expo-status-bar";
 import HeaderSearchIcon from "../components/HeaderSearchIcon";
 
+const darkTheme = Storage.getBoolean("darkTheme");
 const Drawer = createDrawerNavigator();
 
 const DrawerScreen = ({ navigation }) => {
@@ -93,7 +93,20 @@ const DrawerScreen = ({ navigation }) => {
 
 	if (contentUpdated) {
 		return (
-			<Drawer.Navigator initialRouteName="Trending">
+			<Drawer.Navigator
+				initialRouteName="Trending"
+				screenOptions={{
+					statusBarColor: darkTheme ? "black" : "white",
+					statusBarStyle: darkTheme ? "light" : "dark",
+					headerStyle: { backgroundColor: darkTheme ? "black" : "white" },
+					headerTintColor: darkTheme ? "white" : "black",
+					drawerStyle: { backgroundColor: darkTheme ? "black" : "white" },
+					drawerInactiveTintColor: darkTheme ? "white" : "black",
+					sceneContainerStyle: {
+						backgroundColor: darkTheme ? "#18191a" : "#eee",
+					},
+				}}
+			>
 				<Drawer.Screen
 					name="Trending"
 					component={TrendingContentScreen}
@@ -121,7 +134,6 @@ const DrawerScreen = ({ navigation }) => {
 	} else {
 		return (
 			<View style={styles.indicatorParentStyle}>
-				<StatusBar style="dark" />
 				<ActivityIndicator size={50} />
 			</View>
 		);

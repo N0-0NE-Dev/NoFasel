@@ -1,7 +1,16 @@
 import React, { useState } from "react";
-import { View, Switch, Text, StyleSheet, Button } from "react-native";
+import {
+	View,
+	Switch,
+	Text,
+	StyleSheet,
+	Button,
+	ToastAndroid,
+} from "react-native";
 import { Storage } from "../components/Storage";
-import { StatusBar } from "expo-status-bar";
+import ModalSelector from "react-native-modal-selector";
+
+const darkTheme = Storage.getBoolean("darkTheme");
 
 const SettingsScreen = ({ navigation }) => {
 	const [automaticContentUpdates, setAutomaticContentUpdates] = useState(
@@ -9,6 +18,12 @@ const SettingsScreen = ({ navigation }) => {
 	);
 
 	const [useProxy, setUseProxy] = useState(Storage.getBoolean("useProxy"));
+	const [theme, setTheme] = useState(darkTheme ? "dark" : "light");
+
+	const selectorData = [
+		{ label: "Dark Theme", key: "dark" },
+		{ label: "Light Theme", key: "light" },
+	];
 
 	const handleContentUpdates = () => {
 		Storage.set("contentAutoupdate", !automaticContentUpdates);
@@ -20,10 +35,19 @@ const SettingsScreen = ({ navigation }) => {
 		setUseProxy(!useProxy);
 	};
 
-	return (
-		<View>
-			<StatusBar style="dark" />
+	const handleTheme = (selectedTheme) => {
+		if (selectedTheme == "dark") {
+			Storage.set("darkTheme", true);
+			setTheme("dark");
+		} else {
+			Storage.set("darkTheme", false);
+			setTheme("light");
+		}
+		ToastAndroid.show("Please restart the app to apply.", ToastAndroid.SHORT);
+	};
 
+	return (
+		<View style={styles.parentStyle}>
 			<View style={styles.switchParentStyle}>
 				<Text style={styles.textStyle}>Automatic Content Updates</Text>
 				<Switch
@@ -42,6 +66,28 @@ const SettingsScreen = ({ navigation }) => {
 				<Switch onValueChange={handleUseProxy} value={useProxy} />
 			</View>
 
+			<ModalSelector
+				data={selectorData}
+				onChange={(option) => handleTheme(option.key)}
+				style={styles.modalSelectorStyle}
+				selectedKey={theme}
+				backdropPressToClose={true}
+				selectTextStyle={{ color: darkTheme ? "white" : "black" }}
+				optionContainerStyle={{
+					backgroundColor: darkTheme ? "black" : "white",
+					borderColor: darkTheme ? "white" : "black",
+					borderWidth: 1,
+				}}
+				optionTextStyle={{ color: darkTheme ? "#add8e6" : "blue" }}
+				cancelText="Cancel"
+				cancelStyle={{
+					backgroundColor: darkTheme ? "black" : "white",
+					borderWidth: 1,
+					borderColor: darkTheme ? "white" : "black",
+				}}
+				cancelTextStyle={{ color: darkTheme ? "white" : "black" }}
+			/>
+
 			<View style={styles.buttonParentStyle}>
 				<Button
 					title="Update Content"
@@ -56,13 +102,13 @@ const styles = StyleSheet.create({
 	textStyle: {
 		fontSize: 18,
 		margin: 5,
-		color: "black",
+		color: darkTheme ? "white" : "black",
 	},
 	switchParentStyle: {
 		flexDirection: "row",
 		justifyContent: "space-between",
 		borderWidth: 1,
-		borderColor: "#BEBEBE",
+		borderColor: "#bebebe",
 		margin: 10,
 		padding: 5,
 		paddingVertical: 20,
@@ -75,6 +121,17 @@ const styles = StyleSheet.create({
 		width: 150,
 		margin: 20,
 		alignSelf: "center",
+	},
+	parentStyle: {
+		flex: 1,
+	},
+	modalSelectorStyle: {
+		borderColor: "black",
+		borderWidth: 1,
+		width: 300,
+		alignSelf: "center",
+		margin: 10,
+		borderRadius: 5,
 	},
 });
 

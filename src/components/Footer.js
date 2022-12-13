@@ -1,13 +1,21 @@
 import React from "react";
 import { View, StyleSheet, Pressable, Text } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import { Storage } from "./Storage";
+
+const darkTheme = Storage.getBoolean("darkTheme");
 
 const NextButton = ({ handleNext, pageNumber, lastPageNumber }) => {
 	return (
 		<Pressable style={styles.navigationButtonStyle} onPress={handleNext}>
 			<Text
 				style={{
-					color: pageNumber == lastPageNumber ? "grey" : "blue",
+					color:
+						pageNumber == lastPageNumber
+							? "grey"
+							: darkTheme
+							? "#add8e6"
+							: "blue",
 					fontSize: 16,
 				}}
 			>
@@ -16,7 +24,9 @@ const NextButton = ({ handleNext, pageNumber, lastPageNumber }) => {
 			<MaterialIcons
 				name="navigate-next"
 				size={25}
-				color={pageNumber == lastPageNumber ? "grey" : "blue"}
+				color={
+					pageNumber == lastPageNumber ? "grey" : darkTheme ? "#add8e6" : "blue"
+				}
 			/>
 		</Pressable>
 	);
@@ -28,9 +38,14 @@ const PreviousButton = ({ handlePrevious, pageNumber }) => {
 			<MaterialIcons
 				name="navigate-before"
 				size={25}
-				color={pageNumber == 1 ? "grey" : "blue"}
+				color={pageNumber == 1 ? "grey" : darkTheme ? "#add8e6" : "blue"}
 			/>
-			<Text style={{ color: pageNumber == 1 ? "grey" : "blue", fontSize: 16 }}>
+			<Text
+				style={{
+					color: pageNumber == 1 ? "grey" : darkTheme ? "#add8e6" : "blue",
+					fontSize: 16,
+				}}
+			>
 				Previous
 			</Text>
 		</Pressable>
@@ -88,13 +103,7 @@ const styles = StyleSheet.create({
 	pageNumberStyle: {
 		padding: 5,
 		margin: 10,
-		color: "blue",
-		fontSize: 16,
-	},
-	pageNumberStyle: {
-		padding: 5,
-		margin: 10,
-		color: "blue",
+		color: darkTheme ? "#add8e6" : "blue",
 		fontSize: 16,
 	},
 });

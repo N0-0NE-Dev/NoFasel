@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { ScrollView, StyleSheet, Text, ActivityIndicator } from "react-native";
+import {
+	ScrollView,
+	StyleSheet,
+	Text,
+	ActivityIndicator,
+	View,
+} from "react-native";
 import ContentCardsList from "../components/ContentCardsList";
 import * as FileSystem from "expo-file-system";
-import { StatusBar } from "expo-status-bar";
+import { Storage } from "../components/Storage";
+
+const darkTheme = Storage.getBoolean("darkTheme");
 
 const TrendingContentScreen = ({ navigation }) => {
 	const [data, setData] = useState(null);
@@ -16,7 +24,6 @@ const TrendingContentScreen = ({ navigation }) => {
 	if (data) {
 		return (
 			<ScrollView>
-				<StatusBar style="dark" />
 				<Text style={styles.sectionTitleStyle}>Movies</Text>
 				<ContentCardsList
 					data={Object.entries(data.movies)}
@@ -59,7 +66,11 @@ const TrendingContentScreen = ({ navigation }) => {
 			</ScrollView>
 		);
 	} else {
-		return <ActivityIndicator size={50} />;
+		return (
+			<View style={styles.indicatorParentStyle}>
+				<ActivityIndicator size={50} />
+			</View>
+		);
 	}
 };
 
@@ -69,7 +80,11 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 		marginLeft: 10,
 		marginVertical: 10,
-		color: "black",
+		color: darkTheme ? "white" : "black",
+	},
+	indicatorParentStyle: {
+		flex: 1,
+		justifyContent: "center",
 	},
 });
 

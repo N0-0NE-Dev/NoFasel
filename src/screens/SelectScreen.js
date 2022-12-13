@@ -11,8 +11,9 @@ import {
 import { WebView } from "react-native-webview";
 import ModalSelector from "react-native-modal-selector";
 import * as FileSystem from "expo-file-system";
-import { StatusBar } from "expo-status-bar";
 import { Storage } from "../components/Storage";
+
+const darkTheme = Storage.getBoolean("darkTheme");
 
 const SelectScreen = ({ navigation, route }) => {
 	const { id, category } = route.params;
@@ -197,6 +198,20 @@ const SelectScreen = ({ navigation, route }) => {
 					style={styles.modalSelectorStyle}
 					selectedKey={selectedSeason}
 					backdropPressToClose={true}
+					selectTextStyle={{ color: darkTheme ? "white" : "black" }}
+					optionContainerStyle={{
+						backgroundColor: darkTheme ? "black" : "white",
+						borderColor: darkTheme ? "white" : "black",
+						borderWidth: 1,
+					}}
+					optionTextStyle={{ color: darkTheme ? "#add8e6" : "blue" }}
+					cancelText="Cancel"
+					cancelStyle={{
+						backgroundColor: darkTheme ? "black" : "white",
+						borderWidth: 1,
+						borderColor: darkTheme ? "white" : "black",
+					}}
+					cancelTextStyle={{ color: darkTheme ? "white" : "black" }}
 				/>
 			);
 		} else {
@@ -215,6 +230,20 @@ const SelectScreen = ({ navigation, route }) => {
 					style={styles.modalSelectorStyle}
 					selectedKey={selectedEpisode}
 					backdropPressToClose={true}
+					selectTextStyle={{ color: darkTheme ? "white" : "black" }}
+					optionContainerStyle={{
+						backgroundColor: darkTheme ? "black" : "white",
+						borderColor: darkTheme ? "white" : "black",
+						borderWidth: 1,
+					}}
+					optionTextStyle={{ color: darkTheme ? "#add8e6" : "blue" }}
+					cancelText="Cancel"
+					cancelStyle={{
+						backgroundColor: darkTheme ? "black" : "white",
+						borderWidth: 1,
+						borderColor: darkTheme ? "white" : "black",
+					}}
+					cancelTextStyle={{ color: darkTheme ? "white" : "black" }}
 				/>
 			);
 		} else {
@@ -233,6 +262,20 @@ const SelectScreen = ({ navigation, route }) => {
 					style={styles.modalSelectorStyle}
 					selectedKey={selectedQuality}
 					backdropPressToClose={true}
+					selectTextStyle={{ color: darkTheme ? "white" : "black" }}
+					optionContainerStyle={{
+						backgroundColor: darkTheme ? "black" : "white",
+						borderColor: darkTheme ? "white" : "black",
+						borderWidth: 1,
+					}}
+					optionTextStyle={{ color: darkTheme ? "#add8e6" : "blue" }}
+					cancelText="Cancel"
+					cancelStyle={{
+						backgroundColor: darkTheme ? "black" : "white",
+						borderWidth: 1,
+						borderColor: darkTheme ? "white" : "black",
+					}}
+					cancelTextStyle={{ color: darkTheme ? "white" : "black" }}
 				/>
 			);
 		} else if (contentSource && category != "arabic-series") {
@@ -272,8 +315,7 @@ const SelectScreen = ({ navigation, route }) => {
 
 	if (data) {
 		return (
-			<ScrollView>
-				<StatusBar style="dark" />
+			<ScrollView style={styles.parentStyle}>
 				<Image
 					style={styles.imageStyle}
 					source={{ uri: content["Image Source"] }}
@@ -288,7 +330,6 @@ const SelectScreen = ({ navigation, route }) => {
 	} else {
 		return (
 			<View style={styles.indicatorParentStyle}>
-				<StatusBar style="dark" />
 				<ActivityIndicator size={50} />
 			</View>
 		);
@@ -300,15 +341,15 @@ const styles = StyleSheet.create({
 		width: 320,
 		height: 480,
 		alignSelf: "center",
-		margin: 5,
+		margin: 10,
 	},
 	titleStyle: {
 		textAlign: "center",
 		fontSize: 20,
-		color: "black",
+		color: darkTheme ? "white" : "black",
 	},
 	initValueTextStyle: {
-		color: "blue",
+		color: darkTheme ? "#add8e6" : "blue",
 	},
 	modalSelectorStyle: {
 		borderColor: "black",

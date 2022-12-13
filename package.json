@@ -15,7 +15,6 @@
     "expo-dev-client": "~2.0.1",
     "expo-file-system": "~15.1.1",
     "expo-splash-screen": "~0.17.5",
-    "expo-status-bar": "~1.4.2",
     "fast-html-parser": "^1.0.1",
     "json-query": "^2.2.2",
     "react": "18.1.0",

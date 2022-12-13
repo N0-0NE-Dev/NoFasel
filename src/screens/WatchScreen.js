@@ -1,7 +1,6 @@
 import React from "react";
 import WebView from "react-native-webview";
 import { View } from "react-native";
-import { StatusBar } from "expo-status-bar";
 
 const WatchScreen = ({ route }) => {
 	const { source } = route.params;
@@ -19,7 +18,6 @@ const WatchScreen = ({ route }) => {
 
 	return (
 		<View style={{ flex: 1 }}>
-			<StatusBar hidden={true} />
 			<WebView style={{ flex: 1 }} source={{ html: html }} />
 		</View>
 	);

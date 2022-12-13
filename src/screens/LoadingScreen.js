@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { View, ActivityIndicator, StyleSheet } from "react-native";
 import * as FileSystem from "expo-file-system";
-import { StatusBar } from "expo-status-bar";
+import { Storage } from "../components/Storage";
+
+const darkTheme = Storage.getBoolean("darkTheme");
 
 const LoadingScreen = ({ navigation }) => {
-	const [contentUpdated, setContentUpdated] = useState(false);
 	let progress = 0;
 
 	const fileUrls = [
@@ -19,35 +20,25 @@ const LoadingScreen = ({ navigation }) => {
 		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/last-scraped.txt",
 	];
 
-	const updateContent = () => {
-		fileUrls.forEach((url) => {
-			const fileName = url.split("/").slice(-1)[0];
-			FileSystem.downloadAsync(
-				url,
-				FileSystem.documentDirectory + fileName
-			).then(() => {
+	fileUrls.forEach((url) => {
+		const fileName = url.split("/").slice(-1)[0];
+		FileSystem.downloadAsync(url, FileSystem.documentDirectory + fileName).then(
+			() => {
 				progress++;
 				if (progress == fileUrls.length) {
-					setContentUpdated(true);
+					navigation.goBack();
 				} else {
 					// pass
 				}
-			});
-		});
-	};
-
-	useEffect(() => updateContent(), []);
-
-	if (!contentUpdated) {
-		return (
-			<View style={styles.indicatorParentStyle}>
-				<StatusBar style="dark" />
-				<ActivityIndicator size={50} />
-			</View>
+			}
 		);
-	} else {
-		navigation.goBack();
-	}
+	});
+
+	return (
+		<View style={styles.indicatorParentStyle}>
+			<ActivityIndicator size={50} />
+		</View>
+	);
 };
 
 const styles = StyleSheet.create({

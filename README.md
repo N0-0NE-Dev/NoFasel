@@ -8,17 +8,28 @@ A streaming app with zero ads built in react native with [scrapers](https://gith
 
 ## Features:
 
-✅ Watchlist System
-<br />
-✅ Latest Movies, Series, Animes & More...
-<br />
-✅ Fast Video Player (Double-tap To Seek Present)
-<br />
-✅ Daily Content Updates
-<br />
-✅ No Extra Permissions Needed
-<br />
-✅ No Account Needed
+✅ Watchlist System  
+✅ Latest Movies, Series, Animes & More...  
+✅ Fast Video Player (With Double-tap To Seek)  
+✅ Daily Content Updates  
+✅ No Extra Permissions Needed  
+✅ No Account Needed  
+✅ Light & Dark Themes
+
+## Screenshots:
+
+<ul style="list-style-type: none; overflow: hidden;">
+   <li > <img src="https://i.imgur.com/SwPY24el.png" /> </li>
+   <li > <img src="https://i.imgur.com/aCm9vOWl.png" /> </li>
+   <li > <img src="https://i.imgur.com/SY76kbKl.png" /> </li>
+   <li > <img src="https://i.imgur.com/5l3L5Mvl.png" /> </li>
+   <li > <img src="https://i.imgur.com/CATSRhLl.png" /> </li>
+   <li > <img src="https://i.imgur.com/hWfGkWal.png" /> </li>
+   <li > <img src="https://i.imgur.com/tSySR0fl.png" /> </li>
+   <li > <img src="https://i.imgur.com/pIDzfW0l.png" /> </li>
+   <li > <img src="https://i.imgur.com/bEkYPZBl.png" /> </li>
+   <li > <img src="https://i.imgur.com/7A7fDtml.png" /> </li>
+</ul>
 
 ## Download:
 
@@ -34,19 +45,19 @@ You must have node 16, jdk 11 and android studio downloaded and configured accor
 
 ### Steps
 
-1. Clone the repository with:<br />
+1. Clone the repository:<br />
 
    ```
    git clone https://github.com/N0-0NE-Dev/NoFasel
    ```
 
-2. Install the dependencies with:<br />
+2. Install the dependencies:<br />
 
    ```
    npm install
    ```
 
-3. Generate a release keystore with:<br />
+3. Generate a release keystore:<br />
 
    ```
    keytool -genkey -v -keystore your_key_name.keystore -alias your_key_alias -keyalg RSA -keysize 2048 -validity 10000
@@ -56,7 +67,7 @@ You must have node 16, jdk 11 and android studio downloaded and configured accor
 
 4. Move the generated (or existing) keystore to `./android/app`.
 
-5. In `./android/app` create a file named `release.keystore` with the following content:
+5. In `./android/app` create a file named `keystore.properties` with the following content:
 
    ```
    storePassword=PUT_YOUR_KEYSTORE_PASSWORD_HERE
@@ -79,4 +90,4 @@ You must have node 16, jdk 11 and android studio downloaded and configured accor
 
    to build the development client.
 
-7. You can find the apk file in `./android/build/outputs/apk/release` or `./android/build/outputs/apk/debug` depending on which command you used
+7. You can find the apk file in `./android/build/outputs/apk/release` or `./android/build/outputs/apk/debug` depending on which command you used.

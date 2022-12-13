@@ -8,6 +8,9 @@ import {
 	Text,
 	Button,
 } from "react-native";
+import { Storage } from "./Storage";
+
+const darkTheme = Storage.getBoolean("darkTheme");
 
 const ModalButtons = ({ handleCancellation, handleSubmission }) => {
 	return (
@@ -31,7 +34,12 @@ const PageNumberEntryModal = ({
 	lastPageNumber,
 }) => {
 	return (
-		<Modal animationType="slide" transparent={true} visible={modalVisible}>
+		<Modal
+			animationType="slide"
+			transparent={true}
+			visible={modalVisible}
+			statusBarTranslucent={true}
+		>
 			<Pressable
 				style={styles.modalBackgroundStyle}
 				onPress={handleCancellation}
@@ -74,7 +82,7 @@ const styles = StyleSheet.create({
 	},
 	modalViewStyle: {
 		margin: 20,
-		backgroundColor: "white",
+		backgroundColor: darkTheme ? "black" : "white",
 		borderRadius: 20,
 		padding: 35,
 		alignItems: "center",
@@ -90,7 +98,7 @@ const styles = StyleSheet.create({
 	textInputStyle: {
 		margin: 10,
 		textAlign: "center",
-		color: "black",
+		color: darkTheme ? "white" : "black",
 	},
 	buttonParentStyle: {
 		width: 100,
