@@ -35,12 +35,6 @@ const DrawerScreen = ({ navigation }) => {
 		// pass
 	}
 
-	if (!Storage.contains("watchlist")) {
-		Storage.set("watchlist", JSON.stringify({}));
-	} else {
-		// pass
-	}
-
 	const contentAutoupdate = Storage.getBoolean("contentAutoupdate");
 
 	const updateContent = () => {

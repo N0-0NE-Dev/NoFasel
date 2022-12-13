@@ -6,10 +6,17 @@ import { useIsFocused } from "@react-navigation/native";
 import { isTablet } from "react-native-device-info";
 import { AntDesign } from "@expo/vector-icons";
 
+if (!Storage.contains("watchlist")) {
+	Storage.set("watchlist", JSON.stringify({}));
+} else {
+	// pass
+}
+
+const storedData = JSON.parse(Storage.getString("watchlist"));
+
 const ContentCardsList = ({ navigation, data, horizontal, formatted }) => {
 	const [refresh, setRefresh] = useState(false);
 	const isFocused = useIsFocused();
-	const storedData = JSON.parse(Storage.getString("watchlist"));
 
 	useEffect(() => setRefresh(!refresh), [isFocused]);
 
