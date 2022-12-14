@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
 	Text,
 	Image,
@@ -18,6 +18,7 @@ const darkTheme = Storage.getBoolean("darkTheme");
 const SelectScreen = ({ navigation, route }) => {
 	const { id, category } = route.params;
 	const contentWithSeasons = ["series", "tvshows", "asian-series"];
+	const scrollViewRef = useRef(null);
 	const jsCode =
 		"window.ReactNativeWebView.postMessage(document.documentElement.innerHTML)";
 
@@ -132,6 +133,9 @@ const SelectScreen = ({ navigation, route }) => {
 
 	useEffect(() => {
 		if (data) {
+			setQualities(null);
+			setContentSource(null);
+			setSelectedEpisode(null);
 			if (selectedSeason) {
 				getSeriesEpisodes(selectedSeason);
 			} else if ((category == "anime") | (category == "arabic-series")) {
@@ -315,7 +319,11 @@ const SelectScreen = ({ navigation, route }) => {
 
 	if (data) {
 		return (
-			<ScrollView style={styles.parentStyle}>
+			<ScrollView
+				style={styles.parentStyle}
+				ref={scrollViewRef}
+				onContentSizeChange={() => scrollViewRef.current.scrollToEnd()}
+			>
 				<Image
 					style={styles.imageStyle}
 					source={{ uri: content["Image Source"] }}
