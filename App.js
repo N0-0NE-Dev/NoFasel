@@ -52,6 +52,7 @@ const MyStack = () => {
 				options={{
 					headerShown: false,
 					orientation: "all",
+					statusBarHidden: true,
 				}}
 			/>
 			<Stack.Screen

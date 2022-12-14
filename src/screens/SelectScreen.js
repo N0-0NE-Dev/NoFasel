@@ -346,8 +346,8 @@ const SelectScreen = ({ navigation, route }) => {
 
 const styles = StyleSheet.create({
 	imageStyle: {
-		width: 320,
-		height: 480,
+		width: 300,
+		height: 450,
 		alignSelf: "center",
 		margin: 10,
 	},
