@@ -35,8 +35,6 @@ A streaming app with zero ads built in react native with [scrapers](https://gith
 
 Go to [releases](https://github.com/N0-0NE-Dev/NoFasel/releases) page and download the latest release.
 
-Note: The playstore might flag the app as "unsafe", eventhough No Fasel connects to no external servers. No Fasel only ever connects to GitHub to grab the [latest](https://github.com/N0-0NE-Dev/no-fasel-scrapers/tree/main/output) content files, imgur or imgpile to load the content posters and to fasel or akwam to get the HLS sources. So, choose install anyway when prompted. You can also check the VirusTotal report [here](https://www.virustotal.com/gui/file/47db01d2ed0aaf16812474aafa754e553dc7423e2b0bd3f0676cf9d9bf066fd6/behavior).
-
 ## Building Instructions
 
 ### Prerequisite
