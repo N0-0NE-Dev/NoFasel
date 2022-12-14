@@ -29,7 +29,7 @@ const MyStack = () => {
 				headerStyle: { backgroundColor: darkTheme ? "black" : "white" },
 				headerTintColor: darkTheme ? "white" : "black",
 				contentStyle: { backgroundColor: darkTheme ? "#18191a" : "#eee" },
-				navigationBarColor: darkTheme ? "black" : "white",
+				navigationBarHidden: true,
 			}}
 		>
 			<Stack.Screen
@@ -54,7 +54,6 @@ const MyStack = () => {
 					headerShown: false,
 					orientation: "all",
 					statusBarHidden: true,
-					navigationBarHidden: true,
 				}}
 			/>
 			<Stack.Screen

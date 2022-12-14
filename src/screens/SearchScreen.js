@@ -54,6 +54,7 @@ const SearchScreen = ({ navigation }) => {
 					placeholder="Search"
 					onChangeText={setSearchTerm}
 					placeholderTextColor="#BEBEBE"
+					autoFocus={true}
 				/>
 				<ModalSelector
 					data={selectorData}

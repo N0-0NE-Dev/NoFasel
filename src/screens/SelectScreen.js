@@ -136,6 +136,7 @@ const SelectScreen = ({ navigation, route }) => {
 			setQualities(null);
 			setContentSource(null);
 			setSelectedEpisode(null);
+			setSelectedQuality(null);
 			if (selectedSeason) {
 				getSeriesEpisodes(selectedSeason);
 			} else if ((category == "anime") | (category == "arabic-series")) {

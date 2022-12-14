@@ -61,6 +61,7 @@ const PageNumberEntryModal = ({
 						onSubmitEditing={handleSubmission}
 						style={styles.textInputStyle}
 						placeholderTextColor="#BEBEBE"
+						autoFocus={true}
 					/>
 					<ModalButtons
 						handleCancellation={handleCancellation}
@@ -99,6 +100,7 @@ const styles = StyleSheet.create({
 		margin: 10,
 		textAlign: "center",
 		color: darkTheme ? "white" : "black",
+		borderColor: darkTheme ? "white" : "black",
 	},
 	buttonParentStyle: {
 		width: 100,
