@@ -11,10 +11,10 @@ const SearchScreen = ({ navigation }) => {
 	let jsonQuery = require("json-query");
 	const [searchTerm, setSearchTerm] = useState();
 	const [allData, setAllData] = useState();
-	const [filter, setFilter] = useState("none");
+	const [filter, setFilter] = useState("all");
 
 	const selectorData = [
-		{ label: "None", key: "none" },
+		{ label: "All", key: "all" },
 		{ label: "Movies", key: "movies" },
 		{ label: "Series", key: "series" },
 		{ label: "Anime", key: "anime" },
@@ -40,7 +40,7 @@ const SearchScreen = ({ navigation }) => {
 		// pass
 	}
 
-	if (data !== null && filter != "none") {
+	if (data !== null && filter != "all") {
 		data = data.filter((element) => element["Category"] == filter);
 	} else {
 		// pass
