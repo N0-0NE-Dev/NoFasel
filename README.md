@@ -43,19 +43,19 @@ You must have node 16, jdk 11 and android studio downloaded and configured accor
 
 ### Steps
 
-1. Clone the repository:<br />
+1. Clone the repository:
 
    ```
    git clone https://github.com/N0-0NE-Dev/NoFasel
    ```
 
-2. Install the dependencies:<br />
+2. Install the dependencies:
 
    ```
    npm install
    ```
 
-3. Generate a release keystore:<br />
+3. Generate a release keystore:
 
    ```
    keytool -genkey -v -keystore your_key_name.keystore -alias your_key_alias -keyalg RSA -keysize 2048 -validity 10000
@@ -74,18 +74,18 @@ You must have node 16, jdk 11 and android studio downloaded and configured accor
    storeFile=PUT_YOUR_KEYSTORE_FILE_NAME_HERE
    ```
 
-6. Change the directory to the android folder and run:<br />
+6. Change the directory to the android:
+
+   To build the release apk run:
 
    ```
    gradlew assembleRelease
    ```
 
-   to build the release apk or:
+   To build the development client run:
 
    ```
    gradlew assembleDebug
    ```
-
-   to build the development client.
 
 7. You can find the apk file in `./android/build/outputs/apk/release` or `./android/build/outputs/apk/debug` depending on which command you used.
