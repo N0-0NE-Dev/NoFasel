@@ -105,6 +105,7 @@ const DrawerScreen = ({ navigation }) => {
 					sceneContainerStyle: {
 						backgroundColor: darkTheme ? "#18191a" : "#eee",
 					},
+					navigationBarColor: darkTheme ? "black" : "white",
 				}}
 			>
 				<Drawer.Screen

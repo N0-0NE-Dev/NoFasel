@@ -1,6 +1,6 @@
 import "expo-dev-client";
 import "react-native-gesture-handler";
-import React from "react";
+import React, { useState } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import DrawerScreen from "./src/screens/DrawerScreen";
@@ -29,6 +29,7 @@ const MyStack = () => {
 				headerStyle: { backgroundColor: darkTheme ? "black" : "white" },
 				headerTintColor: darkTheme ? "white" : "black",
 				contentStyle: { backgroundColor: darkTheme ? "#18191a" : "#eee" },
+				navigationBarColor: darkTheme ? "black" : "white",
 			}}
 		>
 			<Stack.Screen
@@ -53,6 +54,7 @@ const MyStack = () => {
 					headerShown: false,
 					orientation: "all",
 					statusBarHidden: true,
+					navigationBarHidden: true,
 				}}
 			/>
 			<Stack.Screen
