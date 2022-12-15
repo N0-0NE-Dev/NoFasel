@@ -39,11 +39,11 @@ Go to [releases](https://github.com/N0-0NE-Dev/NoFasel/releases) page and downlo
 
 ## Building Instructions
 
-### Prerequisite
+### Prerequisites:
 
 You must have node 16, jdk 11 and android studio downloaded and configured according to the react native guide found [here](https://reactnative.dev/docs/environment-setup).
 
-### Steps
+### Steps:
 
 1. Clone the repository:
 
