@@ -1,10 +1,12 @@
 <h1 align="center">NoFasel</h1>
 
-<p align="center" >
+<p align="center">
 <img src="https://i.imgur.com/NvLCO9U.png" width="100px" height="100px">
 </p>
 
 A streaming app with zero ads built in react native with [scrapers](https://github.com/N0-0NE-Dev/no-fasel-scrapers) built in python. No Fasel requires no premissons or accounts and is free to use forever (or as long as fasel is operating.
+
+![Github All Releases](https://img.shields.io/github/downloads/N0-0NE-Dev/NoFasel/total.svg)
 
 ## Features:
 
