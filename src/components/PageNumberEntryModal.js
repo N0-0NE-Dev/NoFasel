@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import {
 	Modal,
 	TextInput,
@@ -33,15 +33,12 @@ const PageNumberEntryModal = ({
 	handleCancellation,
 	lastPageNumber,
 }) => {
-	const textInputRef = useRef(null);
-
 	return (
 		<Modal
 			animationType="slide"
 			transparent={true}
 			visible={modalVisible}
 			statusBarTranslucent={true}
-			onShow={() => textInputRef.current.focus()}
 		>
 			<Pressable
 				style={styles.modalBackgroundStyle}
@@ -64,7 +61,6 @@ const PageNumberEntryModal = ({
 						onSubmitEditing={handleSubmission}
 						style={styles.textInputStyle}
 						placeholderTextColor="#BEBEBE"
-						ref={textInputRef}
 					/>
 					<ModalButtons
 						handleCancellation={handleCancellation}
