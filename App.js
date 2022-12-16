@@ -9,6 +9,7 @@ import WatchScreen from "./src/screens/WatchScreen";
 import LoadingScreen from "./src/screens/LoadingScreen";
 import SearchScreen from "./src/screens/SearchScreen";
 import { Storage } from "./src/components/Storage";
+import DownloadScreen from "./src/screens/DownloadScreen";
 
 if (!Storage.contains("darkTheme")) {
 	Storage.set("darkTheme", false);
@@ -69,6 +70,15 @@ const MyStack = () => {
 				component={SearchScreen}
 				options={{
 					orientation: "all",
+				}}
+			/>
+			<Stack.Screen
+				name="Download"
+				component={DownloadScreen}
+				options={{
+					orientation: "all",
+					headerShown: false,
+					animation: "none",
 				}}
 			/>
 		</Stack.Navigator>

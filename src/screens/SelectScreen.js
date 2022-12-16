@@ -44,8 +44,10 @@ const SelectScreen = ({ navigation, route }) => {
 		).then((data) => setData(JSON.parse(data)));
 	}, []);
 
+	let content = null;
+
 	if (data) {
-		var content = data[id];
+		content = data[id];
 	} else {
 		// pass
 	}
@@ -301,17 +303,63 @@ const SelectScreen = ({ navigation, route }) => {
 		}
 	};
 
-	const WatchButton = () => {
+	const handleDownload = () => {
+		let downloadLink = null;
+
+		if (category == "arabic-series") {
+			downloadLink = selectedQuality;
+		} else if (category != "movies") {
+			downloadLink =
+				"https://www.t7meel.site/file/" +
+				selectedEpisode.split("=")[2].replace("&img", "");
+		} else {
+			downloadLink =
+				"https://www.t7meel.site/file/" +
+				contentSource.split("=")[2].replace("&img", "");
+		}
+
+		navigation.navigate("Download", {
+			category: category,
+			downloadLink: downloadLink,
+		});
+	};
+
+	const Buttons = () => {
 		if (selectedQuality) {
 			return (
-				<View style={styles.buttonStyle}>
-					<Button
-						title="Watch!"
-						onPress={() =>
-							navigation.navigate("Watch", { source: selectedQuality })
-						}
-					/>
+				<View style={styles.buttonsParentStyle}>
+					<View style={styles.buttonStyle}>
+						<Button title="Download" onPress={handleDownload} />
+					</View>
+
+					<View style={styles.buttonStyle}>
+						<Button
+							title="Watch"
+							onPress={() =>
+								navigation.navigate("Watch", { source: selectedQuality })
+							}
+						/>
+					</View>
 				</View>
+			);
+		} else {
+			// pass
+		}
+	};
+
+	const Warning = () => {
+		if (category != "arabic-series") {
+			return (
+				<Text
+					style={{
+						textAlign: "center",
+						color: "red",
+						marginTop: 10,
+						fontSize: 15,
+					}}
+				>
+					Download only avilable in highest quality.
+				</Text>
 			);
 		} else {
 			// pass
@@ -321,10 +369,10 @@ const SelectScreen = ({ navigation, route }) => {
 	if (data) {
 		return (
 			<ScrollView
-				style={styles.parentStyle}
 				ref={scrollViewRef}
 				onContentSizeChange={() => scrollViewRef.current.scrollToEnd()}
 			>
+				<Warning />
 				<Image
 					style={styles.imageStyle}
 					source={{ uri: content["Image Source"] }}
@@ -333,7 +381,7 @@ const SelectScreen = ({ navigation, route }) => {
 				<SeasonSelector />
 				<EpisodeSelector />
 				<QualitySelector />
-				<WatchButton />
+				<Buttons />
 			</ScrollView>
 		);
 	} else {
@@ -370,11 +418,14 @@ const styles = StyleSheet.create({
 	},
 	buttonStyle: {
 		width: 125,
-		alignSelf: "center",
 		margin: 10,
 	},
 	indicatorParentStyle: {
 		flex: 1,
+		justifyContent: "center",
+	},
+	buttonsParentStyle: {
+		flexDirection: "row",
 		justifyContent: "center",
 	},
 });
