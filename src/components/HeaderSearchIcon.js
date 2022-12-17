@@ -9,7 +9,7 @@ const HeaderSearchIcon = ({ navigation }) => {
 		<Foundation
 			name="magnifying-glass"
 			size={30}
-			color={darkTheme ? "white" : "black"}
+			color={"green"}
 			style={{ marginRight: 10 }}
 			onPress={() => navigation.navigate("Search")}
 		/>
