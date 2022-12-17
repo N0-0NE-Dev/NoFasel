@@ -37,15 +37,19 @@ const SettingsScreen = ({ navigation }) => {
 	};
 
 	const handleTheme = (selectedTheme) => {
-		if (selectedTheme == "dark") {
-			Storage.set("darkTheme", true);
-			setTheme("dark");
+		if (selectedTheme == theme) {
+			ToastAndroid.show("Already Applied", ToastAndroid.SHORT);
 		} else {
-			Storage.set("darkTheme", false);
-			setTheme("light");
+			if (selectedTheme == "dark") {
+				Storage.set("darkTheme", true);
+				setTheme("dark");
+			} else {
+				Storage.set("darkTheme", false);
+				setTheme("light");
+			}
+			ToastAndroid.show("Restarting...", ToastAndroid.SHORT);
+			RNRestart.Restart();
 		}
-		ToastAndroid.show("Restarting...", ToastAndroid.SHORT);
-		RNRestart.Restart();
 	};
 
 	return (
