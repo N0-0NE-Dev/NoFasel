@@ -44,7 +44,7 @@ const SettingsScreen = ({ navigation }) => {
 			Storage.set("darkTheme", false);
 			setTheme("light");
 		}
-		ToastAndroid.show("Please restart the app to apply.", ToastAndroid.SHORT);
+		ToastAndroid.show("Restarting...", ToastAndroid.SHORT);
 		RNRestart.Restart();
 	};
 

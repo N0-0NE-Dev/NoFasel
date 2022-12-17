@@ -7,7 +7,6 @@
 		"jsEngine": "hermes",
 		"platforms": ["android"],
 		"android": {
-			"package": "com.n00nedev.nofasel",
 			"runtimeVersion": "1.0.5"
 		},
 		"extra": {
