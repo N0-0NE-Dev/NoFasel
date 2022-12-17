@@ -47,7 +47,7 @@ const SettingsScreen = ({ navigation }) => {
 				Storage.set("darkTheme", false);
 				setTheme("light");
 			}
-			ToastAndroid.show("Restarting...", ToastAndroid.SHORT);
+			ToastAndroid.show("Refreshing...", ToastAndroid.SHORT);
 			RNRestart.Restart();
 		}
 	};
