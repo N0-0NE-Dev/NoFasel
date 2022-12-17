@@ -1,11 +1,9 @@
 import React from "react";
 import { View, ActivityIndicator, StyleSheet } from "react-native";
 import * as FileSystem from "expo-file-system";
-import { Storage } from "../components/Storage";
+import RNRestart from "react-native-restart";
 
-const darkTheme = Storage.getBoolean("darkTheme");
-
-const LoadingScreen = ({ navigation }) => {
+const LoadingScreen = () => {
 	let progress = 0;
 
 	const fileUrls = [
@@ -26,7 +24,7 @@ const LoadingScreen = ({ navigation }) => {
 			() => {
 				progress++;
 				if (progress == fileUrls.length) {
-					navigation.goBack();
+					RNRestart.Restart();
 				} else {
 					// pass
 				}

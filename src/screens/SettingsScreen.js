@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { Storage } from "../components/Storage";
 import ModalSelector from "react-native-modal-selector";
+import RNRestart from "react-native-restart";
 
 const darkTheme = Storage.getBoolean("darkTheme");
 
@@ -44,6 +45,7 @@ const SettingsScreen = ({ navigation }) => {
 			setTheme("light");
 		}
 		ToastAndroid.show("Please restart the app to apply.", ToastAndroid.SHORT);
+		RNRestart.Restart();
 	};
 
 	return (

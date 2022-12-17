@@ -66,3 +66,4 @@ buck-out/
 android/keystore.properties
 .prettierrc
 .expo
+dist

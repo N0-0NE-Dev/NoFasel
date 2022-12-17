@@ -56,7 +56,10 @@ const TrendingContentScreen = ({ navigation }) => {
 					formatted={false}
 				/>
 
-				<Text style={styles.sectionTitleStyle}>Arabic Series</Text>
+				{data["arabic-series"].length > 0 ? (
+					<Text style={styles.sectionTitleStyle}>Arabic Series</Text>
+				) : null}
+
 				<ContentCardsList
 					data={Object.entries(data["arabic-series"])}
 					navigation={navigation}
