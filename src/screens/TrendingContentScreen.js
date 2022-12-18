@@ -56,12 +56,23 @@ const TrendingContentScreen = ({ navigation }) => {
 					formatted={false}
 				/>
 
-				{data["arabic-series"].length > 0 ? (
+				{Object.entries(data["arabic-series"]).length > 0 ? (
 					<Text style={styles.sectionTitleStyle}>Arabic Series</Text>
 				) : null}
 
 				<ContentCardsList
 					data={Object.entries(data["arabic-series"])}
+					navigation={navigation}
+					horizontal={true}
+					formatted={false}
+				/>
+
+				{Object.entries(data["arabic-movies"]).length > 0 ? (
+					<Text style={styles.sectionTitleStyle}>Arabic Movies</Text>
+				) : null}
+
+				<ContentCardsList
+					data={Object.entries(data["arabic-movies"])}
 					navigation={navigation}
 					horizontal={true}
 					formatted={false}

@@ -61,6 +61,7 @@ const AllContentScreen = ({ navigation }) => {
 		{ label: "Asian Series", key: "asian-series" },
 		{ label: "TV Shows", key: "tvshows" },
 		{ label: "Arabic Series", key: "arabic-series" },
+		{ label: "Arabic Movies", key: "arabic-movies" },
 	];
 
 	useEffect(() => {

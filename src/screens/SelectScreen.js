@@ -52,8 +52,8 @@ const SelectScreen = ({ navigation, route }) => {
 		// pass
 	}
 
-	const getSources = () => {
-		if (pageSource) {
+	const getSources = (watchUrl) => {
+		if (pageSource && !category.contains("arabic")) {
 			let HTMLParser = require("fast-html-parser");
 			let root = HTMLParser.parse(pageSource);
 			let dataUrls = [];
@@ -88,7 +88,28 @@ const SelectScreen = ({ navigation, route }) => {
 
 			setQualities(dataUrls);
 		} else {
-			// pass
+			fetch(
+				useProxy
+					? `https://api.codetabs.com/v1/proxy?quest=${watchUrl}`
+					: watchUrl
+			)
+				.then((resp) => resp.text())
+				.then((text) => {
+					let HTMLParser = require("fast-html-parser");
+					let root = HTMLParser.parse(text);
+					const rawSources = root.querySelectorAll("source");
+					const sources = [];
+
+					rawSources.forEach((source) => {
+						sources.push({
+							label: source.attributes.size + "p",
+							key: '"' + source.attributes.src + '"',
+						});
+					});
+
+					setQualities(sources);
+				})
+				.catch((e) => console.error(e));
 		}
 	};
 
@@ -161,28 +182,11 @@ const SelectScreen = ({ navigation, route }) => {
 		} else if (selectedEpisode && category == "arabic-series") {
 			setQualities(null);
 			setSelectedQuality(null);
-			fetch(
-				useProxy
-					? `https://api.codetabs.com/v1/proxy?quest=${selectedEpisode}`
-					: selectedEpisode
-			)
-				.then((resp) => resp.text())
-				.then((text) => {
-					let HTMLParser = require("fast-html-parser");
-					let root = HTMLParser.parse(text);
-					const rawSources = root.querySelectorAll("source");
-					const sources = [];
-
-					rawSources.forEach((source) => {
-						sources.push({
-							label: source.attributes.size + "p",
-							key: '"' + source.attributes.src + '"',
-						});
-					});
-
-					setQualities(sources);
-				})
-				.catch((e) => console.error(e));
+			getSources(selectedEpisode);
+		} else if (category == "arabic-movies" && data) {
+			getSources(content["Source"]);
+		} else {
+			// pass
 		}
 	}, [data, selectedEpisode]);
 
@@ -296,7 +300,7 @@ const SelectScreen = ({ navigation, route }) => {
 					/>
 				</View>
 			);
-		} else if (selectedEpisode) {
+		} else if (selectedEpisode | (category == "arabic-movies")) {
 			return <ActivityIndicator size={50} />;
 		} else {
 			// pass
@@ -348,7 +352,7 @@ const SelectScreen = ({ navigation, route }) => {
 	};
 
 	const Warning = () => {
-		if (category != "arabic-series") {
+		if (category != "arabic-series" && category != "arabic-movies") {
 			return (
 				<Text
 					style={{
