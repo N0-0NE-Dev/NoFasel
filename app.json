@@ -1,21 +1,28 @@
 {
-	"expo": {
-		"name": "NoFasel",
-		"slug": "no-fasel",
-		"version": "1.0.5",
-		"sdkVersion": "47.0.0",
-		"jsEngine": "hermes",
-		"platforms": ["android"],
-		"android": {
-			"runtimeVersion": "1.0.5"
-		},
-		"extra": {
-			"eas": {
-				"projectId": "7d1af19c-c34d-49ac-97e6-6df726972b22"
-			}
-		},
-		"updates": {
-			"url": "https://u.expo.dev/7d1af19c-c34d-49ac-97e6-6df726972b22"
-		}
-	}
+  "expo": {
+    "name": "NoFasel",
+    "slug": "no-fasel",
+    "version": "1.0.6",
+    "sdkVersion": "47.0.0",
+    "jsEngine": "hermes",
+    "platforms": [
+      "android"
+    ],
+    "android": {
+      "runtimeVersion": "1.0.6"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "7d1af19c-c34d-49ac-97e6-6df726972b22"
+      }
+    },
+    "updates": {
+      "url": "https://u.expo.dev/7d1af19c-c34d-49ac-97e6-6df726972b22"
+    },
+    "ios": {
+      "runtimeVersion": {
+        "policy": "sdkVersion"
+      }
+    }
+  }
 }
