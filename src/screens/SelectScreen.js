@@ -53,7 +53,11 @@ const SelectScreen = ({ navigation, route }) => {
 	}
 
 	const getSources = (watchUrl) => {
-		if (pageSource && !category.contains("arabic")) {
+		if (
+			pageSource &&
+			category != "arabic-series" &&
+			category != "arabic-movies"
+		) {
 			let HTMLParser = require("fast-html-parser");
 			let root = HTMLParser.parse(pageSource);
 			let dataUrls = [];
@@ -119,7 +123,7 @@ const SelectScreen = ({ navigation, route }) => {
 
 		if (contentWithSeasons.includes(category)) {
 			toUse = content["Seasons"][season]["Episodes"];
-		} else if ((category == "anime") | (category == "arabic-series")) {
+		} else if (category == "anime" || category == "arabic-series") {
 			toUse = content["Episodes"];
 		} else {
 			// pass
@@ -162,7 +166,7 @@ const SelectScreen = ({ navigation, route }) => {
 			setSelectedQuality(null);
 			if (selectedSeason) {
 				getSeriesEpisodes(selectedSeason);
-			} else if ((category == "anime") | (category == "arabic-series")) {
+			} else if (category == "anime" || category == "arabic-series") {
 				getSeriesEpisodes();
 			} else {
 				// pass
@@ -173,15 +177,13 @@ const SelectScreen = ({ navigation, route }) => {
 	}, [selectedSeason, data]);
 
 	useEffect(() => {
+		setQualities(null);
+		setSelectedQuality(null);
 		if (category == "movies" && data) {
 			setTimeout(() => setContentSource(content["Source"]), 250);
 		} else if (selectedEpisode && category != "arabic-series") {
-			setSelectedQuality(null);
-			setQualities(null);
 			setContentSource(selectedEpisode);
 		} else if (selectedEpisode && category == "arabic-series") {
-			setQualities(null);
-			setSelectedQuality(null);
 			getSources(selectedEpisode);
 		} else if (category == "arabic-movies" && data) {
 			getSources(content["Source"]);
@@ -300,7 +302,7 @@ const SelectScreen = ({ navigation, route }) => {
 					/>
 				</View>
 			);
-		} else if (selectedEpisode | (category == "arabic-movies")) {
+		} else if (selectedEpisode || category == "arabic-movies") {
 			return <ActivityIndicator size={50} />;
 		} else {
 			// pass
@@ -310,16 +312,18 @@ const SelectScreen = ({ navigation, route }) => {
 	const handleDownload = () => {
 		let downloadLink = null;
 
-		if (category == "arabic-series") {
+		if (category == "arabic-series" || category == "arabic-movies") {
 			downloadLink = selectedQuality;
 		} else if (category != "movies") {
 			downloadLink =
 				"https://www.t7meel.site/file/" +
 				selectedEpisode.split("=")[2].replace("&img", "");
-		} else {
+		} else if (category == "movies") {
 			downloadLink =
 				"https://www.t7meel.site/file/" +
 				contentSource.split("=")[2].replace("&img", "");
+		} else {
+			// pass
 		}
 
 		navigation.navigate("Download", {

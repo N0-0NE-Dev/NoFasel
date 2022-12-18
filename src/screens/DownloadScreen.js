@@ -17,6 +17,8 @@ const DownloadScreen = ({ navigation, route }) => {
 	const jsCode =
 		"window.ReactNativeWebView.postMessage(document.documentElement.innerHTML)";
 
+	console.log(downloadLink)
+
 	useEffect(() => {
 		if (pageSource) {
 			const HTMLParser = require("fast-html-parser");
@@ -36,7 +38,7 @@ const DownloadScreen = ({ navigation, route }) => {
 		}
 	}, [pageSource]);
 
-	if (category == "arabic-series") {
+	if (category == "arabic-series" | category == "arabic-movies") {
 		Linking.openURL(downloadLink.replaceAll('"', "")).then(navigation.goBack());
 	} else {
 		return (
