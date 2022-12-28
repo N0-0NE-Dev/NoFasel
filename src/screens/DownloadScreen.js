@@ -45,7 +45,6 @@ const DownloadScreen = ({ route, navigation }) => {
 				downloadButtons.forEach((button) => {
 					const downloadLink = button.rawAttributes.href;
 					const currentQuality = downloadLink.split("/").slice(-2, -1)[0];
-					console.log(currentQuality.includes("1_original"));
 
 					if (currentQuality.includes(selectedQuality.replace("p", ""))) {
 						setCorrectUrl(downloadLink);
