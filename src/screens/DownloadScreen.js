@@ -26,7 +26,7 @@ const DownloadScreen = ({ route, navigation }) => {
 	}
 
 	if (category.includes("arabic")) {
-		Linking.openURL(downloadLink.replaceAll('"', " ")).then(() =>
+		Linking.openURL(downloadLink.replaceAll('"', "")).then(() =>
 			navigation.goBack()
 		);
 	} else {
