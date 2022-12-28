@@ -18,7 +18,6 @@ A streaming app with zero ads built in react native with [scrapers](https://gith
 ✅ Supports Full Speed Download ⏬  
 ✅ Watchlist System 📃  
 ✅ Latest Movies, Series, Animes & More... 🎬  
-✅ Fast Video Player (With Double-tap To Seek) ⏩  
 ✅ Daily Content Updates 🆕  
 ✅ No Extra Permissions Needed 🚫  
 ✅ No Account Needed 🚫  
