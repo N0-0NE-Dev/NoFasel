@@ -7,6 +7,7 @@ import ContentCardsList from "../components/ContentCardsList";
 import { isTablet } from "react-native-device-info";
 import * as FileSystem from "expo-file-system";
 import { Storage } from "../components/Storage";
+import StyledModalSelector from "../components/StyledModalSelector";
 
 const darkTheme = Storage.getBoolean("darkTheme");
 
@@ -131,27 +132,10 @@ const AllContentScreen = ({ navigation }) => {
 					handleSubmission={handleSubmission}
 					lastPageNumber={lastPageNumber}
 				/>
-				<ModalSelector
+				<StyledModalSelector
 					data={selectorData}
 					selectedKey={contentData.key}
-					onChange={(option) => setContentData(option)}
-					style={styles.modalSelectorStyle}
-					initValueTextStyle={styles.initValueTextStyle}
-					backdropPressToClose={true}
-					selectTextStyle={{ color: darkTheme ? "white" : "black" }}
-					optionContainerStyle={{
-						backgroundColor: darkTheme ? "black" : "white",
-						borderColor: darkTheme ? "white" : "black",
-						borderWidth: 1,
-					}}
-					optionTextStyle={{ color: darkTheme ? "#add8e6" : "blue" }}
-					cancelText="Cancel"
-					cancelStyle={{
-						backgroundColor: darkTheme ? "black" : "white",
-						borderWidth: 1,
-						borderColor: darkTheme ? "white" : "black",
-					}}
-					cancelTextStyle={{ color: darkTheme ? "white" : "black" }}
+					handleChange={(option) => setContentData(option)}
 				/>
 				<ContentCardsList
 					horizontal={false}

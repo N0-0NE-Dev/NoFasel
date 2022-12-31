@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { View, TextInput, StyleSheet, ActivityIndicator } from "react-native";
 import ContentCardsList from "../components/ContentCardsList";
 import * as FileSystem from "expo-file-system";
-import ModalSelector from "react-native-modal-selector";
 import { Storage } from "../components/Storage";
+import StyledModalSelector from "../components/StyledModalSelector";
 
 const darkTheme = Storage.getBoolean("darkTheme");
 
@@ -57,26 +57,10 @@ const SearchScreen = ({ navigation }) => {
 					placeholderTextColor="#BEBEBE"
 					autoFocus={true}
 				/>
-				<ModalSelector
+				<StyledModalSelector
 					data={selectorData}
-					onChange={(option) => setFilter(option.key)}
-					style={styles.modalSelectorStyle}
-					backdropPressToClose={true}
 					selectedKey={filter}
-					selectTextStyle={{ color: darkTheme ? "white" : "black" }}
-					optionContainerStyle={{
-						backgroundColor: darkTheme ? "black" : "white",
-						borderColor: darkTheme ? "white" : "black",
-						borderWidth: 1,
-					}}
-					optionTextStyle={{ color: darkTheme ? "#add8e6" : "blue" }}
-					cancelText="Cancel"
-					cancelStyle={{
-						backgroundColor: darkTheme ? "black" : "white",
-						borderWidth: 1,
-						borderColor: darkTheme ? "white" : "black",
-					}}
-					cancelTextStyle={{ color: darkTheme ? "white" : "black" }}
+					handleChange={(option) => setFilter(option.key)}
 				/>
 				<ContentCardsList
 					navigation={navigation}
