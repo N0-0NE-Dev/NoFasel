@@ -10,6 +10,12 @@ import * as FileSystem from "expo-file-system";
 import HeaderSearchIcon from "../components/HeaderSearchIcon";
 import WebView from "react-native-webview";
 import { FASEL_EMAIL, FASEL_PASSWORD } from "@env";
+import {
+	TrendingTitleComponent,
+	WatchlistTitleComponent,
+	SettingsTitleComponent,
+	AllContentTitleComponent,
+} from "../components/DrawerTitles";
 
 const darkTheme = Storage.getBoolean("darkTheme");
 const Drawer = createDrawerNavigator();
@@ -141,6 +147,8 @@ const DrawerScreen = ({ navigation }) => {
 					component={TrendingContentScreen}
 					options={{
 						headerRight: () => <HeaderSearchIcon navigation={navigation} />,
+						title: () => <TrendingTitleComponent />,
+						headerTitle: "Trending",
 					}}
 				/>
 				<Drawer.Screen
@@ -148,6 +156,8 @@ const DrawerScreen = ({ navigation }) => {
 					component={AllContentScreen}
 					options={{
 						headerRight: () => <HeaderSearchIcon navigation={navigation} />,
+						title: () => <AllContentTitleComponent />,
+						headerTitle: "All Content",
 					}}
 				/>
 				<Drawer.Screen
@@ -155,9 +165,18 @@ const DrawerScreen = ({ navigation }) => {
 					component={WatchlistScreen}
 					options={{
 						headerRight: () => <HeaderSearchIcon navigation={navigation} />,
+						title: () => <WatchlistTitleComponent />,
+						headerTitle: "Watchlists",
 					}}
 				/>
-				<Drawer.Screen name="Settings" component={SettingsScreen} />
+				<Drawer.Screen
+					name="Settings"
+					component={SettingsScreen}
+					options={{
+						title: () => <SettingsTitleComponent />,
+						headerTitle: "Settings",
+					}}
+				/>
 			</Drawer.Navigator>
 		);
 	} else {
