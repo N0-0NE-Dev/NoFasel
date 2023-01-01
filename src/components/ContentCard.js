@@ -12,14 +12,6 @@ const ContentCard = ({ navigation, imageSource, title, id, category }) => {
 				navigation.navigate("Select", { id: id, category: category })
 			}
 		>
-			<Image
-				style={styles.logoStyle}
-				source={
-					category.includes("arabic")
-						? require("../assets/Akwam.png")
-						: require("../assets/Fasel.png")
-				}
-			/>
 			<Image style={styles.imageStyle} source={{ uri: imageSource }} />
 			<Text numberOfLines={1} style={styles.textStyle}>
 				{title}
@@ -41,13 +33,6 @@ const styles = StyleSheet.create({
 		textAlign: "center",
 		fontSize: 16,
 		color: darkTheme ? "white" : "black",
-	},
-	logoStyle: {
-		width: 80,
-		height: 25,
-		position: "absolute",
-		zIndex: 1,
-		alignSelf: "flex-end",
 	},
 });
 
