@@ -5,13 +5,18 @@ import {
 	View,
 	StyleSheet,
 	ActivityIndicator,
-	Button,
 	ScrollView,
+	Linking,
 } from "react-native";
 import { WebView } from "react-native-webview";
 import * as FileSystem from "expo-file-system";
 import { Storage } from "../components/Storage";
 import StyledModalSelector from "../components/StyledModalSelector";
+import {
+	FontAwesome,
+	AntDesign,
+	MaterialCommunityIcons,
+} from "@expo/vector-icons";
 
 const darkTheme = Storage.getBoolean("darkTheme");
 
@@ -99,7 +104,7 @@ const SelectScreen = ({ navigation, route }) => {
 					rawSources.forEach((source) => {
 						sources.push({
 							label: source.attributes.size + "p",
-							key: '"' + source.attributes.src + '"',
+							key: source.attributes.src,
 						});
 					});
 
@@ -261,43 +266,55 @@ const SelectScreen = ({ navigation, route }) => {
 		}
 	};
 
+	const handleDonwload = () => {
+		if (category.includes("arabic")) {
+			navigation.navigate("Download", {
+				id: id,
+				category: category,
+				downloadLink: selectedQuality.key,
+				premiumDownload: null,
+				selectedQuality: null,
+			});
+		} else {
+			navigation.navigate("Download", {
+				id: id,
+				category: category,
+				downloadLink: null,
+				premiumDownload: premiumDownload,
+				selectedQuality: selectedQuality.label,
+			});
+		}
+	};
+
 	const Buttons = () => {
 		if (selectedQuality) {
 			return (
 				<View style={styles.buttonsParentStyle}>
-					<View style={styles.buttonStyle}>
-						<Button
-							title="Download"
-							onPress={() => {
-								if (category.includes("arabic")) {
-									navigation.navigate("Download", {
-										id: id,
-										category: category,
-										downloadLink: selectedQuality.key,
-										premiumDownload: null,
-										selectedQuality: null,
-									});
-								} else {
-									navigation.navigate("Download", {
-										id: id,
-										category: category,
-										downloadLink: null,
-										premiumDownload: premiumDownload,
-										selectedQuality: selectedQuality.label,
-									});
-								}
-							}}
-						/>
-					</View>
+					<AntDesign
+						name="download"
+						size={32}
+						color={darkTheme ? "white" : "black"}
+						onPress={handleDonwload}
+						style={styles.buttonStyle}
+					/>
 
-					<View style={styles.buttonStyle}>
-						<Button
-							title="Watch"
-							onPress={() =>
-								navigation.navigate("Watch", { source: selectedQuality.key })
-							}
-						/>
-					</View>
+					<MaterialCommunityIcons
+						name="vlc"
+						size={32}
+						color="orange"
+						style={styles.buttonStyle}
+						onPress={() => Linking.openURL(`vlc://${selectedQuality.key}`)}
+					/>
+
+					<FontAwesome
+						name="play"
+						size={32}
+						color={darkTheme ? "white" : "black"}
+						onPress={() =>
+							navigation.navigate("Watch", { source: selectedQuality.key })
+						}
+						style={styles.buttonStyle}
+					/>
 				</View>
 			);
 		} else {
@@ -355,8 +372,7 @@ const styles = StyleSheet.create({
 		borderRadius: 5,
 	},
 	buttonStyle: {
-		width: 125,
-		margin: 10,
+		margin: 35,
 	},
 	indicatorParentStyle: {
 		flex: 1,

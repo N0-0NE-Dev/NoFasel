@@ -45,13 +45,11 @@ const PageNumberEntryModal = ({
 				onPress={handleCancellation}
 			>
 				<View style={styles.modalViewStyle}>
-					{(pageNumberInput > lastPageNumber) | (pageNumberInput < 1) &&
-					pageNumberInput !== "" ? (
+					{(pageNumberInput > lastPageNumber ||
+						(pageNumberInput < 1 && pageNumberInput !== "")) && (
 						<Text
 							style={styles.warningTextStyle}
 						>{`Please enter a number between 1 and ${lastPageNumber}`}</Text>
-					) : (
-						<View></View>
 					)}
 					<TextInput
 						onChangeText={setPageNumberInput}
@@ -99,7 +97,8 @@ const styles = StyleSheet.create({
 		margin: 10,
 		textAlign: "center",
 		color: darkTheme ? "white" : "black",
-		borderColor: darkTheme ? "white" : "black",
+		paddingVertical: 10,
+		paddingHorizontal: 50,
 	},
 	buttonParentStyle: {
 		width: 100,

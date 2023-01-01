@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
-import ModalSelector from "react-native-modal-selector";
 import Footer from "../components/Footer";
 import PageNumberEntryModal from "../components/PageNumberEntryModal";
 import ContentCardsList from "../components/ContentCardsList";
