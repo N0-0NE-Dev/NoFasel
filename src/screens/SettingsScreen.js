@@ -39,7 +39,7 @@ const SettingsScreen = ({ navigation }) => {
 
 	const handleTheme = (selectedTheme) => {
 		if (selectedTheme == theme) {
-			ToastAndroid.show("Already Applied", ToastAndroid.SHORT);
+			ToastAndroid.show("Already applied!", ToastAndroid.SHORT);
 		} else {
 			if (selectedTheme == "dark") {
 				Storage.set("darkTheme", true);
