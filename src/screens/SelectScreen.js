@@ -130,6 +130,7 @@ const SelectScreen = ({ navigation, route }) => {
 			episodes.push({
 				label: `Episode ${episode[1]["Episode Number"]}`,
 				key: episode[1]["Source"],
+				id: episode[0],
 			});
 		});
 
@@ -179,9 +180,9 @@ const SelectScreen = ({ navigation, route }) => {
 		if (category == "movies" && data) {
 			setTimeout(() => setContentSource(data["Source"]), 250);
 		} else if (selectedEpisode && category != "arabic-series") {
-			setContentSource(selectedEpisode);
+			setContentSource(selectedEpisode.key);
 		} else if (selectedEpisode && category == "arabic-series") {
-			getSources(selectedEpisode);
+			getSources(selectedEpisode.key);
 		} else if (category == "arabic-movies" && data) {
 			getSources(data["Source"]);
 		} else {
@@ -217,8 +218,8 @@ const SelectScreen = ({ navigation, route }) => {
 			return (
 				<StyledModalSelector
 					initValue="Select An Episode"
-					handleChange={(option) => setSelectedEpisode(option.key)}
-					selectedKey={selectedEpisode}
+					handleChange={(option) => setSelectedEpisode(option)}
+					selectedKey={selectedEpisode ? selectedEpisode.key : null}
 					data={episodes}
 				/>
 			);
@@ -277,7 +278,7 @@ const SelectScreen = ({ navigation, route }) => {
 			});
 		} else {
 			navigation.navigate("Download", {
-				id: id,
+				id: category == "movies" ? id : selectedEpisode.id,
 				category: category,
 				downloadLink: null,
 				premiumDownload: premiumDownload,
