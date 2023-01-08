@@ -9,6 +9,9 @@
 A streaming app with zero ads built in react native with [scrapers](https://github.com/N0-0NE-Dev/no-fasel-scrapers) built in python. No Fasel requires no premissons or accounts and is free to use forever.
 
 ![Github All Releases](https://img.shields.io/github/downloads/N0-0NE-Dev/NoFasel/total.svg?style=for-the-badge)
+<a href="https://t.me/+sTImsCTajwBhMjlk">
+    ![Telegram](https://img.shields.io/badge/-telegram-red?color=white&logo=telegram&logoColor=black&style=for-the-badge)
+</a>
 
 </div>
 
