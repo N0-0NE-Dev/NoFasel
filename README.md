@@ -12,6 +12,7 @@ A streaming app with zero ads built in react native with [scrapers](https://gith
 <a href="https://t.me/+sTImsCTajwBhMjlk">
     ![Telegram](https://img.shields.io/badge/-telegram-red?color=white&logo=telegram&logoColor=black&style=for-the-badge)
 </a>
+![React Native](https://img.shields.io/badge/react_native-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 
 </div>
 
