@@ -333,7 +333,7 @@ const SelectScreen = ({ navigation, route }) => {
 					style={styles.imageStyle}
 					source={{ uri: data["Image Source"] }}
 				/>
-				<Text style={styles.titleStyle}>{data["Title"]}</Text>
+				<Text selectable={true} style={styles.titleStyle}>{data["Title"]}</Text>
 				<SeasonSelector />
 				<EpisodeSelector />
 				<QualitySelector />
