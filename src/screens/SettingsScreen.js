@@ -8,14 +8,12 @@ import {
 	ToastAndroid,
 	Pressable,
 	ActivityIndicator,
-	Linking,
 } from "react-native";
 import { Storage } from "../components/Storage";
 import RNRestart from "react-native-restart";
 import StyledModalSelector from "../components/StyledModalSelector";
 import deviceInfoModule from "react-native-device-info";
 import * as FileSystem from "expo-file-system";
-import { FontAwesome5 } from "@expo/vector-icons";
 
 const darkTheme = Storage.getBoolean("darkTheme");
 
@@ -70,81 +68,70 @@ const SettingsScreen = ({ navigation }) => {
 	if (contentVersion) {
 		return (
 			<View style={styles.parentStyle}>
-				<View>
-					<Pressable
-						style={({ pressed }) => [
-							{
-								backgroundColor: pressed
-									? darkTheme
-										? "#3a3b3c"
-										: "#ddd"
-									: null,
-							},
-							styles.switchParentStyle,
-						]}
-						onPress={handleContentUpdates}
-					>
-						<Text style={styles.textStyle}>Automatic Content Updates</Text>
-						<Switch
-							onValueChange={handleContentUpdates}
-							value={automaticContentUpdates}
-						/>
-					</Pressable>
-
-					<Pressable
-						style={({ pressed }) => [
-							{
-								backgroundColor: pressed
-									? darkTheme
-										? "#3a3b3c"
-										: "#ddd"
-									: null,
-							},
-							styles.switchParentStyle,
-						]}
-						onPress={handleUseProxy}
-					>
-						<View>
-							<Text style={styles.textStyle}>Use Proxy For Akwam</Text>
-							<Text style={styles.indicatorParentStyle}>
-								Bypasses akwam blocking in certain regions.
-							</Text>
-						</View>
-						<Switch onValueChange={handleUseProxy} value={useProxy} />
-					</Pressable>
-
-					<View
-						style={{ flexDirection: "row", justifyContent: "space-between" }}
-					>
-						<Text style={styles.infoStyle}>
-							Content Version: {contentVersion}
-						</Text>
-
-						<Text style={styles.infoStyle}>
-							App Version: {deviceInfoModule.getVersion()}
-						</Text>
-					</View>
-
-					<StyledModalSelector
-						handleChange={(option) => handleTheme(option.key)}
-						data={selectorData}
-						selectedKey={theme}
+				<Pressable
+					style={({ pressed }) => [
+						{
+							backgroundColor: pressed
+								? darkTheme
+									? "#3a3b3c"
+									: "#ddd"
+								: null,
+						},
+						styles.switchParentStyle,
+					]}
+					onPress={handleContentUpdates}
+				>
+					<Text style={styles.textStyle}>Automatic Content Updates</Text>
+					<Switch
+						onValueChange={handleContentUpdates}
+						value={automaticContentUpdates}
 					/>
+				</Pressable>
 
-					<View style={styles.buttonParentStyle}>
-						<Button
-							title="Update Content"
-							onPress={() => navigation.navigate("Loading")}
-						/>
+				<Pressable
+					style={({ pressed }) => [
+						{
+							backgroundColor: pressed
+								? darkTheme
+									? "#3a3b3c"
+									: "#ddd"
+								: null,
+						},
+						styles.switchParentStyle,
+					]}
+					onPress={handleUseProxy}
+				>
+					<View>
+						<Text style={styles.textStyle}>Use Proxy For Akwam</Text>
+						<Text style={styles.indicatorParentStyle}>
+							Bypasses akwam blocking in certain regions.
+						</Text>
 					</View>
+					<Switch onValueChange={handleUseProxy} value={useProxy} />
+				</Pressable>
+
+				<View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+					<Text style={styles.infoStyle}>
+						Content Version: {contentVersion}
+					</Text>
+
+					<Text style={styles.infoStyle}>
+						App Version: {deviceInfoModule.getVersion()}
+					</Text>
 				</View>
-				<FontAwesome5
-					name="telegram-plane"
-					size={35}
-					color={darkTheme ? "white" : "black"}
-					style={styles.iconStyle}
-					onPress={() => Linking.openURL("https://t.me/+sTImsCTajwBhMjlk")}
+
+				<StyledModalSelector
+					handleChange={(option) => handleTheme(option.key)}
+					data={selectorData}
+					selectedKey={theme}
 				/>
+
+				<View style={styles.buttonParentStyle}>
+					<Button
+						title="Update Content"
+						onPress={() => navigation.navigate("Loading")}
+					/>
+				</View>
 			</View>
 		);
 	} else {
@@ -182,7 +169,6 @@ const styles = StyleSheet.create({
 	},
 	parentStyle: {
 		flex: 1,
-		justifyContent: "space-between",
 	},
 	modalSelectorStyle: {
 		borderColor: "black",
@@ -200,10 +186,6 @@ const styles = StyleSheet.create({
 		fontSize: 11,
 		padding: 5,
 		color: "grey",
-	},
-	iconStyle: {
-		margin: 20,
-		alignSelf: "center",
 	},
 });
 
