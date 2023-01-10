@@ -7,14 +7,17 @@ import { isTablet } from "react-native-device-info";
 import * as FileSystem from "expo-file-system";
 import { Storage } from "../components/Storage";
 import StyledModalSelector from "../components/StyledModalSelector";
+import { useIsFocused } from "@react-navigation/native";
 
 const darkTheme = Storage.getBoolean("darkTheme");
 
-const AllContentScreen = ({ navigation }) => {
+const AllContentScreen = ({ navigation, route }) => {
+	console.log(route.params);
 	const [data, setData] = useState();
 	const [modalVisible, setModalVisible] = useState(false);
 	const tablet = isTablet();
 	const offset = tablet ? 20 : 10;
+	const isFocused = useIsFocused();
 
 	const [pageConfigs, setPageConfigs] = useState({
 		startPage: 0,
@@ -24,10 +27,11 @@ const AllContentScreen = ({ navigation }) => {
 
 	const [pageNumberInput, setPageNumberInput] = useState(1);
 
-	const [contentData, setContentData] = useState({
-		label: "Movies",
-		key: "movies",
-	});
+	const [contentData, setContentData] = useState();
+	useEffect(
+		() => setContentData(route.params ? route.params.key : "movies"),
+		[isFocused]
+	);
 
 	const getLastPageNumber = () => {
 		const numberOfEntries = Math.floor(Object.entries(data).length);
@@ -43,9 +47,13 @@ const AllContentScreen = ({ navigation }) => {
 	};
 
 	useEffect(() => {
-		FileSystem.readAsStringAsync(
-			FileSystem.documentDirectory + contentData.key + ".json"
-		).then((data) => setData(JSON.parse(data)));
+		if (contentData) {
+			FileSystem.readAsStringAsync(
+				FileSystem.documentDirectory + contentData + ".json"
+			).then((data) => setData(JSON.parse(data)));
+		} else {
+			// pass
+		}
 	}, [contentData]);
 
 	if (data) {
@@ -133,8 +141,8 @@ const AllContentScreen = ({ navigation }) => {
 				/>
 				<StyledModalSelector
 					data={selectorData}
-					selectedKey={contentData.key}
-					handleChange={(option) => setContentData(option)}
+					selectedKey={contentData}
+					handleChange={(option) => setContentData(option.key)}
 				/>
 				<ContentCardsList
 					horizontal={false}
