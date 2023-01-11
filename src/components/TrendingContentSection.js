@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
 	sectionHeaderStyle: {
 		flexDirection: "row",
 		justifyContent: "space-between",
-		borderBottomColor: "#18191a",
+		borderBottomColor: darkTheme ? "#18191a" : "#eee",
 		borderBottomWidth: 2,
 	},
 	sectionTitleStyle: {

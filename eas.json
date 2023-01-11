@@ -1,24 +1,20 @@
 {
-  "cli": {
-    "version": ">= 3.1.0"
-  },
-  "build": {
-    "development": {
-      "distribution": "internal",
-      "android": {
-        "gradleCommand": ":app:assembleDebug"
-      },
-      "channel": "development"
-    },
-    "production": {
-      "android": {
-        "gradleCommand": "app:assembleRelease"
-      },
-      "developmentClient": false,
-      "channel": "production"
-    }
-  },
-  "submit": {
-    "production": {}
-  }
+	"cli": {
+		"version": ">= 3.1.0"
+	},
+	"build": {
+		"development": {
+			"distribution": "internal",
+			"android": {
+				"gradleCommand": ":app:assembleDebug"
+			}
+		},
+		"production": {
+			"android": {
+				"gradleCommand": "app:assembleRelease"
+			},
+			"developmentClient": false,
+			"channel": "production"
+		}
+	}
 }

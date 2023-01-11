@@ -7,6 +7,7 @@ import {
 	ActivityIndicator,
 	ScrollView,
 	Linking,
+	ToastAndroid,
 } from "react-native";
 import { WebView } from "react-native-webview";
 import * as FileSystem from "expo-file-system";
@@ -17,6 +18,7 @@ import {
 	AntDesign,
 	MaterialCommunityIcons,
 } from "@expo/vector-icons";
+import Clipboard from "@react-native-clipboard/clipboard";
 
 const darkTheme = Storage.getBoolean("darkTheme");
 
@@ -44,6 +46,8 @@ const SelectScreen = ({ navigation, route }) => {
 	const [selectedEpisode, setSelectedEpisode] = useState(null);
 
 	const [premiumDownload, setPremiumDownload] = useState(false);
+
+	const [copied, setCopied] = useState(false);
 
 	useEffect(() => {
 		FileSystem.readAsStringAsync(
@@ -299,6 +303,28 @@ const SelectScreen = ({ navigation, route }) => {
 						style={styles.buttonStyle}
 					/>
 
+					{copied ? (
+						<FontAwesome
+							name="check"
+							size={32}
+							color="green"
+							style={styles.buttonStyle}
+						/>
+					) : (
+						<MaterialCommunityIcons
+							name="content-copy"
+							size={32}
+							style={styles.buttonStyle}
+							onPress={() => {
+								Clipboard.setString(selectedQuality.key);
+								ToastAndroid.show("Copied", ToastAndroid.SHORT);
+								setCopied(true);
+								setTimeout(() => setCopied(false), 3000);
+							}}
+							color={darkTheme ? "white" : "black"}
+						/>
+					)}
+
 					<MaterialCommunityIcons
 						name="vlc"
 						size={32}
@@ -312,7 +338,11 @@ const SelectScreen = ({ navigation, route }) => {
 						size={32}
 						color={darkTheme ? "white" : "black"}
 						onPress={() =>
-							navigation.navigate("Watch", { source: selectedQuality.key })
+							navigation.navigate("Watch", {
+								source: selectedQuality.key,
+								category: category,
+								id: category.includes("movies") ? id : selectedEpisode.id,
+							})
 						}
 						style={styles.buttonStyle}
 					/>
@@ -333,7 +363,9 @@ const SelectScreen = ({ navigation, route }) => {
 					style={styles.imageStyle}
 					source={{ uri: data["Image Source"] }}
 				/>
-				<Text selectable={true} style={styles.titleStyle}>{data["Title"]}</Text>
+				<Text selectable={true} style={styles.titleStyle}>
+					{data["Title"]}
+				</Text>
 				<SeasonSelector />
 				<EpisodeSelector />
 				<QualitySelector />

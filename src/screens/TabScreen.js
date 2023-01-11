@@ -1,26 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { ActivityIndicator, View, StyleSheet } from "react-native";
-import { createDrawerNavigator } from "@react-navigation/drawer";
 import TrendingContentScreen from "./TrendingContentScreen";
 import { Storage } from "../components/Storage";
 import SettingsScreen from "./SettingsScreen";
-import AllContentScreen from "./AllContentScreen";
 import WatchlistScreen from "./WatchlistScreen";
 import * as FileSystem from "expo-file-system";
-import HeaderSearchIcon from "../components/HeaderSearchIcon";
 import WebView from "react-native-webview";
 import { FASEL_EMAIL, FASEL_PASSWORD } from "@env";
-import {
-	TrendingTitleComponent,
-	WatchlistTitleComponent,
-	SettingsTitleComponent,
-	AllContentTitleComponent,
-} from "../components/DrawerTitles";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Octicons, Feather, AntDesign, Entypo } from "@expo/vector-icons";
+import SearchScreen from "./SearchScreen";
 
 const darkTheme = Storage.getBoolean("darkTheme");
-const Drawer = createDrawerNavigator();
+const Tab = createBottomTabNavigator();
 
-const DrawerScreen = ({ navigation }) => {
+const TabScreen = () => {
 	const [contentUpdated, setContentUpdated] = useState(false);
 	const jsCode = `
 					if (document.getElementById('yorke_user_login')) {
@@ -127,57 +121,70 @@ const DrawerScreen = ({ navigation }) => {
 
 	if (contentUpdated && loggedin) {
 		return (
-			<Drawer.Navigator
+			<Tab.Navigator
 				initialRouteName="Trending"
+				sceneContainerStyle={{
+					backgroundColor: darkTheme ? "#18191a" : "#eee",
+				}}
 				screenOptions={{
-					statusBarColor: darkTheme ? "black" : "white",
-					statusBarStyle: darkTheme ? "light" : "dark",
 					headerStyle: { backgroundColor: darkTheme ? "black" : "white" },
 					headerTintColor: darkTheme ? "white" : "black",
-					drawerStyle: { backgroundColor: darkTheme ? "black" : "white" },
-					drawerInactiveTintColor: darkTheme ? "white" : "black",
-					sceneContainerStyle: {
-						backgroundColor: darkTheme ? "#18191a" : "#eee",
-					},
-					navigationBarHidden: true,
+					tabBarStyle: { backgroundColor: darkTheme ? "black" : "white" },
 				}}
 			>
-				<Drawer.Screen
+				<Tab.Screen
 					name="Trending"
 					component={TrendingContentScreen}
 					options={{
-						headerRight: () => <HeaderSearchIcon navigation={navigation} />,
-						title: () => <TrendingTitleComponent />,
-						headerTitle: "Trending",
+						tabBarIcon: ({ focused }) => (
+							<Octicons
+								name="flame"
+								size={25}
+								color={focused ? "orange" : darkTheme ? "white" : "black"}
+							/>
+						),
 					}}
 				/>
-				<Drawer.Screen
-					name="All Content"
-					component={AllContentScreen}
+				<Tab.Screen
+					name="Search"
+					component={SearchScreen}
 					options={{
-						headerRight: () => <HeaderSearchIcon navigation={navigation} />,
-						title: () => <AllContentTitleComponent />,
-						headerTitle: "All Content",
+						tabBarIcon: ({ focused }) => (
+							<Entypo
+								name="magnifying-glass"
+								size={25}
+								color={focused ? "#1a6fc9" : darkTheme ? "white" : "black"}
+							/>
+						),
 					}}
 				/>
-				<Drawer.Screen
+				<Tab.Screen
 					name="Watchlist"
 					component={WatchlistScreen}
 					options={{
-						headerRight: () => <HeaderSearchIcon navigation={navigation} />,
-						title: () => <WatchlistTitleComponent />,
-						headerTitle: "Watchlists",
+						tabBarIcon: ({ focused }) => (
+							<Feather
+								name="list"
+								size={25}
+								color={focused ? "gold" : darkTheme ? "white" : "black"}
+							/>
+						),
 					}}
 				/>
-				<Drawer.Screen
+				<Tab.Screen
 					name="Settings"
 					component={SettingsScreen}
 					options={{
-						title: () => <SettingsTitleComponent />,
-						headerTitle: "Settings",
+						tabBarIcon: ({ focused }) => (
+							<AntDesign
+								name="setting"
+								size={25}
+								color={focused ? "#1a6fc9" : darkTheme ? "white" : "black"}
+							/>
+						),
 					}}
 				/>
-			</Drawer.Navigator>
+			</Tab.Navigator>
 		);
 	} else {
 		return (
@@ -203,4 +210,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default DrawerScreen;
+export default TabScreen;

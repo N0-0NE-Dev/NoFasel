@@ -3,13 +3,13 @@ import "react-native-gesture-handler";
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
-import DrawerScreen from "./src/screens/DrawerScreen";
+import TabScreen from "./src/screens/TabScreen";
 import SelectScreen from "./src/screens/SelectScreen";
 import WatchScreen from "./src/screens/WatchScreen";
 import LoadingScreen from "./src/screens/LoadingScreen";
-import SearchScreen from "./src/screens/SearchScreen";
 import { Storage } from "./src/components/Storage";
 import DownloadScreen from "./src/screens/DownloadScreen";
+import AllContentScreen from "./src/screens/AllContentScreen";
 
 if (!Storage.contains("darkTheme")) {
 	Storage.set("darkTheme", false);
@@ -23,7 +23,7 @@ const Stack = createNativeStackNavigator();
 const MyStack = () => {
 	return (
 		<Stack.Navigator
-			initialRouteName="Drawer"
+			initialRouteName="Tab"
 			screenOptions={{
 				statusBarColor: darkTheme ? "black" : "white",
 				statusBarStyle: darkTheme ? "light" : "dark",
@@ -34,8 +34,8 @@ const MyStack = () => {
 			}}
 		>
 			<Stack.Screen
-				name="Drawer"
-				component={DrawerScreen}
+				name="Tab"
+				component={TabScreen}
 				options={{
 					headerShown: false,
 					orientation: "all",
@@ -44,6 +44,13 @@ const MyStack = () => {
 			<Stack.Screen
 				name="Select"
 				component={SelectScreen}
+				options={{
+					orientation: "all",
+				}}
+			/>
+			<Stack.Screen
+				name="All Content"
+				component={AllContentScreen}
 				options={{
 					orientation: "all",
 				}}
@@ -62,13 +69,6 @@ const MyStack = () => {
 				component={LoadingScreen}
 				options={{
 					headerShown: false,
-					orientation: "all",
-				}}
-			/>
-			<Stack.Screen
-				name="Search"
-				component={SearchScreen}
-				options={{
 					orientation: "all",
 				}}
 			/>
