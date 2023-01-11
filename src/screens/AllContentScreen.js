@@ -12,7 +12,6 @@ import { useIsFocused } from "@react-navigation/native";
 const darkTheme = Storage.getBoolean("darkTheme");
 
 const AllContentScreen = ({ navigation, route }) => {
-	console.log(route.params);
 	const [data, setData] = useState();
 	const [modalVisible, setModalVisible] = useState(false);
 	const tablet = isTablet();
