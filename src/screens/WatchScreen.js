@@ -8,10 +8,21 @@ const WatchScreen = ({ route, navigation }) => {
 	const { source, category, id } = route.params;
 	const [viewPadding, setViewPadding] = useState(20);
 	const appState = useRef(AppState.currentState);
-	const [currentTime, setCurrentTime] = useState(0);
+	const [currentTime, setCurrentTime] = useState(
+		Storage.contains(id + category) ? Storage.getString(id + category) : 0
+	);
+
+	const startTime = Storage.contains(id + category)
+		? Storage.getString(id + category)
+		: 0;
 
 	navigation.addListener("beforeRemove", () => {
-		Storage.set(id + category, currentTime);
+		Storage.delete(id + category);
+		if (currentTime > 60) {
+			Storage.set(id + category, String(currentTime - 1));
+		} else {
+			// pass
+		}
 	});
 
 	useEffect(() => {
@@ -37,14 +48,13 @@ const WatchScreen = ({ route, navigation }) => {
 						</head>
 						<body style="margin: 0;">
 							<video id="player" style="width: 100%; height: 100%; background: #000;" controls>
-								<source src=${source}>
+								<source src=${source + "#t=" + startTime}>
 							</video>
 
 							<script>
 								var player = document.getElementById("player");
 								player.addEventListener("timeupdate", () => {
 									window.ReactNativeWebView.postMessage(player.currentTime);
-									// window.ReactNativeWebView.postMessage(player.duration);
 								});
 							</script>
 						</body>

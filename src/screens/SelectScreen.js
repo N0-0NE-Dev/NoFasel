@@ -45,8 +45,6 @@ const SelectScreen = ({ navigation, route }) => {
 	const [episodes, setEpisodes] = useState(null);
 	const [selectedEpisode, setSelectedEpisode] = useState(null);
 
-	const [premiumDownload, setPremiumDownload] = useState(false);
-
 	const [copied, setCopied] = useState(false);
 
 	useEffect(() => {
@@ -63,12 +61,14 @@ const SelectScreen = ({ navigation, route }) => {
 		) {
 			let HTMLParser = require("fast-html-parser");
 			let root = HTMLParser.parse(faselPageSource);
-			const buttons = root.querySelectorAll(".hd_btn");
+			const buttons = root
+				.querySelector(".downloadLinks.isVip")
+				.querySelectorAll("a");
 
 			if (buttons.length !== 0) {
 				let dataUrls = [];
 				buttons.forEach((button) => {
-					const dataUrl = button.rawAttributes["data-url"];
+					const dataUrl = button.rawAttributes.href;
 					if (dataUrl.includes("master")) {
 						dataUrls.push({ label: "Auto", key: dataUrl });
 					} else if (dataUrl.includes("hd1080b")) {
@@ -81,9 +81,6 @@ const SelectScreen = ({ navigation, route }) => {
 						dataUrls.push({ label: "480p", key: dataUrl });
 					} else if (dataUrl.includes("sd360b")) {
 						dataUrls.push({ label: "360p", key: dataUrl });
-					} else if (dataUrl.includes("1_original")) {
-						dataUrls.splice(1, 0, { label: "Highest Quality", key: dataUrl });
-						setPremiumDownload(true);
 					} else {
 						// pass
 					}
@@ -182,9 +179,9 @@ const SelectScreen = ({ navigation, route }) => {
 		setAvilableQualities(null);
 		setSelectedQuality(null);
 		if (category == "movies" && data) {
-			setTimeout(() => setContentSource(data["Source"]), 250);
+			setTimeout(() => setContentSource(id), 250);
 		} else if (selectedEpisode && category != "arabic-series") {
-			setContentSource(selectedEpisode.key);
+			setContentSource(selectedEpisode.id);
 		} else if (selectedEpisode && category == "arabic-series") {
 			getSources(selectedEpisode.key);
 		} else if (category == "arabic-movies" && data) {
@@ -248,18 +245,11 @@ const SelectScreen = ({ navigation, route }) => {
 					<ActivityIndicator size={50} />
 					<WebView
 						source={{
-							uri: contentSource.replace(
-								"https://embed.scdn.to/",
-								"https://www.faselhd.club/"
-							),
+							uri: `https://www.faselhd.club/?p=${contentSource}`,
 						}}
 						injectedJavaScript={jsCode}
 						onMessage={(event) => {
-							if (event.nativeEvent.data.includes("secure")) {
-								// pass
-							} else {
-								setFaselPageSource(event.nativeEvent.data);
-							}
+							setFaselPageSource(event.nativeEvent.data);
 						}}
 					/>
 				</View>
@@ -271,26 +261,6 @@ const SelectScreen = ({ navigation, route }) => {
 		}
 	};
 
-	const handleDonwload = () => {
-		if (category.includes("arabic")) {
-			navigation.navigate("Download", {
-				id: id,
-				category: category,
-				downloadLink: selectedQuality.key,
-				premiumDownload: null,
-				selectedQuality: null,
-			});
-		} else {
-			navigation.navigate("Download", {
-				id: category == "movies" ? id : selectedEpisode.id,
-				category: category,
-				downloadLink: null,
-				premiumDownload: premiumDownload,
-				selectedQuality: selectedQuality.label,
-			});
-		}
-	};
-
 	const Buttons = () => {
 		if (selectedQuality) {
 			return (
@@ -299,7 +269,7 @@ const SelectScreen = ({ navigation, route }) => {
 						name="download"
 						size={32}
 						color={darkTheme ? "white" : "black"}
-						onPress={handleDonwload}
+						onPress={() => Linking.openURL(selectedQuality.key)}
 						style={styles.buttonStyle}
 					/>
 
