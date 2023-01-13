@@ -52,3 +52,7 @@ You must have node 16, jdk 11 and android studio downloaded and configured accor
    ```
 
 7. You can find the apk file in `./android/build/outputs/apk/release` or `./android/build/outputs/apk/debug` depending on which command you used.
+
+## Note:
+
+Builds genetated in this way will not have OTA functionality, for that you will have to use eas.
