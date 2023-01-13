@@ -51,7 +51,7 @@ const WatchScreen = ({ route, navigation }) => {
 							<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0">
 						</head>
 						<body style="margin: 0;">
-							<video id="player" style="width: 100%; height: 100%; background: #000;" controls>
+							<video id="player" style="width: 100%; height: 100%; background: #000;" controls autoplay>
 								<source src=${source + "#t=" + startTime}>
 							</video>
 
@@ -71,6 +71,7 @@ const WatchScreen = ({ route, navigation }) => {
 			<WebView
 				source={{ html: html }}
 				onMessage={(event) => setCurrentTime(event.nativeEvent.data)}
+				mediaPlaybackRequiresUserAction={false}
 			/>
 		</View>
 	);
