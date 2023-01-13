@@ -17,6 +17,7 @@ A streaming app with zero ads built in react native with [scrapers](https://gith
 ## 📖 Features:
 
 ✅ Uses Fasel's Premium Servers ⭐  
+✅ Pick Up Where You Left Off ⏩  
 ✅ Full Speed Download ⏬  
 ✅ Watchlist System 📃  
 ✅ Latest Movies, Series & Anime 🎬  
@@ -41,4 +42,8 @@ A streaming app with zero ads built in react native with [scrapers](https://gith
 
 ## ⬇️ Download:
 
-Go to [releases](https://github.com/N0-0NE-Dev/NoFasel/releases) page and download the latest release.
+Go to [releases](https://github.com/N0-0NE-Dev/NoFasel/releases) page and download the latest release or you can download it from [IzzyOnDroid]("https://apt.izzysoft.de/fdroid/index/apk/com.n00nedev.nofasel") for automatic updates.
+
+<a href="https://apt.izzysoft.de/fdroid/index/apk/com.n00nedev.nofasel">
+   <img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" width="50%">
+</a>
