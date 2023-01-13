@@ -59,6 +59,12 @@ const TabScreen = () => {
 		// pass
 	}
 
+	if (!Storage.contains("resume")) {
+		Storage.set("resume", JSON.stringify({}));
+	} else {
+		// pass
+	}
+
 	const [loggedin, setLoggedin] = useState(Storage.getBoolean("loggedin"));
 	const contentAutoupdate = Storage.getBoolean("contentAutoupdate");
 

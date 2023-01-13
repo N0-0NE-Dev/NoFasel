@@ -8,18 +8,22 @@ const WatchScreen = ({ route, navigation }) => {
 	const { source, category, id } = route.params;
 	const [viewPadding, setViewPadding] = useState(20);
 	const appState = useRef(AppState.currentState);
-	const [currentTime, setCurrentTime] = useState(
-		Storage.contains(id + category) ? Storage.getString(id + category) : 0
-	);
+	const resume = JSON.parse(Storage.getString("resume"));
+	const [currentTime, setCurrentTime] = useState(0);
 
-	const startTime = Storage.contains(id + category)
-		? Storage.getString(id + category)
+	const startTime = resume.hasOwnProperty(id + category)
+		? resume[id + category]
 		: 0;
 
 	navigation.addListener("beforeRemove", () => {
-		Storage.delete(id + category);
 		if (currentTime > 60) {
-			Storage.set(id + category, String(currentTime - 1));
+			Object.assign(resume, { [id + category]: currentTime });
+			if (Object.keys(resume).length === 50) {
+				delete resume[Object.keys(resume)[0]];
+			} else {
+				// pass
+			}
+			Storage.set("resume", JSON.stringify(resume));
 		} else {
 			// pass
 		}
