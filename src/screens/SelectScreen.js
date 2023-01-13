@@ -249,7 +249,15 @@ const SelectScreen = ({ navigation, route }) => {
 						}}
 						injectedJavaScript={jsCode}
 						onMessage={(event) => {
-							setFaselPageSource(event.nativeEvent.data);
+							if (
+								event.nativeEvent.data.includes(
+									"Checking if the site connection is secure"
+								)
+							) {
+								// pass
+							} else {
+								setFaselPageSource(event.nativeEvent.data);
+							}
 						}}
 					/>
 				</View>
