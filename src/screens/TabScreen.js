@@ -8,13 +8,13 @@ import * as FileSystem from "expo-file-system";
 import WebView from "react-native-webview";
 import { FASEL_EMAIL, FASEL_PASSWORD } from "@env";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Octicons, Feather, AntDesign, Entypo } from "@expo/vector-icons";
-import SearchScreen from "./SearchScreen";
+import { Octicons, AntDesign } from "@expo/vector-icons";
+import HeaderSearchIcon from "../components/HeaderSearchIcon";
 
 const darkTheme = Storage.getBoolean("darkTheme");
 const Tab = createBottomTabNavigator();
 
-const TabScreen = () => {
+const TabScreen = ({ navigation }) => {
 	const [contentUpdated, setContentUpdated] = useState(false);
 	const jsCode = `
 					if (document.getElementById('yorke_user_login')) {
@@ -145,23 +145,12 @@ const TabScreen = () => {
 						tabBarIcon: ({ focused }) => (
 							<Octicons
 								name="flame"
-								size={25}
+								size={22}
 								color={focused ? "orange" : darkTheme ? "white" : "black"}
 							/>
 						),
-					}}
-				/>
-				<Tab.Screen
-					name="Search"
-					component={SearchScreen}
-					options={{
-						tabBarIcon: ({ focused }) => (
-							<Entypo
-								name="magnifying-glass"
-								size={25}
-								color={focused ? "#1a6fc9" : darkTheme ? "white" : "black"}
-							/>
-						),
+						headerRight: () => <HeaderSearchIcon navigation={navigation} />,
+						tabBarActiveTintColor: "orange",
 					}}
 				/>
 				<Tab.Screen
@@ -169,12 +158,14 @@ const TabScreen = () => {
 					component={WatchlistScreen}
 					options={{
 						tabBarIcon: ({ focused }) => (
-							<Feather
-								name="list"
-								size={25}
+							<AntDesign
+								name="star"
+								size={22}
 								color={focused ? "gold" : darkTheme ? "white" : "black"}
 							/>
 						),
+						headerRight: () => <HeaderSearchIcon navigation={navigation} />,
+						tabBarActiveTintColor: "gold",
 					}}
 				/>
 				<Tab.Screen
@@ -184,7 +175,7 @@ const TabScreen = () => {
 						tabBarIcon: ({ focused }) => (
 							<AntDesign
 								name="setting"
-								size={25}
+								size={22}
 								color={focused ? "#1a6fc9" : darkTheme ? "white" : "black"}
 							/>
 						),

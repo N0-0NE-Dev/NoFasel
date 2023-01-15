@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		alignSelf: "center",
 		margin: 10,
+		marginLeft: 5,
 	},
 	sectionParentStyle: {
 		backgroundColor: darkTheme ? "black" : "white",
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
 	sectionTitleStyle: {
 		fontSize: 20,
 		fontWeight: "bold",
-		marginLeft: 10,
+		marginLeft: 15,
 		marginVertical: 5,
 		color: darkTheme ? "white" : "black",
 	},

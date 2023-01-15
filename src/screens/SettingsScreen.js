@@ -11,7 +11,6 @@ import {
 } from "react-native";
 import { Storage } from "../components/Storage";
 import RNRestart from "react-native-restart";
-import StyledModalSelector from "../components/StyledModalSelector";
 import deviceInfoModule from "react-native-device-info";
 import * as FileSystem from "expo-file-system";
 
@@ -23,13 +22,7 @@ const SettingsScreen = ({ navigation }) => {
 	);
 
 	const [useProxy, setUseProxy] = useState(Storage.getBoolean("useProxy"));
-	const [theme, setTheme] = useState(darkTheme ? "dark" : "light");
 	const [contentVersion, setContentVersion] = useState(null);
-
-	const selectorData = [
-		{ label: "Dark Theme", key: "dark" },
-		{ label: "Light Theme", key: "light" },
-	];
 
 	const handleContentUpdates = () => {
 		Storage.set("contentAutoupdate", !automaticContentUpdates);
@@ -41,20 +34,10 @@ const SettingsScreen = ({ navigation }) => {
 		setUseProxy(!useProxy);
 	};
 
-	const handleTheme = (selectedTheme) => {
-		if (selectedTheme == theme) {
-			ToastAndroid.show("Already applied!", ToastAndroid.SHORT);
-		} else {
-			if (selectedTheme == "dark") {
-				Storage.set("darkTheme", true);
-				setTheme("dark");
-			} else {
-				Storage.set("darkTheme", false);
-				setTheme("light");
-			}
-			ToastAndroid.show("Refreshing...", ToastAndroid.SHORT);
-			RNRestart.Restart();
-		}
+	const handleTheme = () => {
+		ToastAndroid.show("Applying theme...", ToastAndroid.SHORT);
+		Storage.set("darkTheme", !darkTheme);
+		RNRestart.Restart();
 	};
 
 	useEffect(() => {
@@ -103,11 +86,28 @@ const SettingsScreen = ({ navigation }) => {
 				>
 					<View>
 						<Text style={styles.textStyle}>Use Proxy For Akwam</Text>
-						<Text style={styles.indicatorParentStyle}>
+						<Text style={styles.infoParentStyle}>
 							Bypasses akwam blocking in certain regions.
 						</Text>
 					</View>
 					<Switch onValueChange={handleUseProxy} value={useProxy} />
+				</Pressable>
+
+				<Pressable
+					style={({ pressed }) => [
+						{
+							backgroundColor: pressed
+								? darkTheme
+									? "#3a3b3c"
+									: "#ddd"
+								: null,
+						},
+						styles.switchParentStyle,
+					]}
+					onPress={handleTheme}
+				>
+					<Text style={styles.textStyle}>Dark Theme</Text>
+					<Switch onValueChange={handleTheme} value={darkTheme} />
 				</Pressable>
 
 				<View style={{ flexDirection: "row", justifyContent: "space-between" }}>
@@ -119,12 +119,6 @@ const SettingsScreen = ({ navigation }) => {
 						App Version: {deviceInfoModule.getVersion()}
 					</Text>
 				</View>
-
-				<StyledModalSelector
-					handleChange={(option) => handleTheme(option.key)}
-					data={selectorData}
-					selectedKey={theme}
-				/>
 
 				<View style={styles.buttonParentStyle}>
 					<Button
@@ -169,14 +163,6 @@ const styles = StyleSheet.create({
 	},
 	parentStyle: {
 		flex: 1,
-	},
-	modalSelectorStyle: {
-		borderColor: "black",
-		borderWidth: 1,
-		width: 300,
-		alignSelf: "center",
-		margin: 10,
-		borderRadius: 5,
 	},
 	infoStyle: {
 		color: "grey",

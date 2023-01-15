@@ -46,7 +46,7 @@ const ContentCardsList = ({ navigation, data, horizontal, formatted }) => {
 
 		return (
 			<Pressable
-				style={{ position: "absolute", zIndex: 1, padding: 5 }}
+				style={{ position: "absolute", zIndex: 1, padding: 8 }}
 				onPress={handlePress}
 			>
 				{storedData.hasOwnProperty(id) ? (

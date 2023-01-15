@@ -28,11 +28,14 @@ const styles = StyleSheet.create({
 	imageStyle: {
 		width: 180,
 		height: 270,
+		borderRadius: 15,
+		marginTop: 3,
 	},
 	textStyle: {
 		textAlign: "center",
 		fontSize: 16,
 		color: darkTheme ? "white" : "black",
+		marginBottom: 3,
 	},
 });
 
