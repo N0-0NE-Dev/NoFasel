@@ -46,7 +46,7 @@ const ContentCardsList = ({ navigation, data, horizontal, formatted }) => {
 
 		return (
 			<Pressable
-				style={{ position: "absolute", zIndex: 1, padding: 8 }}
+				style={{ position: "absolute", zIndex: 1, padding: 2.5 }}
 				onPress={handlePress}
 			>
 				{storedData.hasOwnProperty(id) ? (
@@ -63,9 +63,9 @@ const ContentCardsList = ({ navigation, data, horizontal, formatted }) => {
 	if (horizontal) {
 		numColumns = 1;
 	} else if (!horizontal && isTablet()) {
-		numColumns = 3;
+		numColumns = 4;
 	} else {
-		numColumns = 2;
+		numColumns = 3;
 	}
 
 	return (

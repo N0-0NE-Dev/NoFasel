@@ -22,12 +22,12 @@ const ContentCard = ({ navigation, imageSource, title, id, category }) => {
 
 const styles = StyleSheet.create({
 	patentStyle: {
-		width: 180,
+		width: 120,
 		margin: 5,
 	},
 	imageStyle: {
-		width: 180,
-		height: 270,
+		width: 120,
+		height: 180,
 		borderRadius: 15,
 		marginTop: 3,
 	},

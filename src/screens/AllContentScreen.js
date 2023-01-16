@@ -15,7 +15,7 @@ const AllContentScreen = ({ navigation, route }) => {
 	const [data, setData] = useState();
 	const [modalVisible, setModalVisible] = useState(false);
 	const tablet = isTablet();
-	const offset = tablet ? 20 : 10;
+	const offset = tablet ? 42 : 21;
 	const isFocused = useIsFocused();
 
 	const [pageConfigs, setPageConfigs] = useState({
