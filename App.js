@@ -37,21 +37,21 @@ const MyStack = () => {
 				component={TabScreen}
 				options={{
 					headerShown: false,
-					orientation: "all",
+					orientation: "default",
 				}}
 			/>
 			<Stack.Screen
 				name="Select"
 				component={SelectScreen}
 				options={{
-					orientation: "all",
+					orientation: "default",
 				}}
 			/>
 			<Stack.Screen
 				name="All Content"
 				component={AllContentScreen}
 				options={{
-					orientation: "all",
+					orientation: "default",
 				}}
 			/>
 			<Stack.Screen
@@ -68,14 +68,14 @@ const MyStack = () => {
 				component={LoadingScreen}
 				options={{
 					headerShown: false,
-					orientation: "all",
+					orientation: "default",
 				}}
 			/>
 			<Stack.Screen
 				name="Search"
 				component={SearchScreen}
 				options={{
-					orientation: "all",
+					orientation: "default",
 				}}
 			/>
 		</Stack.Navigator>
