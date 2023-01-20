@@ -20,12 +20,7 @@ const TrendingContentSection = ({ data, title, category, navigation }) => {
 							navigation.navigate("All Content", { key: category })
 						}
 					>
-						<Text style={styles.moreTextStyle}>More</Text>
-						<MaterialCommunityIcons
-							name="chevron-double-right"
-							size={24}
-							color={darkTheme ? "#add8e6" : "blue"}
-						/>
+						<Text style={styles.moreTextStyle}>See all</Text>
 					</Pressable>
 				</View>
 
@@ -57,8 +52,7 @@ const styles = StyleSheet.create({
 	sectionHeaderStyle: {
 		flexDirection: "row",
 		justifyContent: "space-between",
-		borderBottomColor: darkTheme ? "#18191a" : "#eee",
-		borderBottomWidth: 2,
+
 	},
 	sectionTitleStyle: {
 		fontSize: 20,
@@ -69,7 +63,7 @@ const styles = StyleSheet.create({
 	},
 	moreTextStyle: {
 		fontSize: 15,
-		color: darkTheme ? "#add8e6" : "blue",
+		color: darkTheme ? "#add8e6" : "red",
 	},
 });
 

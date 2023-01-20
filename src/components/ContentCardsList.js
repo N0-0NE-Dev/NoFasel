@@ -84,21 +84,13 @@ const ContentCardsList = ({ navigation, data, horizontal, formatted }) => {
 				const title = formatted ? item["Title"] : item[1]["Title"];
 
 				return (
-					<View>
-						<AddToWatchlistButton
-							id={id}
-							category={category}
-							imageSource={imageSource}
-							title={title}
-						/>
-						<ContentCard
-							imageSource={imageSource}
-							title={title}
-							id={id}
-							navigation={navigation}
-							category={category}
-						/>
-					</View>
+					<ContentCard
+						imageSource={imageSource}
+						title={title}
+						id={id}
+						navigation={navigation}
+						category={category}
+					/>
 				);
 			}}
 			keyExtractor={(item) => {
