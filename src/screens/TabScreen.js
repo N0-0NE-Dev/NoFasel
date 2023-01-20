@@ -8,7 +8,7 @@ import * as FileSystem from "expo-file-system";
 import WebView from "react-native-webview";
 import { FASEL_EMAIL, FASEL_PASSWORD } from "@env";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Octicons, AntDesign } from "@expo/vector-icons";
+import { Octicons, AntDesign, Ionicons } from "@expo/vector-icons";
 import HeaderSearchIcon from "../components/HeaderSearchIcon";
 
 const darkTheme = Storage.getBoolean("darkTheme");
@@ -37,6 +37,7 @@ const TabScreen = ({ navigation }) => {
 		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/arabic-series.json",
 		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/arabic-movies.json",
 		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/last-scraped.txt",
+		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/featured-content.json",
 	];
 
 	let progress = 0;
@@ -130,7 +131,7 @@ const TabScreen = ({ navigation }) => {
 			<Tab.Navigator
 				initialRouteName="Trending"
 				sceneContainerStyle={{
-					backgroundColor: darkTheme ? "#18191a" : "#eee",
+					backgroundColor: darkTheme ? "#18191a" : "white",
 				}}
 				screenOptions={{
 					headerStyle: { backgroundColor: darkTheme ? "black" : "white" },
@@ -142,15 +143,15 @@ const TabScreen = ({ navigation }) => {
 					name="Trending"
 					component={TrendingContentScreen}
 					options={{
-						tabBarIcon: ({ focused }) => (
-							<Octicons
-								name="flame"
-								size={22}
-								color={focused ? "orange" : darkTheme ? "white" : "black"}
-							/>
-						),
+						tabBarIcon: ({ focused }) =>
+							focused ? (
+								<Ionicons name="home" size={22} color="red" />
+							) : (
+								<Ionicons name="home-outline" size={22} color="grey" />
+							),
 						headerRight: () => <HeaderSearchIcon navigation={navigation} />,
-						tabBarActiveTintColor: "orange",
+						tabBarActiveTintColor: "red",
+						headerShown: false,
 					}}
 				/>
 				<Tab.Screen

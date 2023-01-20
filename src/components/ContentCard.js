@@ -13,21 +13,18 @@ const ContentCard = ({ navigation, imageSource, title, id, category }) => {
 			}
 		>
 			<Image style={styles.imageStyle} source={{ uri: imageSource }} />
-			<Text numberOfLines={1} style={styles.textStyle}>
-				{title}
-			</Text>
 		</Pressable>
 	);
 };
 
 const styles = StyleSheet.create({
 	patentStyle: {
-		width: 120,
+		width: 400 * 0.35,
 		margin: 5,
 	},
 	imageStyle: {
-		width: 120,
-		height: 180,
+		width: 400 * 0.35,
+		height: 600 * 0.35,
 		borderRadius: 15,
 		marginTop: 3,
 	},
