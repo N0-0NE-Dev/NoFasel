@@ -15,7 +15,7 @@ const AllContentScreen = ({ navigation, route }) => {
 	const [data, setData] = useState();
 	const [modalVisible, setModalVisible] = useState(false);
 	const tablet = isTablet();
-	const offset = tablet ? 42 : 21;
+	const offset = tablet ? 42 : 20;
 	const isFocused = useIsFocused();
 
 	const [pageConfigs, setPageConfigs] = useState({
@@ -151,6 +151,8 @@ const AllContentScreen = ({ navigation, route }) => {
 						pageConfigs.startPage,
 						pageConfigs.endPage
 					)}
+					width={180}
+					height={270}
 				/>
 				<Footer
 					handleNext={handleNext}

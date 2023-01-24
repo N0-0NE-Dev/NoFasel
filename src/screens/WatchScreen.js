@@ -10,6 +10,7 @@ const WatchScreen = ({ route, navigation }) => {
 	const appState = useRef(AppState.currentState);
 	const resume = JSON.parse(Storage.getString("resume"));
 	const [currentTime, setCurrentTime] = useState(0);
+	const [duration, setDuration] = useState(0);
 
 	const startTime = resume.hasOwnProperty(id + category)
 		? resume[id + category]
@@ -17,8 +18,11 @@ const WatchScreen = ({ route, navigation }) => {
 
 	navigation.addListener("beforeRemove", () => {
 		if (currentTime > 60) {
-			Object.assign(resume, { [id + category]: currentTime });
-			if (Object.keys(resume).length === 50) {
+			Object.assign(resume, {
+				[id + category]: currentTime,
+				duration: duration,
+			});
+			if (Object.keys(resume).length === 101) {
 				delete resume[Object.keys(resume)[0]];
 			} else {
 				// pass
@@ -57,6 +61,11 @@ const WatchScreen = ({ route, navigation }) => {
 
 							<script>
 								var player = document.getElementById("player");
+
+								player.addEventListener("loadeddata", () => {
+									window.ReactNativeWebView.postMessage("duration: " + String(player.duration));
+								}, false)
+								
 								player.addEventListener("timeupdate", () => {
 									window.ReactNativeWebView.postMessage(player.currentTime);
 								});
@@ -70,7 +79,13 @@ const WatchScreen = ({ route, navigation }) => {
 		>
 			<WebView
 				source={{ html: html }}
-				onMessage={(event) => setCurrentTime(event.nativeEvent.data)}
+				onMessage={(event) => {
+					if (event.nativeEvent.data.includes("duration")) {
+						setDuration(event.nativeEvent.data.split(" ")[1]);
+					} else {
+						setCurrentTime(event.nativeEvent.data);
+					}
+				}}
 				mediaPlaybackRequiresUserAction={false}
 			/>
 		</View>

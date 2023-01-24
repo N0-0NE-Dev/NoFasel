@@ -8,8 +8,9 @@ import * as FileSystem from "expo-file-system";
 import WebView from "react-native-webview";
 import { FASEL_EMAIL, FASEL_PASSWORD } from "@env";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Octicons, AntDesign, Ionicons } from "@expo/vector-icons";
+import { AntDesign, Ionicons } from "@expo/vector-icons";
 import HeaderSearchIcon from "../components/HeaderSearchIcon";
+import SearchScreen from "./SearchScreen";
 
 const darkTheme = Storage.getBoolean("darkTheme");
 const Tab = createBottomTabNavigator();
@@ -137,6 +138,7 @@ const TabScreen = ({ navigation }) => {
 					headerStyle: { backgroundColor: darkTheme ? "black" : "white" },
 					headerTintColor: darkTheme ? "white" : "black",
 					tabBarStyle: { backgroundColor: darkTheme ? "black" : "white" },
+					tabBarHideOnKeyboard: true,
 				}}
 			>
 				<Tab.Screen
@@ -150,6 +152,20 @@ const TabScreen = ({ navigation }) => {
 								<Ionicons name="home-outline" size={22} color="grey" />
 							),
 						headerRight: () => <HeaderSearchIcon navigation={navigation} />,
+						tabBarActiveTintColor: "red",
+						headerShown: false,
+					}}
+				/>
+				<Tab.Screen
+					name="Search"
+					component={SearchScreen}
+					options={{
+						tabBarIcon: ({ focused }) =>
+							focused ? (
+								<Ionicons name="compass" size={24} color="red" />
+							) : (
+								<Ionicons name="compass-outline" size={24} color="grey" />
+							),
 						tabBarActiveTintColor: "red",
 						headerShown: false,
 					}}

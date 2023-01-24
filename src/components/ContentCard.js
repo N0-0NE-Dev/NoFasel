@@ -1,10 +1,36 @@
 import React from "react";
-import { Pressable, Image, Text, StyleSheet } from "react-native";
+import { Pressable, Image, StyleSheet } from "react-native";
 import { Storage } from "./Storage";
 
 const darkTheme = Storage.getBoolean("darkTheme");
 
-const ContentCard = ({ navigation, imageSource, title, id, category }) => {
+const ContentCard = ({
+	navigation,
+	imageSource,
+	id,
+	category,
+	width,
+	height,
+}) => {
+	const styles = StyleSheet.create({
+		patentStyle: {
+			width: width,
+			margin: 5,
+		},
+		imageStyle: {
+			width: width,
+			height: height,
+			borderRadius: 15,
+			marginTop: 3,
+		},
+		textStyle: {
+			textAlign: "center",
+			fontSize: 16,
+			color: darkTheme ? "white" : "black",
+			marginBottom: 3,
+		},
+	});
+
 	return (
 		<Pressable
 			style={styles.patentStyle}
@@ -16,24 +42,5 @@ const ContentCard = ({ navigation, imageSource, title, id, category }) => {
 		</Pressable>
 	);
 };
-
-const styles = StyleSheet.create({
-	patentStyle: {
-		width: 400 * 0.35,
-		margin: 5,
-	},
-	imageStyle: {
-		width: 400 * 0.35,
-		height: 600 * 0.35,
-		borderRadius: 15,
-		marginTop: 3,
-	},
-	textStyle: {
-		textAlign: "center",
-		fontSize: 16,
-		color: darkTheme ? "white" : "black",
-		marginBottom: 3,
-	},
-});
 
 export default ContentCard;

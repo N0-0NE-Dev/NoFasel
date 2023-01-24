@@ -29,6 +29,8 @@ const TrendingContentSection = ({ data, title, category, navigation }) => {
 					navigation={navigation}
 					horizontal={true}
 					formatted={false}
+					width={140}
+					height={210}
 				/>
 			</View>
 		);
@@ -52,7 +54,6 @@ const styles = StyleSheet.create({
 	sectionHeaderStyle: {
 		flexDirection: "row",
 		justifyContent: "space-between",
-
 	},
 	sectionTitleStyle: {
 		fontSize: 20,

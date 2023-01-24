@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet, ActivityIndicator, View } from "react-native";
 import * as FileSystem from "expo-file-system";
 import TrendingContentSection from "../components/TrendingContentSection";
 import FeaturedContentCard from "../components/FeaturedContentCard";
+import FeaturedContentCardList from "../components/FeaturedContentCardList";
 
 const TrendingContentScreen = ({ navigation }) => {
 	const [data, setData] = useState(null);
@@ -16,10 +17,7 @@ const TrendingContentScreen = ({ navigation }) => {
 	if (data) {
 		return (
 			<ScrollView>
-				<FeaturedContentCard
-					imageSource={data.movies["117986"]["Image Source"]}
-					title={data.movies["117986"]["Title"]}
-				/>
+				<FeaturedContentCardList />
 				<TrendingContentSection
 					data={data.movies}
 					title="Movies"

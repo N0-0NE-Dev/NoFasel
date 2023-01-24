@@ -8,7 +8,6 @@ import WatchScreen from "./src/screens/WatchScreen";
 import LoadingScreen from "./src/screens/LoadingScreen";
 import { Storage } from "./src/components/Storage";
 import AllContentScreen from "./src/screens/AllContentScreen";
-import SearchScreen from "./src/screens/SearchScreen";
 
 if (!Storage.contains("darkTheme")) {
 	Storage.set("darkTheme", false);
@@ -68,13 +67,6 @@ const MyStack = () => {
 				component={LoadingScreen}
 				options={{
 					headerShown: false,
-					orientation: "default",
-				}}
-			/>
-			<Stack.Screen
-				name="Search"
-				component={SearchScreen}
-				options={{
 					orientation: "default",
 				}}
 			/>

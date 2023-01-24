@@ -14,7 +14,7 @@ if (!Storage.contains("watchlist")) {
 
 const storedData = JSON.parse(Storage.getString("watchlist"));
 
-const ContentCardsList = ({ navigation, data, horizontal, formatted }) => {
+const ContentCardsList = ({ navigation, data, horizontal, formatted, width, height }) => {
 	const [refresh, setRefresh] = useState(false);
 	const isFocused = useIsFocused();
 
@@ -65,7 +65,7 @@ const ContentCardsList = ({ navigation, data, horizontal, formatted }) => {
 	} else if (!horizontal && isTablet()) {
 		numColumns = 4;
 	} else {
-		numColumns = 3;
+		numColumns = 2;
 	}
 
 	return (
@@ -75,6 +75,7 @@ const ContentCardsList = ({ navigation, data, horizontal, formatted }) => {
 			contentContainerStyle={{ alignItems: "center" }}
 			horizontal={horizontal}
 			numColumns={numColumns}
+			nestedScrollEnabled={true}
 			renderItem={({ item }) => {
 				const id = formatted ? item["key"] : item[0];
 				const category = formatted ? item["Category"] : item[1]["Category"];
@@ -90,6 +91,8 @@ const ContentCardsList = ({ navigation, data, horizontal, formatted }) => {
 						id={id}
 						navigation={navigation}
 						category={category}
+						width={width}
+						height={height}
 					/>
 				);
 			}}
