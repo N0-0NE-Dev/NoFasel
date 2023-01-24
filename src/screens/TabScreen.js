@@ -17,6 +17,8 @@ const Tab = createBottomTabNavigator();
 
 const TabScreen = ({ navigation }) => {
 	const [contentUpdated, setContentUpdated] = useState(false);
+	const [loggedin, setLoggedin] = useState(false);
+
 	const jsCode = `
 					if (document.getElementById('yorke_user_login')) {
 						document.getElementById('yorke_user_login').value='${FASEL_EMAIL}';
@@ -55,19 +57,12 @@ const TabScreen = ({ navigation }) => {
 		// pass
 	}
 
-	if (!Storage.contains("loggedin")) {
-		Storage.set("loggedin", false);
-	} else {
-		// pass
-	}
-
 	if (!Storage.contains("resume")) {
 		Storage.set("resume", JSON.stringify({}));
 	} else {
 		// pass
 	}
 
-	const [loggedin, setLoggedin] = useState(Storage.getBoolean("loggedin"));
 	const contentAutoupdate = Storage.getBoolean("contentAutoupdate");
 
 	const updateContent = () => {
@@ -121,7 +116,6 @@ const TabScreen = ({ navigation }) => {
 	const handleNavigationChange = (webViewState) => {
 		if (webViewState.url.includes("home3")) {
 			setLoggedin(true);
-			Storage.set("loggedin", true);
 		} else {
 			// pass
 		}
