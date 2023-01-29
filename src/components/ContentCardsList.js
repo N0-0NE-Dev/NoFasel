@@ -14,7 +14,14 @@ if (!Storage.contains("watchlist")) {
 
 const storedData = JSON.parse(Storage.getString("watchlist"));
 
-const ContentCardsList = ({ navigation, data, horizontal, formatted, width, height }) => {
+const ContentCardsList = ({
+	navigation,
+	data,
+	horizontal,
+	formatted,
+	width,
+	height,
+}) => {
 	const [refresh, setRefresh] = useState(false);
 	const isFocused = useIsFocused();
 
@@ -79,10 +86,11 @@ const ContentCardsList = ({ navigation, data, horizontal, formatted, width, heig
 			renderItem={({ item }) => {
 				const id = formatted ? item["key"] : item[0];
 				const category = formatted ? item["Category"] : item[1]["Category"];
+				const title = formatted ? item["Title"] : item[1]["Title"];
+				const rating = formatted ? item["Rating"] : item[1]["Rating"];
 				const imageSource = formatted
 					? item["Image Source"]
 					: item[1]["Image Source"];
-				const title = formatted ? item["Title"] : item[1]["Title"];
 
 				return (
 					<ContentCard
@@ -93,6 +101,7 @@ const ContentCardsList = ({ navigation, data, horizontal, formatted, width, heig
 						category={category}
 						width={width}
 						height={height}
+						rating={rating}
 					/>
 				);
 			}}

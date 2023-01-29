@@ -5,12 +5,14 @@ import {
 	ActivityIndicator,
 	Text,
 	Dimensions,
+	ScrollView,
 } from "react-native";
 import { TextInput } from "react-native-paper";
 import { FontAwesome } from "@expo/vector-icons";
 import * as FileSystem from "expo-file-system";
 import ContentCardsList from "../components/ContentCardsList";
 import RBSheet from "react-native-raw-bottom-sheet";
+import ToggleButton from "../components/ToggleButton";
 
 const SearchScreen = ({ navigation }) => {
 	let jsonQuery = require("json-query");
@@ -18,6 +20,68 @@ const SearchScreen = ({ navigation }) => {
 	const [allData, setAllData] = useState(null);
 	const [featuredContent, setFeaturedContent] = useState(null);
 	const bottomSheetRef = useRef(null);
+	const [appliedFilters, setAppliedFilters] = useState([]);
+	const [selectedGenres, setSelectedGenres] = useState([]);
+	const [data, setData] = useState([]);
+	const [filteredData, setFilteredData] = useState([]);
+
+	const categories = [
+		{ label: "Movies", key: "movies" },
+		{ label: "Series", key: "series" },
+		{ label: "Anime", key: "anime" },
+		{ label: "Asian Series", key: "asian-series" },
+		{ label: "TV Shows", key: "tvshows" },
+		{ label: "Arabic Series", key: "arabic-series" },
+		{ label: "Arabic Movies", key: "arabic-movies" },
+	];
+
+	const genres = [
+		"Netflix",
+		"Ramadan",
+		"Fantasy",
+		"Music",
+		"Reality-tv",
+		"News",
+		"Youth",
+		"Psychological",
+		"Family",
+		"N-a",
+		"History",
+		"Crime",
+		"Sport",
+		"Life",
+		"Mystery",
+		"Drama",
+		"Biography",
+		"Science Fiction",
+		"Zombies",
+		"Animation",
+		"Adventure",
+		"Film-noir",
+		"Animated",
+		"Romance",
+		"School",
+		"Friendship",
+		"Comdey",
+		"Sports",
+		"Kids",
+		"Western",
+		"Musical",
+		"Talk-show",
+		"Melodrama",
+		"Dubbed",
+		"Game-show",
+		"Office",
+		"War",
+		"Comedy",
+		"Thriller",
+		"Horror",
+		"Documentary",
+		"Sci-fi",
+		"Short",
+		"Action",
+		"Supernatural",
+	];
 
 	useEffect(() => {
 		FileSystem.readAsStringAsync(
@@ -30,16 +94,33 @@ const SearchScreen = ({ navigation }) => {
 		);
 	}, []);
 
-	let data = jsonQuery(`content[*Title~/^.*${searchText}.*$/i]`, {
-		data: allData,
-		allowRegexp: true,
-	}).value;
+	useEffect(() => {
+		setData(
+			jsonQuery(`content[*Title~/^.*${searchText}.*$/i]`, {
+				data: allData,
+				allowRegexp: true,
+			}).value
+		);
+	}, [searchText, appliedFilters, selectedGenres]);
 
-	if (searchText === "") {
-		data = [];
-	} else {
-		// pass
-	}
+	useEffect(() => {
+		console.log(data);
+		if (appliedFilters.length > 0 || selectedGenres.length > 0) {
+			const test = data.filter((item) =>
+				appliedFilters.includes(item["Category"])
+			);
+			setFilteredData(test);
+		} else {
+			setFilteredData([]);
+		}
+	}, [appliedFilters, selectedGenres, data]);
+
+	// useEffect(() => {
+	// 	if (appliedFilters.length > 0 || selectedGenres.length > 0) {
+	// 		const temp = data
+	// 		setData(temp.filter(isIn));
+	// 	}
+	// }, [appliedFilters, selectedGenres, allData, searchText]);
 
 	if (allData && featuredContent) {
 		return (
@@ -63,19 +144,34 @@ const SearchScreen = ({ navigation }) => {
 						onPress={() => bottomSheetRef.current.open()}
 					/>
 				</View>
+
 				<ContentCardsList
-					data={searchText === "" ? Object.entries(featuredContent) : data}
+					data={
+						(searchText === "") &
+						(appliedFilters.length === 0) &
+						(selectedGenres.length === 0)
+							? Object.entries(featuredContent)
+							: filteredData.length !== 0 || selectedGenres.length !== 0
+							? filteredData
+							: data
+					}
 					horizontal={false}
-					formatted={searchText === "" ? false : true}
+					formatted={
+						(searchText === "") &
+						(appliedFilters.length === 0 || selectedGenres.length === 0)
+							? false
+							: true
+					}
 					width={180}
 					height={270}
 					navigation={navigation}
 				/>
+
 				<RBSheet
 					ref={bottomSheetRef}
 					closeOnDragDown={true}
 					closeOnPressMask={true}
-					height={500}
+					height={800}
 					customStyles={{
 						wrapper: {
 							backgroundColor: "rgba(0, 0, 0, 0.75)",
@@ -88,13 +184,37 @@ const SearchScreen = ({ navigation }) => {
 						},
 					}}
 				>
-					<View>
-						<Text style={styles.filterTitleStyle}>Filter</Text>
-						<View style={styles.separatorStyle} />
-						<Text style={styles.filterSectionStyle}>Categories</Text>
-						<Text style={styles.filterSectionStyle}>Genre</Text>
-						<View style={styles.separatorStyle} />
+					<Text style={styles.filterTitleStyle}>Filter</Text>
+					<View style={styles.separatorStyle} />
+					<Text style={styles.filterSectionStyle}>Categories</Text>
+					<View style={{ flexWrap: "wrap", flexDirection: "row" }}>
+						{categories.map((category) => (
+							<ToggleButton
+								title={category.label}
+								filters={appliedFilters}
+								setFilters={setAppliedFilters}
+								value={category.key}
+								key={category.key}
+							/>
+						))}
 					</View>
+					<Text style={styles.filterSectionStyle}>Genre</Text>
+					<ScrollView
+						contentContainerStyle={{
+							flexWrap: "wrap",
+							flexDirection: "row",
+						}}
+					>
+						{genres.map((genre) => (
+							<ToggleButton
+								title={genre}
+								filters={selectedGenres}
+								setFilters={setSelectedGenres}
+								value={genre}
+								key={genre}
+							/>
+						))}
+					</ScrollView>
 				</RBSheet>
 			</View>
 		);
@@ -125,9 +245,6 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: "center",
 		alignItems: "center",
-	},
-	parentStyle: {
-		flex: 1,
 	},
 	searchBarParentStyle: {
 		flexDirection: "row",

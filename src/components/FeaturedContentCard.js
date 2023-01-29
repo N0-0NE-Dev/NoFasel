@@ -10,11 +10,20 @@ import PlayButton from "./PlayButton";
 import AddToListButton from "./AddToListButton";
 import LinearGradient from "react-native-linear-gradient";
 
-const FeaturedContentCard = ({ title, imageSource }) => {
+const FeaturedContentCard = ({ title, imageSource, genres }) => {
 	return (
 		<ImageBackground source={{ uri: imageSource }} style={styles.imageStyle}>
 			<LinearGradient colors={["rgba(0, 0, 0, 0)", "rgba(0, 0, 0, 1)"]}>
 				<Text style={styles.titleStyle}>{title}</Text>
+
+				<View style={styles.genresParentStyle}>
+					{genres.map((genre) => (
+						<Text key={genre} style={styles.genreTextStyle}>
+							{genre}
+						</Text>
+					))}
+				</View>
+
 				<View style={styles.buttonsParentStyle}>
 					<PlayButton />
 					<AddToListButton />
@@ -34,7 +43,8 @@ const styles = StyleSheet.create({
 	},
 	titleStyle: {
 		color: "white",
-		margin: 20,
+		marginLeft: 20,
+		marginBottom: 10,
 		fontSize: 24,
 		fontWeight: "bold",
 		letterSpacing: 1.25,
@@ -43,6 +53,17 @@ const styles = StyleSheet.create({
 	buttonsParentStyle: {
 		flexDirection: "row",
 		backgroundColor: "transparent",
+	},
+	genresParentStyle: {
+		flexDirection: "row",
+		marginLeft: 20,
+		marginBottom: 20,
+	},
+	genreTextStyle: {
+		color: "white",
+		marginRight: 10,
+		fontSize: 16,
+		fontWeight: "250",
 	},
 });
 

@@ -3,6 +3,8 @@ import FeaturedContentCard from "./FeaturedContentCard";
 import * as FileSystem from "expo-file-system";
 import { Dimensions, ScrollView } from "react-native";
 
+const WINDOW_WIDTH = Dimensions.get("window").width;
+
 const FeaturedContentCardList = () => {
 	const [data, setData] = useState();
 	const [currentPosition, setCurrentPosition] = useState(0);
@@ -18,7 +20,7 @@ const FeaturedContentCardList = () => {
 		if (data && scrollViewRef) {
 			const interval = setInterval(() => {
 				scrollViewRef.current.scrollTo({
-					x: Dimensions.get("window").width * currentPosition,
+					x: WINDOW_WIDTH * currentPosition,
 					y: 0,
 					animated: true,
 				});
@@ -37,12 +39,19 @@ const FeaturedContentCardList = () => {
 
 	if (data) {
 		return (
-			<ScrollView horizontal={true} ref={scrollViewRef}>
+			<ScrollView
+				horizontal={true}
+				ref={scrollViewRef}
+				decelerationRate={0}
+				snapToInterval={WINDOW_WIDTH}
+				snapToAlignment="center"
+			>
 				{Object.entries(data).map((item) => (
 					<FeaturedContentCard
 						title={item[1]["Title"]}
 						imageSource={item[1]["Image Source"]}
 						key={item[0]}
+						genres={item[1]["Genres"]}
 					/>
 				))}
 			</ScrollView>
