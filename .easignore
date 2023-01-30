@@ -67,3 +67,4 @@ android/keystore.properties
 .prettierrc
 .expo
 dist
+/fastlane/
