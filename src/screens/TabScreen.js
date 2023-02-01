@@ -7,17 +7,58 @@ import WatchlistScreen from "./WatchlistScreen";
 import * as FileSystem from "expo-file-system";
 import WebView from "react-native-webview";
 import { FASEL_EMAIL, FASEL_PASSWORD } from "@env";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import HeaderSearchIcon from "../components/HeaderSearchIcon";
 import SearchScreen from "./SearchScreen";
+import { BottomNavigation } from "react-native-paper";
 
 const darkTheme = Storage.getBoolean("darkTheme");
-const Tab = createBottomTabNavigator();
 
 const TabScreen = ({ navigation }) => {
 	const [contentUpdated, setContentUpdated] = useState(false);
 	const [loggedin, setLoggedin] = useState(false);
+	const [index, setIndex] = useState(0);
+	const [routes] = useState([
+		{
+			key: "home",
+			title: "Home",
+			focusedIcon: "home",
+			unfocusedIcon: "home-outline",
+		},
+		{
+			key: "explore",
+			title: "Explore",
+			focusedIcon: "compass",
+			unfocusedIcon: "compass-outline",
+		},
+		{
+			key: "mylist",
+			title: "My List",
+			focusedIcon: "bookmark-minus",
+			unfocusedIcon: "bookmark-minus-outline",
+		},
+		{
+			key: "settings",
+			title: "Settings",
+			focusedIcon: "cog",
+			unfocusedIcon: "cog-outline",
+		},
+	]);
+
+	const renderScene = BottomNavigation.SceneMap({
+		home: () => {
+			return <TrendingContentScreen navigation={navigation} />;
+		},
+		explore: () => {
+			return <SearchScreen navigation={navigation} />;
+		},
+		mylist: () => {
+			<WatchlistScreen navigation={navigation} />;
+		},
+		settings: () => {
+			return <SettingsScreen navigation={navigation} />;
+		},
+	});
 
 	const jsCode = `
 					if (document.getElementById('yorke_user_login')) {
@@ -123,76 +164,15 @@ const TabScreen = ({ navigation }) => {
 
 	if (contentUpdated && loggedin) {
 		return (
-			<Tab.Navigator
-				initialRouteName="Trending"
-				sceneContainerStyle={{
-					backgroundColor: darkTheme ? "#18191a" : "white",
-				}}
-				screenOptions={{
-					headerStyle: { backgroundColor: darkTheme ? "black" : "white" },
-					headerTintColor: darkTheme ? "white" : "black",
-					tabBarStyle: { backgroundColor: darkTheme ? "black" : "white" },
-					tabBarHideOnKeyboard: true,
-				}}
-			>
-				<Tab.Screen
-					name="Trending"
-					component={TrendingContentScreen}
-					options={{
-						tabBarIcon: ({ focused }) =>
-							focused ? (
-								<Ionicons name="home" size={22} color="red" />
-							) : (
-								<Ionicons name="home-outline" size={22} color="grey" />
-							),
-						headerRight: () => <HeaderSearchIcon navigation={navigation} />,
-						tabBarActiveTintColor: "red",
-						headerShown: false,
-					}}
-				/>
-				<Tab.Screen
-					name="Search"
-					component={SearchScreen}
-					options={{
-						tabBarIcon: ({ focused }) =>
-							focused ? (
-								<Ionicons name="compass" size={24} color="red" />
-							) : (
-								<Ionicons name="compass-outline" size={24} color="grey" />
-							),
-						tabBarActiveTintColor: "red",
-						headerShown: false,
-					}}
-				/>
-				<Tab.Screen
-					name="Watchlist"
-					component={WatchlistScreen}
-					options={{
-						tabBarIcon: ({ focused }) => (
-							<AntDesign
-								name="star"
-								size={22}
-								color={focused ? "gold" : darkTheme ? "white" : "black"}
-							/>
-						),
-						headerRight: () => <HeaderSearchIcon navigation={navigation} />,
-						tabBarActiveTintColor: "gold",
-					}}
-				/>
-				<Tab.Screen
-					name="Settings"
-					component={SettingsScreen}
-					options={{
-						tabBarIcon: ({ focused }) => (
-							<AntDesign
-								name="setting"
-								size={22}
-								color={focused ? "#1a6fc9" : darkTheme ? "white" : "black"}
-							/>
-						),
-					}}
-				/>
-			</Tab.Navigator>
+			<BottomNavigation
+				navigationState={{ index, routes }}
+				onIndexChange={setIndex}
+				renderScene={renderScene}
+				activeColor="red"
+				shifting={true}
+				theme={{ colors: { secondaryContainer: "rgba(0, 0, 0, 0)" } }}
+				barStyle={{ backgroundColor: "#ffffff" }}
+			/>
 		);
 	} else {
 		return (
