@@ -18,7 +18,7 @@ const FeaturedContentCardList = () => {
 
 	useEffect(() => {
 		if (data && scrollViewRef) {
-			const interval = setInterval(() => {
+			const timeout = setTimeout(() => {
 				scrollViewRef.current.scrollTo({
 					x: WINDOW_WIDTH * currentPosition,
 					y: 0,
@@ -32,7 +32,7 @@ const FeaturedContentCardList = () => {
 				}
 			}, 3000);
 			return () => {
-				clearInterval(interval);
+				clearTimeout(timeout);
 			};
 		}
 	}, [data, currentPosition, scrollViewRef]);
