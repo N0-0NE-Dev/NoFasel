@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { ScrollView, StyleSheet, ActivityIndicator, View } from "react-native";
+import { StyleSheet, ActivityIndicator, View, ScrollView } from "react-native";
 import * as FileSystem from "expo-file-system";
 import TrendingContentSection from "../components/TrendingContentSection";
-import FeaturedContentCard from "../components/FeaturedContentCard";
 import FeaturedContentCardList from "../components/FeaturedContentCardList";
 
 const TrendingContentScreen = ({ navigation }) => {
 	const [data, setData] = useState(null);
+
+	const listData = [
+		{ category: "movies", title: "Movies" },
+		{ category: "series", title: "Series" },
+		{ category: "anime", title: "Anime" },
+		{ category: "asian-series", title: "Asian Series" },
+		{ category: "arabic-series", title: "Arabic Series" },
+		{ category: "arabic-movies", title: "Arabic Movies" },
+	];
 
 	useEffect(() => {
 		FileSystem.readAsStringAsync(
@@ -16,49 +24,18 @@ const TrendingContentScreen = ({ navigation }) => {
 
 	if (data) {
 		return (
-			<ScrollView>
+			<ScrollView style={styles.parentStyle}>
 				<FeaturedContentCardList />
-				<TrendingContentSection
-					data={data.movies}
-					title="Movies"
-					category="movies"
-					navigation={navigation}
-				/>
 
-				<TrendingContentSection
-					data={data.series}
-					title="Series"
-					category="series"
-					navigation={navigation}
-				/>
-
-				<TrendingContentSection
-					data={data.anime}
-					title="Anime"
-					category="anime"
-					navigation={navigation}
-				/>
-
-				<TrendingContentSection
-					data={data["asian-series"]}
-					title="Asian Series"
-					category="asian-series"
-					navigation={navigation}
-				/>
-
-				<TrendingContentSection
-					data={data["arabic-series"]}
-					title="Arabic Series"
-					category="arabic-series"
-					navigation={navigation}
-				/>
-
-				<TrendingContentSection
-					data={data["arabic-movies"]}
-					title="Arabic Movies"
-					category="arabic-movies"
-					navigation={navigation}
-				/>
+				{listData.map(({ category, title }) => (
+					<TrendingContentSection
+						data={data[category]}
+						title={title}
+						category={category}
+						navigation={navigation}
+						key={category + title}
+					/>
+				))}
 			</ScrollView>
 		);
 	} else {
@@ -74,6 +51,9 @@ const styles = StyleSheet.create({
 	indicatorParentStyle: {
 		flex: 1,
 		justifyContent: "center",
+	},
+	parentStyle: {
+		flex: 1,
 	},
 });
 
