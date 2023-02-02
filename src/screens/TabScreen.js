@@ -7,8 +7,6 @@ import WatchlistScreen from "./WatchlistScreen";
 import * as FileSystem from "expo-file-system";
 import WebView from "react-native-webview";
 import { FASEL_EMAIL, FASEL_PASSWORD } from "@env";
-import { AntDesign, Ionicons } from "@expo/vector-icons";
-import HeaderSearchIcon from "../components/HeaderSearchIcon";
 import SearchScreen from "./SearchScreen";
 import { BottomNavigation } from "react-native-paper";
 
