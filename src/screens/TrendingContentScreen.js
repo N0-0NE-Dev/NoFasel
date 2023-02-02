@@ -6,15 +6,7 @@ import FeaturedContentCardList from "../components/FeaturedContentCardList";
 
 const TrendingContentScreen = ({ navigation }) => {
 	const [data, setData] = useState(null);
-
-	const listData = [
-		{ category: "movies", title: "Movies" },
-		{ category: "series", title: "Series" },
-		{ category: "anime", title: "Anime" },
-		{ category: "asian-series", title: "Asian Series" },
-		{ category: "arabic-series", title: "Arabic Series" },
-		{ category: "arabic-movies", title: "Arabic Movies" },
-	];
+	const listData = require("../data/common.json").categories.slice(0, 5);
 
 	useEffect(() => {
 		FileSystem.readAsStringAsync(
@@ -27,13 +19,13 @@ const TrendingContentScreen = ({ navigation }) => {
 			<ScrollView style={styles.parentStyle}>
 				<FeaturedContentCardList />
 
-				{listData.map(({ category, title }) => (
+				{listData.map(({ label, key }) => (
 					<TrendingContentSection
-						data={data[category]}
-						title={title}
-						category={category}
+						data={data[key]}
+						title={label}
+						category={key}
 						navigation={navigation}
-						key={category + title}
+						key={label + key}
 					/>
 				))}
 			</ScrollView>
