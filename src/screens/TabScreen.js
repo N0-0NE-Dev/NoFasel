@@ -51,7 +51,7 @@ const TabScreen = ({ navigation }) => {
 			return <SearchScreen navigation={navigation} />;
 		},
 		mylist: () => {
-			<WatchlistScreen navigation={navigation} />;
+			return <WatchlistScreen navigation={navigation} />;
 		},
 		settings: () => {
 			return <SettingsScreen navigation={navigation} />;
