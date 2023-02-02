@@ -6,6 +6,7 @@ import {
 	Text,
 	Dimensions,
 	ScrollView,
+	Image,
 } from "react-native";
 import { TextInput } from "react-native-paper";
 import { FontAwesome } from "@expo/vector-icons";
@@ -15,7 +16,10 @@ import RBSheet from "react-native-raw-bottom-sheet";
 import ToggleButton from "../components/ToggleButton";
 
 const SearchScreen = ({ navigation }) => {
-	let jsonQuery = require("json-query");
+	const common = require("../data/common.json");
+	const categories = common.categories;
+	const genres = common.genres;
+
 	const [searchText, setSearchText] = useState("");
 	const [allData, setAllData] = useState(null);
 	const [featuredContent, setFeaturedContent] = useState(null);
@@ -23,65 +27,6 @@ const SearchScreen = ({ navigation }) => {
 	const [appliedFilters, setAppliedFilters] = useState([]);
 	const [selectedGenres, setSelectedGenres] = useState([]);
 	const [data, setData] = useState([]);
-	const [filteredData, setFilteredData] = useState([]);
-
-	const categories = [
-		{ label: "Movies", key: "movies" },
-		{ label: "Series", key: "series" },
-		{ label: "Anime", key: "anime" },
-		{ label: "Asian Series", key: "asian-series" },
-		{ label: "TV Shows", key: "tvshows" },
-		{ label: "Arabic Series", key: "arabic-series" },
-		{ label: "Arabic Movies", key: "arabic-movies" },
-	];
-
-	const genres = [
-		"Netflix",
-		"Ramadan",
-		"Fantasy",
-		"Music",
-		"Reality-tv",
-		"News",
-		"Youth",
-		"Psychological",
-		"Family",
-		"N-a",
-		"History",
-		"Crime",
-		"Sport",
-		"Life",
-		"Mystery",
-		"Drama",
-		"Biography",
-		"Science Fiction",
-		"Zombies",
-		"Animation",
-		"Adventure",
-		"Film-noir",
-		"Animated",
-		"Romance",
-		"School",
-		"Friendship",
-		"Comdey",
-		"Sports",
-		"Kids",
-		"Western",
-		"Musical",
-		"Talk-show",
-		"Melodrama",
-		"Dubbed",
-		"Game-show",
-		"Office",
-		"War",
-		"Comedy",
-		"Thriller",
-		"Horror",
-		"Documentary",
-		"Sci-fi",
-		"Short",
-		"Action",
-		"Supernatural",
-	];
 
 	useEffect(() => {
 		FileSystem.readAsStringAsync(
@@ -89,40 +34,59 @@ const SearchScreen = ({ navigation }) => {
 		).then((allData) => setAllData(JSON.parse(allData)));
 		FileSystem.readAsStringAsync(
 			FileSystem.documentDirectory + "featured-content.json"
-		).then((featuredContent) =>
-			setFeaturedContent(JSON.parse(featuredContent))
-		);
+		).then((featuredContent) => {
+			setFeaturedContent(JSON.parse(featuredContent));
+			setData(JSON.parse(featuredContent).content);
+		});
 	}, []);
 
-	useEffect(() => {
-		setData(
-			jsonQuery(`content[*Title~/^.*${searchText}.*$/i]`, {
-				data: allData,
-				allowRegexp: true,
-			}).value
+	const applyFilter = (item) => {
+		const genreIntersection = item["Genres"].filter((value) =>
+			selectedGenres.includes(value)
 		);
+		if (
+			appliedFilters.includes(item["Category"]) ||
+			genreIntersection.length > 0
+		) {
+			return item;
+		} else {
+			// pass
+		}
+	};
+
+	useEffect(() => {
+		if (allData && featuredContent) {
+			if (searchText !== "") {
+				var searched = allData.content.filter((item) => {
+					if (
+						item["Title"].toLowerCase().includes(searchText.toLocaleLowerCase())
+					) {
+						return item;
+					} else {
+						// pass
+					}
+				});
+			} else {
+				// pass
+			}
+
+			if (appliedFilters.length !== 0 || selectedGenres.length !== 0) {
+				const toUse = searchText === "" ? allData.content : searched;
+				const filtered = toUse.filter(applyFilter);
+				setData(filtered);
+			} else {
+				if (searchText !== "") {
+					setData(searched);
+				} else {
+					setData(featuredContent.content);
+				}
+			}
+		} else {
+			// pass
+		}
 	}, [searchText, appliedFilters, selectedGenres]);
 
-	useEffect(() => {
-		console.log(data);
-		if (appliedFilters.length > 0 || selectedGenres.length > 0) {
-			const test = data.filter((item) =>
-				appliedFilters.includes(item["Category"])
-			);
-			setFilteredData(test);
-		} else {
-			setFilteredData([]);
-		}
-	}, [appliedFilters, selectedGenres, data]);
-
-	// useEffect(() => {
-	// 	if (appliedFilters.length > 0 || selectedGenres.length > 0) {
-	// 		const temp = data
-	// 		setData(temp.filter(isIn));
-	// 	}
-	// }, [appliedFilters, selectedGenres, allData, searchText]);
-
-	if (allData && featuredContent) {
+	if (data.length !== 0) {
 		return (
 			<View style={{ flex: 1 }}>
 				<View style={styles.searchBarParentStyle}>
@@ -145,27 +109,28 @@ const SearchScreen = ({ navigation }) => {
 					/>
 				</View>
 
-				<ContentCardsList
-					data={
-						(searchText === "") &
-						(appliedFilters.length === 0) &
-						(selectedGenres.length === 0)
-							? Object.entries(featuredContent)
-							: filteredData.length !== 0 || selectedGenres.length !== 0
-							? filteredData
-							: data
-					}
-					horizontal={false}
-					formatted={
-						(searchText === "") &
-						(appliedFilters.length === 0 || selectedGenres.length === 0)
-							? false
-							: true
-					}
-					width={180}
-					height={270}
-					navigation={navigation}
-				/>
+				{data.length == 0 ? (
+					<View style={styles.imageParentStyle}>
+						<Image
+							source={require("../assets/NotFound.png")}
+							style={{ width: 860 * 0.4, height: 571 * 0.4 }}
+						/>
+						<Text style={styles.notFoundTextStyle}>Not Found</Text>
+						<Text style={styles.descriptionTextStyle}>
+							Sorry, the keywords you entered could not be found. Try to check
+							again or search with different keywords.
+						</Text>
+					</View>
+				) : (
+					<ContentCardsList
+						data={data}
+						horizontal={false}
+						formatted={true}
+						width={180}
+						height={270}
+						navigation={navigation}
+					/>
+				)}
 
 				<RBSheet
 					ref={bottomSheetRef}
@@ -219,9 +184,11 @@ const SearchScreen = ({ navigation }) => {
 			</View>
 		);
 	} else {
-		<View style={styles.activityIndicatorParentStyle}>
-			<ActivityIndicator size={50} />
-		</View>;
+		return (
+			<View style={styles.activityIndicatorParentStyle}>
+				<ActivityIndicator size={50} />
+			</View>
+		);
 	}
 };
 
@@ -270,6 +237,27 @@ const styles = StyleSheet.create({
 		fontSize: 24,
 		fontWeight: "bold",
 		margin: 15,
+	},
+	imageParentStyle: {
+		position: "absolute",
+		top: 0,
+		left: 0,
+		right: 0,
+		bottom: 0,
+		justifyContent: "center",
+		alignItems: "center",
+	},
+	notFoundTextStyle: {
+		color: "red",
+		fontWeight: "bold",
+		fontSize: 26,
+		margin: 20,
+	},
+	descriptionTextStyle: {
+		textAlign: "center",
+		marginHorizontal: 10,
+		fontSize: 16,
+		letterSpacing: 0.75,
 	},
 });
 
