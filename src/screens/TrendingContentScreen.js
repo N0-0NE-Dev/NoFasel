@@ -16,7 +16,7 @@ const TrendingContentScreen = ({ navigation }) => {
 
 	if (data) {
 		return (
-			<ScrollView style={styles.parentStyle}>
+			<ScrollView style={{ flex: 1 }}>
 				<FeaturedContentCardList />
 
 				{listData.map(({ label, key }) => (
@@ -43,9 +43,6 @@ const styles = StyleSheet.create({
 	indicatorParentStyle: {
 		flex: 1,
 		justifyContent: "center",
-	},
-	parentStyle: {
-		flex: 1,
 	},
 });
 
