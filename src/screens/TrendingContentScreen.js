@@ -17,7 +17,7 @@ const TrendingContentScreen = ({ navigation }) => {
 	if (data) {
 		return (
 			<ScrollView style={{ flex: 1 }}>
-				<FeaturedContentCardList />
+				<FeaturedContentCardList navigation={navigation} />
 
 				{listData.map(({ label, key }) => (
 					<TrendingContentSection

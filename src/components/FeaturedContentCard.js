@@ -10,7 +10,14 @@ import PlayButton from "./PlayButton";
 import AddToListButton from "./AddToListButton";
 import LinearGradient from "react-native-linear-gradient";
 
-const FeaturedContentCard = ({ title, imageSource, genres }) => {
+const FeaturedContentCard = ({
+	navigation,
+	title,
+	imageSource,
+	genres,
+	category,
+	id,
+}) => {
 	return (
 		<ImageBackground source={{ uri: imageSource }} style={styles.imageStyle}>
 			<LinearGradient colors={["rgba(0, 0, 0, 0)", "rgba(0, 0, 0, 1)"]}>
@@ -25,7 +32,7 @@ const FeaturedContentCard = ({ title, imageSource, genres }) => {
 				</View>
 
 				<View style={styles.buttonsParentStyle}>
-					<PlayButton />
+					<PlayButton category={category} id={id} navigation={navigation} />
 					<AddToListButton />
 				</View>
 			</LinearGradient>

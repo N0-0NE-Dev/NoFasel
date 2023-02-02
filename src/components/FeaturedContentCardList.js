@@ -5,7 +5,7 @@ import { Dimensions, ScrollView } from "react-native";
 
 const WINDOW_WIDTH = Dimensions.get("window").width;
 
-const FeaturedContentCardList = () => {
+const FeaturedContentCardList = ({ navigation }) => {
 	const [data, setData] = useState();
 	const [currentPosition, setCurrentPosition] = useState(0);
 	const scrollViewRef = useRef();
@@ -46,6 +46,10 @@ const FeaturedContentCardList = () => {
 						imageSource={item["Image Source"]}
 						key={item["key"]}
 						genres={item["Genres"]}
+						source={item["Source"]}
+						category={item["Category"]}
+						id={item["key"]}
+						navigation={navigation}
 					/>
 				))}
 			</ScrollView>

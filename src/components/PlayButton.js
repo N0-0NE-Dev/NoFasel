@@ -1,13 +1,21 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
-const PlayButton = () => {
+const PlayButton = ({ navigation, category, id }) => {
 	return (
-		<View style={styles.parentStyle}>
+		<Pressable
+			style={styles.parentStyle}
+			onPress={() =>
+				navigation.navigate("Select", {
+					category: category,
+					id: id,
+				})
+			}
+		>
 			<AntDesign name="play" size={16} color="white" />
 			<Text style={styles.textStyle}>Play</Text>
-		</View>
+		</Pressable>
 	);
 };
 
