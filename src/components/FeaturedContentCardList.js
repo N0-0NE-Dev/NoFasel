@@ -25,12 +25,12 @@ const FeaturedContentCardList = () => {
 					animated: true,
 				});
 
-				if (currentPosition == Object.entries(data).length - 1) {
+				if (currentPosition == data.content.length - 1) {
 					setCurrentPosition(0);
 				} else {
 					setCurrentPosition(currentPosition + 1);
 				}
-			}, 3000);
+			}, 2500);
 			return () => {
 				clearTimeout(timeout);
 			};
@@ -39,19 +39,13 @@ const FeaturedContentCardList = () => {
 
 	if (data) {
 		return (
-			<ScrollView
-				horizontal={true}
-				ref={scrollViewRef}
-				decelerationRate={0}
-				snapToInterval={WINDOW_WIDTH}
-				snapToAlignment="center"
-			>
-				{Object.entries(data).map((item) => (
+			<ScrollView horizontal={true} ref={scrollViewRef} scrollEnabled={false}>
+				{data.content.map((item) => (
 					<FeaturedContentCard
-						title={item[1]["Title"]}
-						imageSource={item[1]["Image Source"]}
-						key={item[0]}
-						genres={item[1]["Genres"]}
+						title={item["Title"]}
+						imageSource={item["Image Source"]}
+						key={item["key"]}
+						genres={item["Genres"]}
 					/>
 				))}
 			</ScrollView>
