@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Image, Text } from "react-native";
 import ContentCardsList from "../components/ContentCardsList";
 import { Storage } from "../components/Storage";
 import { useIsFocused } from "@react-navigation/native";
@@ -11,25 +11,46 @@ const WatchlistScreen = ({ navigation }) => {
 
 	useEffect(() => setRefresh(!refresh), [isFocused]);
 
-	return (
-		<View style={styles.parentStyle}>
-			<View style={styles.listParentStyle}>
-				<ContentCardsList
-					navigation={navigation}
-					data={Object.entries(storedData)}
-					horizontal={false}
-				/>
+	if (Object.entries(storedData).length !== 0) {
+		return (
+			<View style={{ flex: 1 }}>
+				<View style={{ marginTop: 10 }}>
+					<ContentCardsList
+						navigation={navigation}
+						data={Object.entries(storedData)}
+						horizontal={false}
+					/>
+				</View>
 			</View>
-		</View>
-	);
+		);
+	} else {
+		return (
+			<View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+				<Image
+					source={require("../assets/EmptyList.png")}
+					style={{ width: 648 * 0.5, height: 632 * 0.5 }}
+				/>
+				<Text style={styles.emptyListTextStyle}>Your List is Empty</Text>
+				<Text style={styles.descriptionTextStyle}>
+					It seems like you haven't added any content to the list.
+				</Text>
+			</View>
+		);
+	}
 };
 
 const styles = StyleSheet.create({
-	listParentStyle: {
-		marginTop: 10,
+	emptyListTextStyle: {
+		color: "red",
+		fontWeight: "bold",
+		fontSize: 26,
+		margin: 20,
 	},
-	parentStyle: {
-		flex: 1,
+	descriptionTextStyle: {
+		textAlign: "center",
+		marginHorizontal: 10,
+		fontSize: 16,
+		letterSpacing: 0.75,
 	},
 });
 
