@@ -46,7 +46,6 @@ const FeaturedContentCardList = ({ navigation }) => {
 						imageSource={item["Image Source"]}
 						key={item["key"]}
 						genres={item["Genres"]}
-						source={item["Source"]}
 						category={item["Category"]}
 						id={item["key"]}
 						navigation={navigation}
