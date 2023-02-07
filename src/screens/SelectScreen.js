@@ -245,7 +245,7 @@ const SelectScreen = ({ navigation, route }) => {
 					<ActivityIndicator size={50} />
 					<WebView
 						source={{
-							uri: `https://www.faselhd.club/?p=${contentSource}`,
+							uri: `https://www.faselhd.ws/?p=${contentSource}`,
 						}}
 						injectedJavaScript={jsCode}
 						onMessage={(event) => {
