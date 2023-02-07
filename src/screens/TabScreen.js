@@ -112,7 +112,7 @@ const TabScreen = ({ navigation }) => {
 	}, []);
 
 	const handleNavigationChange = (webViewState) => {
-		if (webViewState.url.includes("home3")) {
+		if (webViewState.url === "https://www.faselhd.ws/") {
 			setLoggedin(true);
 		} else {
 			// pass
@@ -183,7 +183,7 @@ const TabScreen = ({ navigation }) => {
 				<ActivityIndicator size={50} />
 				<View>
 					<WebView
-						source={{ uri: "https://www.faselhd.club/account/login" }}
+						source={{ uri: "https://www.faselhd.ws/account/login" }}
 						injectedJavaScript={jsCode}
 						sharedCookiesEnabled={true}
 						onNavigationStateChange={handleNavigationChange}
