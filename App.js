@@ -6,28 +6,23 @@ import TabScreen from "./src/screens/TabScreen";
 import SelectScreen from "./src/screens/SelectScreen";
 import WatchScreen from "./src/screens/WatchScreen";
 import LoadingScreen from "./src/screens/LoadingScreen";
-import { Storage } from "./src/components/Storage";
 import AllContentScreen from "./src/screens/AllContentScreen";
+import NewSelectScreen from "./src/screens/NewSelectScreen";
+import { Provider as PaperProvider, useTheme } from "react-native-paper";
 
-if (!Storage.contains("darkTheme")) {
-	Storage.set("darkTheme", false);
-} else {
-	// pass
-}
-
-const darkTheme = Storage.getBoolean("darkTheme");
 const Stack = createNativeStackNavigator();
 
 const MyStack = () => {
+	const theme = useTheme();
+
 	return (
 		<Stack.Navigator
 			initialRouteName="Tab"
 			screenOptions={{
-				statusBarColor: darkTheme ? "black" : "white",
-				statusBarStyle: darkTheme ? "light" : "dark",
-				headerStyle: { backgroundColor: darkTheme ? "black" : "white" },
-				headerTintColor: darkTheme ? "white" : "black",
-				contentStyle: { backgroundColor: darkTheme ? "#18191a" : "#eee" },
+				statusBarColor: theme.dark ? "black" : "white",
+				statusBarStyle: theme.dark ? "light" : "dark",
+				headerStyle: { backgroundColor: theme.dark ? "black" : "white" },
+				headerTintColor: theme.dark ? "white" : "black",
 				navigationBarHidden: true,
 			}}
 		>
@@ -70,15 +65,25 @@ const MyStack = () => {
 					orientation: "default",
 				}}
 			/>
+			<Stack.Screen
+				name="New Select"
+				component={NewSelectScreen}
+				options={{
+					headerShown: false,
+					orientation: "default",
+				}}
+			/>
 		</Stack.Navigator>
 	);
 };
 
 const App = () => {
 	return (
-		<NavigationContainer>
-			<MyStack />
-		</NavigationContainer>
+		<PaperProvider>
+			<NavigationContainer>
+				<MyStack />
+			</NavigationContainer>
+		</PaperProvider>
 	);
 };
 

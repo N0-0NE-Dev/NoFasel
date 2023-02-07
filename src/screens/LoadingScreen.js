@@ -1,9 +1,11 @@
 import React from "react";
-import { View, ActivityIndicator, StyleSheet } from "react-native";
+import { View } from "react-native";
 import * as FileSystem from "expo-file-system";
 import RNRestart from "react-native-restart";
+import { ActivityIndicator, useTheme } from "react-native-paper";
 
 const LoadingScreen = () => {
+	const theme = useTheme();
 	let progress = 0;
 
 	const fileUrls = [
@@ -35,17 +37,16 @@ const LoadingScreen = () => {
 	});
 
 	return (
-		<View style={styles.indicatorParentStyle}>
+		<View
+			style={{
+				flex: 1,
+				justifyContent: "center",
+				backgroundColor: theme.colors.backdrop,
+			}}
+		>
 			<ActivityIndicator size={50} />
 		</View>
 	);
 };
-
-const styles = StyleSheet.create({
-	indicatorParentStyle: {
-		flex: 1,
-		justifyContent: "center",
-	},
-});
 
 export default LoadingScreen;

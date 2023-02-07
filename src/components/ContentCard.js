@@ -1,8 +1,6 @@
 import React from "react";
-import { Pressable, StyleSheet, Text, ImageBackground } from "react-native";
-import { Storage } from "./Storage";
-
-const darkTheme = Storage.getBoolean("darkTheme");
+import { Pressable, StyleSheet, ImageBackground } from "react-native";
+import { Text, useTheme } from "react-native-paper";
 
 const ContentCard = ({
 	navigation,
@@ -14,48 +12,28 @@ const ContentCard = ({
 	rating,
 	title,
 }) => {
-	const styles = StyleSheet.create({
-		patentStyle: {
-			width: width,
-			margin: 5,
-		},
-		imageBackgroundStyle: {
-			width: width,
-			height: height,
-		},
-		ratingTextStyle: {
-			backgroundColor: "red",
-			width: 40,
-			margin: 5,
-			color: "white",
-			padding: 5,
-			textAlign: "center",
-			fontSize: 12,
-			borderRadius: 10,
-		},
-		imageStyle: {
-			borderRadius: 15,
-		},
-		titleStyle: {
-			textAlign: "center",
-			fontSize: 14,
-			marginVertical: 3,
-		},
-	});
+	const theme = useTheme();
 
 	return (
 		<Pressable
-			style={styles.patentStyle}
+			style={{ width: width, margin: 5 }}
 			onPress={() =>
-				navigation.navigate("Select", { id: id, category: category })
+				navigation.navigate("New Select", { id: id, category: category })
 			}
 		>
 			<ImageBackground
-				style={styles.imageBackgroundStyle}
-				imageStyle={styles.imageStyle}
+				style={{ width: width, height: height }}
+				imageStyle={{ borderRadius: 15 }}
 				source={{ uri: imageSource }}
 			>
-				<Text style={styles.ratingTextStyle}>{rating ? rating : "N/A"}</Text>
+				<Text
+					style={{
+						...styles.ratingTextStyle,
+						backgroundColor: theme.colors.primary,
+					}}
+				>
+					{rating ? rating : "N/A"}
+				</Text>
 			</ImageBackground>
 			<Text numberOfLines={1} style={styles.titleStyle}>
 				{title}
@@ -63,5 +41,22 @@ const ContentCard = ({
 		</Pressable>
 	);
 };
+
+const styles = StyleSheet.create({
+	ratingTextStyle: {
+		width: 40,
+		margin: 3,
+		padding: 5,
+		textAlign: "center",
+		fontSize: 12,
+		borderRadius: 10,
+		color: "black",
+	},
+	titleStyle: {
+		textAlign: "center",
+		fontSize: 14,
+		marginVertical: 3,
+	},
+});
 
 export default ContentCard;

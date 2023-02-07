@@ -1,13 +1,11 @@
 import React from "react";
-import { Text, View, StyleSheet, Pressable } from "react-native";
+import { View, StyleSheet, Pressable } from "react-native";
 import ContentCardsList from "./ContentCardsList";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Storage } from "../components/Storage";
-
-const darkTheme = Storage.getBoolean("darkTheme");
+import { useTheme, Text } from "react-native-paper";
 
 const TrendingContentSection = ({ data, title, category, navigation }) => {
 	const dataEntries = Object.entries(data);
+	const theme = useTheme();
 
 	if (dataEntries.length > 0) {
 		return (
@@ -20,7 +18,9 @@ const TrendingContentSection = ({ data, title, category, navigation }) => {
 							navigation.navigate("All Content", { key: category })
 						}
 					>
-						<Text style={styles.moreTextStyle}>See all</Text>
+						<Text style={{ fontSize: 15, color: theme.colors.primary }}>
+							See all
+						</Text>
 					</Pressable>
 				</View>
 
@@ -47,7 +47,6 @@ const styles = StyleSheet.create({
 		marginLeft: 5,
 	},
 	sectionParentStyle: {
-		backgroundColor: darkTheme ? "black" : "white",
 		margin: 5,
 		borderRadius: 10,
 	},
@@ -60,11 +59,9 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 		marginLeft: 15,
 		marginVertical: 5,
-		color: darkTheme ? "white" : "black",
 	},
 	moreTextStyle: {
 		fontSize: 15,
-		color: darkTheme ? "#add8e6" : "red",
 	},
 });
 

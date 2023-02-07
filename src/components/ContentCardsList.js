@@ -5,6 +5,7 @@ import { Storage } from "./Storage";
 import { useIsFocused } from "@react-navigation/native";
 import { isTablet } from "react-native-device-info";
 import { AntDesign } from "@expo/vector-icons";
+import { useTheme } from "react-native-paper";
 
 if (!Storage.contains("watchlist")) {
 	Storage.set("watchlist", JSON.stringify({}));
@@ -24,6 +25,7 @@ const ContentCardsList = ({
 }) => {
 	const [refresh, setRefresh] = useState(false);
 	const isFocused = useIsFocused();
+	const theme = useTheme();
 
 	useEffect(() => setRefresh(!refresh), [isFocused]);
 
@@ -79,7 +81,10 @@ const ContentCardsList = ({
 		<FlatList
 			data={data}
 			showsHorizontalScrollIndicator={false}
-			contentContainerStyle={{ alignItems: "center" }}
+			contentContainerStyle={{
+				alignItems: "center",
+				backgroundColor: theme.colors.background,
+			}}
 			horizontal={horizontal}
 			numColumns={numColumns}
 			nestedScrollEnabled={true}

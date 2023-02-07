@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ActivityIndicator, View, StyleSheet } from "react-native";
+import { View } from "react-native";
 import TrendingContentScreen from "./TrendingContentScreen";
 import { Storage } from "../components/Storage";
 import SettingsScreen from "./SettingsScreen";
@@ -8,14 +8,17 @@ import * as FileSystem from "expo-file-system";
 import WebView from "react-native-webview";
 import { FASEL_EMAIL, FASEL_PASSWORD } from "@env";
 import SearchScreen from "./SearchScreen";
-import { BottomNavigation } from "react-native-paper";
-
-const darkTheme = Storage.getBoolean("darkTheme");
+import {
+	BottomNavigation,
+	ActivityIndicator,
+	useTheme,
+} from "react-native-paper";
 
 const TabScreen = ({ navigation }) => {
 	const [contentUpdated, setContentUpdated] = useState(false);
 	const [loggedin, setLoggedin] = useState(false);
 	const [index, setIndex] = useState(0);
+	const theme = useTheme();
 	const [routes] = useState([
 		{
 			key: "home",
@@ -166,15 +169,18 @@ const TabScreen = ({ navigation }) => {
 				navigationState={{ index, routes }}
 				onIndexChange={setIndex}
 				renderScene={renderScene}
-				activeColor="red"
 				shifting={true}
-				theme={{ colors: { secondaryContainer: "rgba(0, 0, 0, 0)" } }}
-				barStyle={{ backgroundColor: "#ffffff" }}
 			/>
 		);
 	} else {
 		return (
-			<View style={styles.indicatorParentStyle}>
+			<View
+				style={{
+					flex: 1,
+					justifyContent: "center",
+					backgroundColor: theme.colors.background,
+				}}
+			>
 				<ActivityIndicator size={50} />
 				<View>
 					<WebView
@@ -188,12 +194,5 @@ const TabScreen = ({ navigation }) => {
 		);
 	}
 };
-
-const styles = StyleSheet.create({
-	indicatorParentStyle: {
-		flex: 1,
-		justifyContent: "center",
-	},
-});
 
 export default TabScreen;

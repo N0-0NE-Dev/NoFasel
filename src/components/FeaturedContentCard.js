@@ -1,14 +1,7 @@
 import React from "react";
-import {
-	View,
-	Text,
-	StyleSheet,
-	Dimensions,
-	ImageBackground,
-} from "react-native";
-import PlayButton from "./PlayButton";
-import AddToListButton from "./AddToListButton";
+import { View, StyleSheet, Dimensions, ImageBackground } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
+import { Button, useTheme, Text } from "react-native-paper";
 
 const FeaturedContentCard = ({
 	navigation,
@@ -18,10 +11,17 @@ const FeaturedContentCard = ({
 	category,
 	id,
 }) => {
+	const theme = useTheme();
+
 	return (
 		<ImageBackground source={{ uri: imageSource }} style={styles.imageStyle}>
-			<LinearGradient colors={["rgba(0, 0, 0, 0)", "rgba(0, 0, 0, 1)"]}>
-				<Text style={styles.titleStyle}>{title}</Text>
+			<LinearGradient
+				colors={["rgba(0, 0, 0, 0)", "rgba(0, 0, 0, 1)"]}
+				style={{ flex: 1, justifyContent: "flex-end" }}
+			>
+				<Text numberOfLines={1} style={styles.titleStyle}>
+					{title}
+				</Text>
 
 				<View style={styles.genresParentStyle}>
 					{genres.map((genre) => (
@@ -32,8 +32,33 @@ const FeaturedContentCard = ({
 				</View>
 
 				<View style={styles.buttonsParentStyle}>
-					<PlayButton category={category} id={id} navigation={navigation} />
-					<AddToListButton />
+					<Button
+						mode="contained"
+						icon="play-circle"
+						style={styles.buttonStyle}
+						labelStyle={{ fontSize: 18 }}
+						onPress={() =>
+							navigation.navigate("Select", {
+								category: category,
+								id: id,
+							})
+						}
+					>
+						Play
+					</Button>
+
+					<Button
+						icon="plus"
+						mode="outlined"
+						style={{
+							...styles.buttonStyle,
+							borderColor: theme.colors.primary,
+							borderWidth: 2,
+						}}
+						labelStyle={{ fontSize: 18 }}
+					>
+						My List
+					</Button>
 				</View>
 			</LinearGradient>
 		</ImageBackground>
@@ -44,12 +69,8 @@ const styles = StyleSheet.create({
 	imageStyle: {
 		width: Dimensions.get("window").width,
 		height: Dimensions.get("window").height * 0.4,
-		flex: 1,
-		justifyContent: "flex-end",
-		backgroundColor: "transparent",
 	},
 	titleStyle: {
-		color: "white",
 		marginLeft: 20,
 		marginBottom: 10,
 		fontSize: 24,
@@ -67,10 +88,13 @@ const styles = StyleSheet.create({
 		marginBottom: 20,
 	},
 	genreTextStyle: {
-		color: "white",
 		marginRight: 10,
 		fontSize: 16,
 		fontWeight: "250",
+	},
+	buttonStyle: {
+		marginLeft: 10,
+		marginBottom: 20,
 	},
 });
 

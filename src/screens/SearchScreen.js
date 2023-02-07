@@ -3,7 +3,6 @@ import {
 	View,
 	StyleSheet,
 	ActivityIndicator,
-	Text,
 	Dimensions,
 	ScrollView,
 	Image,
@@ -14,11 +13,13 @@ import * as FileSystem from "expo-file-system";
 import ContentCardsList from "../components/ContentCardsList";
 import RBSheet from "react-native-raw-bottom-sheet";
 import ToggleButton from "../components/ToggleButton";
+import { useTheme, Text } from "react-native-paper";
 
 const SearchScreen = ({ navigation }) => {
 	const common = require("../data/common.json");
 	const categories = common.categories;
 	const genres = common.genres;
+	const theme = useTheme();
 
 	const [searchText, setSearchText] = useState("");
 	const [allData, setAllData] = useState(null);
@@ -103,8 +104,11 @@ const SearchScreen = ({ navigation }) => {
 					<FontAwesome
 						name="sliders"
 						size={27}
-						color="red"
-						style={styles.iconStyle}
+						color={theme.colors.primary}
+						style={{
+							...styles.iconStyle,
+							backgroundColor: theme.colors.elevation.level4,
+						}}
 						onPress={() => bottomSheetRef.current.open()}
 					/>
 				</View>
@@ -142,10 +146,11 @@ const SearchScreen = ({ navigation }) => {
 							backgroundColor: "rgba(0, 0, 0, 0.75)",
 						},
 						draggableIcon: {
-							backgroundColor: "#ddd",
+							backgroundColor: theme.colors.primary,
 						},
 						container: {
 							borderRadius: 30,
+							backgroundColor: theme.colors.background,
 						},
 					}}
 				>
@@ -199,12 +204,10 @@ const styles = StyleSheet.create({
 		borderRadius: 10,
 		borderTopRightRadius: 10,
 		borderTopLeftRadius: 10,
-		backgroundColor: "#eee",
 		flex: 1,
 	},
 	iconStyle: {
 		marginRight: 20,
-		backgroundColor: "rgba(255, 0, 0, 0.1)",
 		borderRadius: 15,
 		padding: 15,
 	},
@@ -221,7 +224,6 @@ const styles = StyleSheet.create({
 	filterTitleStyle: {
 		fontSize: 26,
 		fontWeight: "bold",
-		color: "red",
 		textAlign: "center",
 		padding: 15,
 		letterSpacing: 1.15,

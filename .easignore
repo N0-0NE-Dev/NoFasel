@@ -68,3 +68,4 @@ android/keystore.properties
 .expo
 dist
 /fastlane/
+/.github/

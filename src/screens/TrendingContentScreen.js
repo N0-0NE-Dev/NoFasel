@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, ActivityIndicator, View, ScrollView } from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
 import * as FileSystem from "expo-file-system";
 import TrendingContentSection from "../components/TrendingContentSection";
 import FeaturedContentCardList from "../components/FeaturedContentCardList";
+import { ActivityIndicator } from "react-native-paper";
 
 const TrendingContentScreen = ({ navigation }) => {
 	const [data, setData] = useState(null);
@@ -18,7 +19,6 @@ const TrendingContentScreen = ({ navigation }) => {
 		return (
 			<ScrollView style={{ flex: 1 }}>
 				<FeaturedContentCardList navigation={navigation} />
-
 				{listData.map(({ label, key }) => (
 					<TrendingContentSection
 						data={data[key]}
