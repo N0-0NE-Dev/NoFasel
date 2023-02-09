@@ -36,7 +36,6 @@ const FeaturedContentCard = ({
 						mode="contained"
 						icon="play-circle"
 						style={styles.buttonStyle}
-						labelStyle={{ fontSize: 18 }}
 						onPress={() =>
 							navigation.navigate("Select", {
 								category: category,
@@ -55,7 +54,6 @@ const FeaturedContentCard = ({
 							borderColor: theme.colors.primary,
 							borderWidth: 2,
 						}}
-						labelStyle={{ fontSize: 18 }}
 					>
 						My List
 					</Button>
