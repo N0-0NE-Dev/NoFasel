@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Image, Text } from "react-native";
+import { View, StyleSheet, Image } from "react-native";
 import ContentCardsList from "../components/ContentCardsList";
 import { Storage } from "../components/Storage";
 import { useIsFocused } from "@react-navigation/native";
+import { Text, useTheme } from "react-native-paper";
 
 const WatchlistScreen = ({ navigation }) => {
 	const [refresh, setRefresh] = useState(false);
 	const storedData = JSON.parse(Storage.getString("watchlist"));
 	const isFocused = useIsFocused();
+	const theme = useTheme();
 
 	useEffect(() => setRefresh(!refresh), [isFocused]);
 
@@ -19,6 +21,8 @@ const WatchlistScreen = ({ navigation }) => {
 						navigation={navigation}
 						data={Object.entries(storedData)}
 						horizontal={false}
+						width={180}
+						height={270}
 					/>
 				</View>
 			</View>
@@ -30,7 +34,11 @@ const WatchlistScreen = ({ navigation }) => {
 					source={require("../assets/EmptyList.png")}
 					style={{ width: 648 * 0.5, height: 632 * 0.5 }}
 				/>
-				<Text style={styles.emptyListTextStyle}>Your List is Empty</Text>
+				<Text
+					style={{ ...styles.emptyListTextStyle, color: theme.colors.primary }}
+				>
+					Your List is Empty
+				</Text>
 				<Text style={styles.descriptionTextStyle}>
 					It seems like you haven't added any content to the list.
 				</Text>
@@ -41,7 +49,6 @@ const WatchlistScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
 	emptyListTextStyle: {
-		color: "red",
 		fontWeight: "bold",
 		fontSize: 26,
 		margin: 20,

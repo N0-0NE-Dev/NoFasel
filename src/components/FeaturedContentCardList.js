@@ -3,8 +3,6 @@ import FeaturedContentCard from "./FeaturedContentCard";
 import * as FileSystem from "expo-file-system";
 import { Dimensions, ScrollView } from "react-native";
 
-const WINDOW_WIDTH = Dimensions.get("window").width;
-
 const FeaturedContentCardList = ({ navigation }) => {
 	const [data, setData] = useState();
 	const [currentPosition, setCurrentPosition] = useState(0);
@@ -20,7 +18,7 @@ const FeaturedContentCardList = ({ navigation }) => {
 		if (data && scrollViewRef) {
 			const timeout = setTimeout(() => {
 				scrollViewRef.current.scrollTo({
-					x: WINDOW_WIDTH * currentPosition,
+					x: Dimensions.get("window").width * currentPosition,
 					y: 0,
 					animated: true,
 				});

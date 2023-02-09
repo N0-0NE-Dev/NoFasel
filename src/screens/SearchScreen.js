@@ -112,7 +112,14 @@ const SearchScreen = ({ navigation }) => {
 							source={require("../assets/NotFound.png")}
 							style={{ width: 860 * 0.4, height: 571 * 0.4 }}
 						/>
-						<Text style={styles.notFoundTextStyle}>Not Found</Text>
+						<Text
+							style={{
+								...styles.notFoundTextStyle,
+								color: theme.colors.primary,
+							}}
+						>
+							Not Found
+						</Text>
 						<Text style={styles.descriptionTextStyle}>
 							Sorry, the keywords you entered could not be found. Try to check
 							again or search with different keywords.
@@ -243,7 +250,6 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 	notFoundTextStyle: {
-		color: "red",
 		fontWeight: "bold",
 		fontSize: 26,
 		margin: 20,

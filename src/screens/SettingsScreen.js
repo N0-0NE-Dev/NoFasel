@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import {
 	View,
 	Switch,
-	Text,
 	StyleSheet,
 	Button,
 	ToastAndroid,
@@ -13,6 +12,7 @@ import { Storage } from "../components/Storage";
 import RNRestart from "react-native-restart";
 import deviceInfoModule from "react-native-device-info";
 import * as FileSystem from "expo-file-system";
+import { Text } from "react-native-paper";
 
 const darkTheme = Storage.getBoolean("darkTheme");
 
@@ -141,7 +141,6 @@ const styles = StyleSheet.create({
 	textStyle: {
 		fontSize: 18,
 		margin: 5,
-		color: darkTheme ? "white" : "black",
 	},
 	switchParentStyle: {
 		flexDirection: "row",

@@ -10,6 +10,8 @@ import {
 	Pressable,
 	Linking,
 	ToastAndroid,
+	FlatList,
+	Modal,
 } from "react-native";
 
 import {
@@ -18,8 +20,7 @@ import {
 	useTheme,
 	ActivityIndicator,
 	IconButton,
-	Modal,
-	Portal,
+	Snackbar,
 } from "react-native-paper";
 
 import * as FileSystem from "expo-file-system";
@@ -29,9 +30,13 @@ import { TMDB_API_KEY } from "@env";
 import { WebView } from "react-native-webview";
 import Clipboard from "@react-native-clipboard/clipboard";
 import { Storage } from "../components/Storage";
+import { useIsFocused } from "@react-navigation/native";
+import { useDeviceOrientation } from "@react-native-community/hooks";
+
+const WINDOW_WIDTH = Dimensions.get("window").width;
+const WINDOW_HEIGHT = Dimensions.get("window").height;
 
 const getOverview = async (tmdbId, category) => {
-	console.log(tmdbId);
 	return fetch(
 		`https://api.themoviedb.org/3/${
 			category == "movies" ? "movie" : "tv"
@@ -73,12 +78,15 @@ const PostTextContent = ({ text, moreTextColor }) => {
 	};
 
 	const onTextLayout = useCallback((e) => {
-		setLengthMore(e.nativeEvent.lines.length >= 3);
+		setLengthMore(e.nativeEvent.lines.length > 3);
 	}, []);
 
 	if (text !== "N/A") {
 		return (
-			<View style={{ flexDirection: "row", flexWrap: "wrap", margin: 10 }}>
+			<Pressable
+				onPress={toggleNumberOfLines}
+				style={{ flexDirection: "row", flexWrap: "wrap", margin: 10 }}
+			>
 				<Text
 					onTextLayout={onTextLayout}
 					numberOfLines={textShown ? undefined : 3}
@@ -86,15 +94,15 @@ const PostTextContent = ({ text, moreTextColor }) => {
 				>
 					{text}
 				</Text>
-				{lengthMore ? (
+				{lengthMore && (
 					<Text
 						onPress={toggleNumberOfLines}
 						style={{ lineHeight: 21, color: moreTextColor }}
 					>
 						{textShown ? "View Less" : "View More"}
 					</Text>
-				) : null}
-			</View>
+				)}
+			</Pressable>
 		);
 	} else {
 		return;
@@ -108,63 +116,64 @@ const CastCard = ({ name, role, imageUrl }) => {
 				source={{ uri: "https://image.tmdb.org/t/p/original" + imageUrl }}
 				style={{ width: 70, height: 70, borderRadius: 50 }}
 			/>
-			<View>
-				<Text style={{ marginHorizontal: 5 }}>{name.replace(" ", "\n")}</Text>
+			<View style={{ justifyContent: "center" }}>
+				<Text style={{ marginHorizontal: 5, fontWeight: "bold" }}>{name}</Text>
 				<Text style={{ margin: 5, color: "grey" }}>{role}</Text>
 			</View>
 		</View>
 	);
 };
 
-const Buttons = ({ showModal, setType }) => {
+const Buttons = ({ showModal, setType, theme }) => {
+	const buttonsData = [
+		{
+			mode: "contained",
+			icon: "play-circle",
+			label: "Play",
+			color: null,
+		},
+		{
+			mode: "contained",
+			icon: "vlc",
+			type: "vlc",
+			label: "Open In VLC",
+			color: "orange",
+		},
+		{
+			mode: "outlined",
+			icon: "tray-arrow-down",
+			label: "Download",
+			color: null,
+		},
+		{
+			mode: "outlined",
+			icon: "content-copy",
+			label: "Copy",
+			color: null,
+		},
+	];
 	return (
-		<ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-			<Button
-				style={styles.buttonStyle}
-				mode="contained"
-				icon="play-circle"
-				onPress={() => {
-					showModal();
-					setType("play");
-				}}
-			>
-				Play
-			</Button>
-			<Button
-				mode="contained"
-				icon="vlc"
-				style={styles.buttonStyle}
-				buttonColor="orange"
-				onPress={() => {
-					showModal();
-					setType("vlc");
-				}}
-			>
-				Open In VLC
-			</Button>
-			<Button
-				mode="outlined"
-				style={styles.buttonStyle}
-				icon="tray-arrow-down"
-				onPress={() => {
-					showModal();
-					setType("download");
-				}}
-			>
-				Download
-			</Button>
-			<Button
-				mode="outlined"
-				style={styles.buttonStyle}
-				icon="content-copy"
-				onPress={() => {
-					showModal();
-					setType("copy");
-				}}
-			>
-				Copy
-			</Button>
-		</ScrollView>
+		<FlatList
+			horizontal={true}
+			showsHorizontalScrollIndicator={false}
+			data={buttonsData}
+			renderItem={({ item }) => {
+				return (
+					<Button
+						mode={item.mode}
+						icon={item.icon}
+						onPress={() => {
+							showModal();
+							setType(item.label);
+						}}
+						buttonColor={item.color}
+						style={{ ...styles.buttonStyle, borderColor: theme.colors.primary }}
+					>
+						{item.label}
+					</Button>
+				);
+			}}
+		/>
 	);
 };
 
@@ -190,67 +199,73 @@ const CastList = ({ castList }) => {
 const QualitySelector = ({
 	visible,
 	setVisible,
-	qualityList,
-	navigation,
-	category,
-	id,
+	itemList,
 	theme,
-	type,
+	handlePress,
 }) => {
 	return (
-		<Portal>
-			<Modal
-				visible={visible}
-				onDismiss={() => setVisible(false)}
-				contentContainerStyle={{ backgroundColor: theme.colors.background }}
-				style={{ backgroundColor: theme.colors.backdrop, padding: 50 }}
+		<Modal
+			animationType="slide"
+			transparent={true}
+			visible={visible}
+			statusBarTranslucent={true}
+		>
+			<Pressable
+				style={styles.modalBackgroundStyle}
+				onPress={() => setVisible(false)}
 			>
-				{Object.entries(qualityList).map((item) => (
-					<Pressable
-						key={item[0]}
-						style={({ pressed }) => [
-							{
-								backgroundColor: pressed ? theme.colors.elevation.level5 : null,
-							},
-							{ flexDirection: "row", margin: 10, paddingVertical: 10 },
-						]}
-						onPress={() => {
-							setVisible(false);
-
-							switch (type) {
-								case "play":
-									navigation.navigate("Watch", {
-										source: item[1],
-										category: category,
-										id: id,
-									});
-									break;
-								case "copy":
-									Clipboard.setString(item[1]);
-									ToastAndroid.show("Copied", ToastAndroid.SHORT);
-									break;
-								case "vlc":
-									Linking.openURL(`vlc://${item[1]}`);
-									break;
-								case "download":
-									Linking.openURL(item[1]);
-									break;
-								default:
-									break;
-							}
-						}}
-					>
-						<Text style={{ fontSize: 16, margin: 5 }}>{item[0]}</Text>
-					</Pressable>
-				))}
-			</Modal>
-		</Portal>
+				<View
+					style={{
+						...styles.modalViewStyle,
+						backgroundColor: theme.colors.background,
+					}}
+				>
+					{Object.entries(itemList).map((item) => (
+						<Pressable
+							key={item[0]}
+							style={({ pressed }) => [
+								{
+									backgroundColor: pressed
+										? theme.colors.elevation.level5
+										: null,
+								},
+								{
+									flexDirection: "row",
+									margin: 10,
+									paddingVertical: 10,
+									borderRadius: 20,
+								},
+							]}
+							onPress={() => handlePress(item)}
+						>
+							<Text
+								style={{
+									fontSize: 16,
+									margin: 5,
+									flex: 1,
+									textAlign: "center",
+								}}
+							>
+								{item[0]}
+							</Text>
+						</Pressable>
+					))}
+				</View>
+			</Pressable>
+		</Modal>
 	);
 };
 
 const NewSelectScreen = ({ navigation, route }) => {
 	const { id, category } = route.params;
+	const theme = useTheme();
 	const useProxy = Storage.getBoolean("useProxy");
+	const contentWithSeasons = ["series", "tvshows", "asian-series"];
+	const watchlist = JSON.parse(Storage.getString("watchlist"));
+	const resume = JSON.parse(Storage.getString("resume"));
+	const isFocused = useIsFocused();
+	const orientation = useDeviceOrientation();
+
 	const [data, setData] = useState(null);
 	const [overview, setOverview] = useState(null);
 	const [cast, setCast] = useState(null);
@@ -258,7 +273,21 @@ const NewSelectScreen = ({ navigation, route }) => {
 	const [webpageUrl, setWebpageUrl] = useState(null);
 	const [qualities, setQualities] = useState(null);
 	const [type, setType] = useState(null);
-	const theme = useTheme();
+	const [episodes, setEpisodes] = useState([]);
+	const [seasons, setSeasons] = useState(null);
+	const [selectedSeason, setSelectedSeason] = useState(null);
+	const [selectedEpisode, setSelectedEpisode] = useState(null);
+	const [seasonsSelectorVisible, setSeasonsSelectorVisible] = useState(false);
+	const [refresh, setRefresh] = useState(false);
+	const [snackbarVisible, setSnackbarVisible] = useState(false);
+
+	const [showLoading, setShowLoading] = useState(
+		category == "movies" ? true : false
+	);
+
+	const [inWatchList, setInWatchList] = useState(
+		watchlist.hasOwnProperty(id) ? true : false
+	);
 
 	const jsCode = `
 		var qualities = {};
@@ -271,14 +300,66 @@ const NewSelectScreen = ({ navigation, route }) => {
 		window.ReactNativeWebView.postMessage(JSON.stringify(qualities));
 		`;
 
+	useEffect(() => setRefresh(!refresh), [isFocused]);
+	useEffect(() => setRefresh(!refresh), [orientation]);
+
+	useEffect(() => {
+		if (seasons) {
+			setSelectedSeason(Object.entries(seasons)[0]);
+		} else {
+			// pass
+		}
+	}, [seasons]);
+
+	const handleQualitySelect = (item) => {
+		setVisible(false);
+
+		switch (type) {
+			case "Play":
+				navigation.navigate("Watch", {
+					source: item[1],
+					category: category,
+					id: category.includes("movies") ? id : selectedEpisode,
+				});
+				break;
+			case "Copy":
+				Clipboard.setString(item[1]);
+				ToastAndroid.show("Copied", ToastAndroid.SHORT);
+				break;
+			case "Open In VLC":
+				Linking.openURL(`vlc://${item[1]}`);
+				break;
+			case "Download":
+				Linking.openURL(item[1]);
+				break;
+			default:
+				break;
+		}
+	};
+
+	const handleSeasonSwitch = (item) => {
+		setSeasonsSelectorVisible(false);
+		setSelectedSeason(item);
+	};
+
+	useEffect(() => {
+		if (data) {
+			if (category == "arabic-movies") {
+				setWebpageUrl(data["Soruce"]);
+			} else {
+				// pass
+			}
+		}
+	}, [data]);
+
 	useEffect(() => {
 		if (category === "movies" && !webpageUrl) {
-			setWebpageUrl(`https://www.faselhd.club/?p=${id}`);
-		} else if (category === "arabic-movies" && data) {
+			setWebpageUrl(`https://www.faselhd.ws/?p=${id}`);
+		} else if (category.includes("arabic") && webpageUrl) {
 			fetch(
 				useProxy
-					? `https://api.codetabs.com/v1/proxy?quest=${data["Source"]}`
-					: data["Source"]
+					? `https://api.codetabs.com/v1/proxy?quest=${webpageUrl}`
+					: webpageUrl
 			)
 				.then((resp) => resp.text())
 				.then((text) => {
@@ -292,10 +373,34 @@ const NewSelectScreen = ({ navigation, route }) => {
 					});
 
 					setQualities(sources);
+					setShowLoading(false);
 				})
 				.catch((e) => console.error(e));
+		} else if (
+			(["anime", "arabic-series"].includes(category) ||
+				(contentWithSeasons.includes(category) && selectedSeason)) &&
+			data
+		) {
+			const episodes = [];
+			const rawEpisodes = contentWithSeasons.includes(category)
+				? data["Seasons"][selectedSeason[1]]["Episodes"]
+				: data["Episodes"];
+
+			Object.entries(rawEpisodes).forEach((episode) => {
+				episodes.push({
+					label: `Episode ${episode[1]["Episode Number"]}`,
+					key: episode[0],
+				});
+			});
+			setEpisodes(episodes);
+		} else if (contentWithSeasons.includes(category) && data && !seasons) {
+			const seasons = {};
+			Object.entries(data["Seasons"]).forEach((season) => {
+				seasons[`Season ${season[1]["Season Number"]}`] = season[0];
+			});
+			setSeasons(seasons);
 		}
-	}, [data]);
+	}, [data, webpageUrl, selectedSeason]);
 
 	useEffect(() => {
 		FileSystem.readAsStringAsync(
@@ -316,6 +421,88 @@ const NewSelectScreen = ({ navigation, route }) => {
 		}
 	}, [data]);
 
+	const EpisodeCard = ({ label, posterSource, source }) => {
+		return (
+			<Pressable
+				onPress={() => {
+					setSelectedEpisode(source);
+					setShowLoading(true);
+					setQualities(null);
+					if (category == "anime" || contentWithSeasons.includes(category)) {
+						setWebpageUrl(`https://www.faselhd.ws/?p=${source}`);
+					} else {
+						setWebpageUrl(source);
+					}
+				}}
+			>
+				<ImageBackground
+					source={{ uri: posterSource }}
+					style={{ height: 150, width: 150, margin: 5 }}
+					imageStyle={{ borderRadius: 15 }}
+				>
+					<LinearGradient
+						colors={["rgba(0, 0, 0, 0)", "rgba(0, 0, 0, 1)"]}
+						style={{ flex: 1, justifyContent: "flex-end", borderRadius: 15 }}
+					>
+						<View
+							style={{
+								justifyContent: "center",
+								alignItems: "center",
+								flex: 1,
+							}}
+						>
+							<FontAwesome
+								name="play-circle"
+								size={34}
+								color={
+									source == selectedEpisode ? theme.colors.primary : "white"
+								}
+								style={{ marginTop: 20 }}
+							/>
+						</View>
+						<View style={{ justifyContent: "center" }}>
+							<Text style={{ margin: 10, fontWeight: "bold" }}>{label}</Text>
+						</View>
+						{resume.hasOwnProperty(source + category) && (
+							<View
+								style={{
+									height: 10,
+									width:
+										(Number(resume[source + category]["resume"]) /
+											Number(resume[source + category]["duration"])) *
+										135,
+									backgroundColor: theme.colors.primary,
+									borderRadius: 15,
+								}}
+							/>
+						)}
+					</LinearGradient>
+				</ImageBackground>
+			</Pressable>
+		);
+	};
+
+	const handleWatchList = () => {
+		if (inWatchList) {
+			delete watchlist[id];
+			setSnackbarVisible(false);
+		} else {
+			Object.assign(watchlist, {
+				[id]: {
+					Category: category,
+					"Image Source": data["Image Source"],
+					Title: data["Title"],
+					Rating: data["Rating"] ? data["Rating"] : "N/A",
+				},
+			});
+			setSnackbarVisible(true);
+			setTimeout(() => setSnackbarVisible(false), 2500);
+		}
+
+		Storage.set("watchlist", JSON.stringify(watchlist));
+		setInWatchList(!inWatchList);
+	};
+
 	if (overview && cast) {
 		return (
 			<ScrollView style={{ backgroundColor: theme.colors.background, flex: 1 }}>
@@ -323,32 +510,38 @@ const NewSelectScreen = ({ navigation, route }) => {
 					<QualitySelector
 						visible={visible}
 						setVisible={setVisible}
-						qualityList={qualities}
-						category={category}
-						id={id}
-						navigation={navigation}
+						itemList={qualities}
 						theme={theme}
-						type={type}
+						handlePress={handleQualitySelect}
+					/>
+				)}
+
+				{seasons && (
+					<QualitySelector
+						visible={seasonsSelectorVisible}
+						setVisible={setSeasonsSelectorVisible}
+						itemList={seasons}
+						theme={theme}
+						handlePress={handleSeasonSwitch}
 					/>
 				)}
 
 				<ImageBackground
 					source={{ uri: data["Image Source"] }}
-					style={styles.imageStyle}
+					style={{
+						width: orientation == "portrait" ? WINDOW_WIDTH : WINDOW_HEIGHT,
+						height:
+							orientation == "portrait"
+								? WINDOW_HEIGHT * 0.4
+								: WINDOW_WIDTH * 0.75,
+					}}
 				>
-					<View>
-						<LinearGradient
-							colors={["rgba(0, 0, 0, 0)", "rgba(0, 0, 0, 0.25)"]}
-							start={{ x: 0, y: 1 }}
-							end={{ x: 0, y: 0 }}
-						>
-							<IconButton
-								icon="arrow-left"
-								size={32}
-								onPress={() => navigation.goBack()}
-							/>
-						</LinearGradient>
-					</View>
+					<IconButton
+						icon="arrow-left"
+						size={32}
+						onPress={() => navigation.goBack()}
+						iconColor={theme.colors.primary}
+					/>
 				</ImageBackground>
 
 				<View style={styles.titleParentStyle}>
@@ -364,19 +557,34 @@ const NewSelectScreen = ({ navigation, route }) => {
 							<Text>{data["Rating"] ? data["Rating"] : "N/A"}</Text>
 						</View>
 					</View>
-					<IconButton icon="bookmark-minus-outline" size={28} />
+					<IconButton
+						icon={inWatchList ? "bookmark-minus" : "bookmark-minus-outline"}
+						size={28}
+						onPress={handleWatchList}
+					/>
 				</View>
+
+				{showLoading && (
+					<View style={{ justifyContent: "center", padding: 20 }}>
+						<ActivityIndicator size={35} />
+					</View>
+				)}
 
 				<View>
 					{qualities ? (
-						<Buttons showModal={() => setVisible(true)} setType={setType} />
+						<Buttons
+							theme={theme}
+							showModal={() => setVisible(true)}
+							setType={setType}
+						/>
 					) : (
 						<WebView
 							source={{ uri: webpageUrl }}
 							injectedJavaScript={jsCode}
-							onMessage={(event) =>
-								setQualities(JSON.parse(event.nativeEvent.data))
-							}
+							onMessage={(event) => {
+								setQualities(JSON.parse(event.nativeEvent.data));
+								setShowLoading(false);
+							}}
 						/>
 					)}
 
@@ -386,6 +594,51 @@ const NewSelectScreen = ({ navigation, route }) => {
 					/>
 					<CastList castList={cast} />
 				</View>
+
+				{selectedSeason && (
+					<Pressable
+						style={{
+							flexDirection: "row-reverse",
+							margin: 10,
+							alignItems: "center",
+						}}
+						onPress={() => setSeasonsSelectorVisible(true)}
+					>
+						<Text style={{ color: theme.colors.primary, fontSize: 16 }}>
+							{selectedSeason[0]}
+						</Text>
+						<FontAwesome
+							name="chevron-down"
+							size={16}
+							color={theme.colors.primary}
+							style={{ paddingHorizontal: 4 }}
+						/>
+					</Pressable>
+				)}
+
+				{episodes.length > 0 && (
+					<ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+						{episodes.map(({ label, key }) => (
+							<EpisodeCard
+								label={label}
+								posterSource={data["Image Source"]}
+								source={key}
+								setWebpageUrl={setWebpageUrl}
+								key={key}
+							/>
+						))}
+					</ScrollView>
+				)}
+				<Snackbar
+					visible={snackbarVisible}
+					onDismiss={() => setSeasonsSelectorVisible(false)}
+					action={{
+						label: "Undo",
+						onPress: handleWatchList,
+					}}
+				>
+					Added to Watchlist
+				</Snackbar>
 			</ScrollView>
 		);
 	} else {
@@ -404,9 +657,13 @@ const NewSelectScreen = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
-	imageStyle: {
-		width: Dimensions.get("window").width,
-		height: Dimensions.get("window").height * 0.4,
+	imageStylePortrait: {
+		width: WINDOW_WIDTH,
+		height: WINDOW_HEIGHT * 0.4,
+	},
+	imageStyleLandscape: {
+		width: WINDOW_WIDTH,
+		height: WINDOW_HEIGHT * 0.75,
 	},
 	buttonStyle: {
 		marginVertical: 10,
@@ -420,6 +677,18 @@ const styles = StyleSheet.create({
 	titleParentStyle: {
 		flexDirection: "row",
 		justifyContent: "space-between",
+	},
+	modalBackgroundStyle: {
+		backgroundColor: "rgba(0,0,0,0.5)",
+		position: "absolute",
+		...StyleSheet.absoluteFillObject,
+		justifyContent: "center",
+		alignItems: "center",
+	},
+	modalViewStyle: {
+		marginHorizontal: 20,
+		borderRadius: 20,
+		alignItems: "center",
 	},
 });
 

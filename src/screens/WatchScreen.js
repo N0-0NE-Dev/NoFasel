@@ -13,16 +13,15 @@ const WatchScreen = ({ route, navigation }) => {
 	const [duration, setDuration] = useState(0);
 
 	const startTime = resume.hasOwnProperty(id + category)
-		? resume[id + category]
+		? resume[id + category]["resume"]
 		: 0;
 
 	navigation.addListener("beforeRemove", () => {
 		if (currentTime > 60) {
 			Object.assign(resume, {
-				[id + category]: currentTime,
-				duration: duration,
+				[id + category]: { resume: currentTime, duration: duration },
 			});
-			if (Object.keys(resume).length === 101) {
+			if (Object.keys(resume).length === 501) {
 				delete resume[Object.keys(resume)[0]];
 			} else {
 				// pass

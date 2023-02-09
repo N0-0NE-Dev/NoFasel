@@ -1,19 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { FlatList, Pressable, View, ToastAndroid } from "react-native";
+import React from "react";
+import { FlatList } from "react-native";
 import ContentCard from "./ContentCard";
-import { Storage } from "./Storage";
-import { useIsFocused } from "@react-navigation/native";
 import { isTablet } from "react-native-device-info";
-import { AntDesign } from "@expo/vector-icons";
 import { useTheme } from "react-native-paper";
-
-if (!Storage.contains("watchlist")) {
-	Storage.set("watchlist", JSON.stringify({}));
-} else {
-	// pass
-}
-
-const storedData = JSON.parse(Storage.getString("watchlist"));
 
 const ContentCardsList = ({
 	navigation,
@@ -23,56 +12,14 @@ const ContentCardsList = ({
 	width,
 	height,
 }) => {
-	const [refresh, setRefresh] = useState(false);
-	const isFocused = useIsFocused();
 	const theme = useTheme();
-
-	useEffect(() => setRefresh(!refresh), [isFocused]);
-
-	const AddToWatchlistButton = ({ id, category, imageSource, title }) => {
-		const showToast = (message) => {
-			ToastAndroid.show(message, ToastAndroid.SHORT);
-		};
-
-		const handlePress = () => {
-			if (storedData.hasOwnProperty(id)) {
-				delete storedData[id];
-				showToast("Removed from watchlist");
-			} else {
-				Object.assign(storedData, {
-					[id]: {
-						Category: category,
-						"Image Source": imageSource,
-						Title: title,
-					},
-				});
-				showToast("Added to watchlist");
-			}
-
-			Storage.set("watchlist", JSON.stringify(storedData));
-			setRefresh(!refresh);
-		};
-
-		return (
-			<Pressable
-				style={{ position: "absolute", zIndex: 1, padding: 2.5 }}
-				onPress={handlePress}
-			>
-				{storedData.hasOwnProperty(id) ? (
-					<AntDesign name="star" size={30} color="gold" />
-				) : (
-					<AntDesign name="staro" size={30} color="gold" />
-				)}
-			</Pressable>
-		);
-	};
 
 	let numColumns = null;
 
 	if (horizontal) {
 		numColumns = 1;
 	} else if (!horizontal && isTablet()) {
-		numColumns = 4;
+		numColumns = 3;
 	} else {
 		numColumns = 2;
 	}
