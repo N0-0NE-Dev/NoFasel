@@ -1,19 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-	View,
-	StyleSheet,
-	ActivityIndicator,
-	Dimensions,
-	ScrollView,
-	Image,
-} from "react-native";
+import { View, StyleSheet, Dimensions, ScrollView, Image } from "react-native";
 import { TextInput } from "react-native-paper";
 import { FontAwesome } from "@expo/vector-icons";
 import * as FileSystem from "expo-file-system";
 import ContentCardsList from "../components/ContentCardsList";
 import RBSheet from "react-native-raw-bottom-sheet";
 import ToggleButton from "../components/ToggleButton";
-import { useTheme, Text } from "react-native-paper";
+import { useTheme, Text, ActivityIndicator } from "react-native-paper";
 
 const SearchScreen = ({ navigation }) => {
 	const common = require("../data/common.json");
@@ -27,7 +20,7 @@ const SearchScreen = ({ navigation }) => {
 	const bottomSheetRef = useRef(null);
 	const [appliedFilters, setAppliedFilters] = useState([]);
 	const [selectedGenres, setSelectedGenres] = useState([]);
-	const [data, setData] = useState([]);
+	const [data, setData] = useState(null);
 
 	useEffect(() => {
 		FileSystem.readAsStringAsync(
@@ -87,7 +80,7 @@ const SearchScreen = ({ navigation }) => {
 		}
 	}, [searchText, appliedFilters, selectedGenres]);
 
-	if (data.length !== 0) {
+	if (data !== null) {
 		return (
 			<View style={{ flex: 1 }}>
 				<View style={styles.searchBarParentStyle}>
@@ -113,7 +106,7 @@ const SearchScreen = ({ navigation }) => {
 					/>
 				</View>
 
-				{data.length == 0 ? (
+				{data.length === 0 && searchText !== "" ? (
 					<View style={styles.imageParentStyle}>
 						<Image
 							source={require("../assets/NotFound.png")}
