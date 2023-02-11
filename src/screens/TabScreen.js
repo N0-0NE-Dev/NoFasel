@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import { View } from "react-native";
 import TrendingContentScreen from "./TrendingContentScreen";
 import { Storage } from "../components/Storage";
-import SettingsScreen from "./SettingsScreen";
 import WatchlistScreen from "./WatchlistScreen";
 import * as FileSystem from "expo-file-system";
 import WebView from "react-native-webview";
 import { FASEL_EMAIL, FASEL_PASSWORD } from "@env";
 import SearchScreen from "./SearchScreen";
+import NewSettingsScreen from "./NewSettingsScreen";
 import {
 	BottomNavigation,
 	ActivityIndicator,
@@ -57,7 +57,7 @@ const TabScreen = ({ navigation }) => {
 			return <WatchlistScreen navigation={navigation} />;
 		},
 		settings: () => {
-			return <SettingsScreen navigation={navigation} />;
+			return <NewSettingsScreen navigation={navigation} />;
 		},
 	});
 
@@ -81,17 +81,66 @@ const TabScreen = ({ navigation }) => {
 		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/tvshows.json",
 		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/arabic-series.json",
 		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/arabic-movies.json",
-		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/last-scraped.txt",
 		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/featured-content.json",
+		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/file-hashes.json",
 	];
 
-	let progress = 0;
+	useEffect(() => {
+		fetch(
+			"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/file-hashes.json"
+		)
+			.then((resp) => resp.text())
+			.then((rawFetchedHashes) => {
+				FileSystem.readAsStringAsync(
+					FileSystem.documentDirectory + "file-hashes.json"
+				)
+					.then((rawExistingHashes) => {
+						let progress = 0;
+						const existingHashes = JSON.parse(rawExistingHashes);
+						const fetchedHashes = JSON.parse(rawFetchedHashes);
 
-	if (!Storage.contains("contentAutoupdate")) {
-		Storage.set("contentAutoupdate", true);
-	} else {
-		// pass
-	}
+						Object.keys(existingHashes).forEach((key) => {
+							console.log(key);
+
+							if (existingHashes[key] !== fetchedHashes[key]) {
+								FileSystem.downloadAsync(
+									`https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/${key}.json`,
+									FileSystem.documentDirectory + key + ".json"
+								).then(() => progress++);
+							} else {
+								progress++;
+							}
+
+							if (progress === Object.keys(existingHashes).length) {
+								FileSystem.downloadAsync(
+									"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/file-hashes.json",
+									FileSystem.documentDirectory + "file-hashes.json"
+								).then(() => setContentUpdated(true));
+							} else {
+								// pass
+							}
+						});
+					})
+					.catch((e) => {
+						console.error(e);
+						let progress = 0;
+						fileUrls.forEach((url) => {
+							const fileName = url.split("/").slice(-1)[0];
+							FileSystem.downloadAsync(
+								url,
+								FileSystem.documentDirectory + fileName
+							).then(() => {
+								progress++;
+								if (progress === fileUrls.length) {
+									setContentUpdated(true);
+								} else {
+									// pass
+								}
+							});
+						});
+					});
+			});
+	}, []);
 
 	if (!Storage.contains("useProxy")) {
 		Storage.set("useProxy", false);
@@ -105,55 +154,11 @@ const TabScreen = ({ navigation }) => {
 		// pass
 	}
 
-	const contentAutoupdate = Storage.getBoolean("contentAutoupdate");
-
-	const updateContent = () => {
-		fileUrls.forEach((url) => {
-			const fileName = url.split("/").slice(-1)[0];
-			FileSystem.downloadAsync(
-				url,
-				FileSystem.documentDirectory + fileName
-			).then(() => {
-				progress++;
-				if (progress == fileUrls.length) {
-					setContentUpdated(true);
-				} else {
-					// pass
-				}
-			});
-		});
-	};
-
-	const handleContentUpdate = () => {
-		fetch(
-			"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/last-scraped.txt"
-		)
-			.then((response) => response.text())
-			.then((text) => {
-				const newestDate = new Date(text);
-				FileSystem.readAsStringAsync(
-					FileSystem.documentDirectory + "last-scraped.txt"
-				)
-					.then((date) => {
-						const currentDate = new Date(date);
-
-						if (newestDate > currentDate) {
-							updateContent();
-						} else {
-							setContentUpdated(true);
-						}
-					})
-					.catch(() => updateContent());
-			});
-	};
-
-	useEffect(() => {
-		if (contentAutoupdate) {
-			handleContentUpdate();
-		} else {
-			// pass
-		}
-	}, []);
+	if (!Storage.contains("watchlist")) {
+		Storage.set("watchlist", JSON.stringify({}));
+	} else {
+		// pass
+	}
 
 	const handleNavigationChange = (webViewState) => {
 		if (webViewState.url === "https://www.faselhd.ws/") {

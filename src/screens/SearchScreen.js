@@ -3,10 +3,11 @@ import { View, StyleSheet, Dimensions, ScrollView, Image } from "react-native";
 import { TextInput } from "react-native-paper";
 import { FontAwesome } from "@expo/vector-icons";
 import * as FileSystem from "expo-file-system";
-import ContentCardsList from "../components/ContentCardsList";
 import RBSheet from "react-native-raw-bottom-sheet";
 import ToggleButton from "../components/ToggleButton";
-import { useTheme, Text, ActivityIndicator } from "react-native-paper";
+import { useTheme, Text, Button } from "react-native-paper";
+import CentredActivityIndicator from "../components/CentredActivityIndicator";
+import ContentCard from "../components/ContentCard";
 
 const SearchScreen = ({ navigation }) => {
 	const common = require("../data/common.json");
@@ -21,6 +22,23 @@ const SearchScreen = ({ navigation }) => {
 	const [appliedFilters, setAppliedFilters] = useState([]);
 	const [selectedGenres, setSelectedGenres] = useState([]);
 	const [data, setData] = useState(null);
+	const [start, setStart] = useState(0);
+	const [end, setEnd] = useState(20);
+	const pageNumber = end / 20;
+
+	const handleNext = () => {
+		setStart(end);
+		setEnd(end + 20);
+	};
+
+	const handlePrevious = () => {
+		if (start !== 0) {
+			setStart(start - 20);
+			setEnd(end - 20);
+		} else {
+			// pass
+		}
+	};
 
 	useEffect(() => {
 		FileSystem.readAsStringAsync(
@@ -82,7 +100,7 @@ const SearchScreen = ({ navigation }) => {
 
 	if (data !== null) {
 		return (
-			<View style={{ flex: 1 }}>
+			<ScrollView>
 				<View style={styles.searchBarParentStyle}>
 					<TextInput
 						placeholder="Search"
@@ -110,7 +128,7 @@ const SearchScreen = ({ navigation }) => {
 					<View style={styles.imageParentStyle}>
 						<Image
 							source={require("../assets/NotFound.png")}
-							style={{ width: 860 * 0.4, height: 571 * 0.4 }}
+							style={{ width: 860 * 0.3, height: 571 * 0.3 }}
 						/>
 						<Text
 							style={{
@@ -126,14 +144,63 @@ const SearchScreen = ({ navigation }) => {
 						</Text>
 					</View>
 				) : (
-					<ContentCardsList
-						data={data}
-						horizontal={false}
-						formatted={true}
-						width={180}
-						height={270}
-						navigation={navigation}
-					/>
+					<ScrollView
+						horizontal={true}
+						contentContainerStyle={{
+							flexWrap: "wrap",
+							flex: 1,
+							justifyContent: "center",
+						}}
+					>
+						{data.slice(start, end).map((item) => (
+							<ContentCard
+								width={180}
+								height={270}
+								navigation={navigation}
+								id={item["key"]}
+								category={item["Category"]}
+								title={item["Title"]}
+								rating={item["Rating"]}
+								imageSource={item["Image Source"]}
+								key={item["key"]}
+							/>
+						))}
+					</ScrollView>
+				)}
+
+				{data.length > 20 && (
+					<View
+						style={{
+							flexDirection: "row",
+							justifyContent: "center",
+							alignItems: "center",
+						}}
+					>
+						{start > 0 && (
+							<Button
+								icon="chevron-left"
+								mode="outlined"
+								style={{ borderColor: "rgba(0, 0, 0, 0)" }}
+								labelStyle={{ fontSize: 15 }}
+								onPress={handlePrevious}
+							>
+								Previous
+							</Button>
+						)}
+						<Text>{pageNumber}</Text>
+						{end < data.length && (
+							<Button
+								mode="outlined"
+								icon="chevron-right"
+								style={{ borderColor: "rgba(0, 0, 0, 0)" }}
+								contentStyle={{ flexDirection: "row-reverse" }}
+								labelStyle={{ fontSize: 15 }}
+								onPress={handleNext}
+							>
+								Next
+							</Button>
+						)}
+					</View>
 				)}
 
 				<RBSheet
@@ -186,14 +253,10 @@ const SearchScreen = ({ navigation }) => {
 						))}
 					</ScrollView>
 				</RBSheet>
-			</View>
+			</ScrollView>
 		);
 	} else {
-		return (
-			<View style={styles.activityIndicatorParentStyle}>
-				<ActivityIndicator size={50} />
-			</View>
-		);
+		return <CentredActivityIndicator />;
 	}
 };
 
@@ -210,11 +273,6 @@ const styles = StyleSheet.create({
 		marginRight: 20,
 		borderRadius: 15,
 		padding: 15,
-	},
-	activityIndicatorParentStyle: {
-		flex: 1,
-		justifyContent: "center",
-		alignItems: "center",
 	},
 	searchBarParentStyle: {
 		flexDirection: "row",
@@ -241,13 +299,10 @@ const styles = StyleSheet.create({
 		margin: 15,
 	},
 	imageParentStyle: {
-		position: "absolute",
-		top: 0,
-		left: 0,
-		right: 0,
-		bottom: 0,
-		justifyContent: "center",
 		alignItems: "center",
+		flex: 1,
+		borderColor: "white",
+		justifyContent: "center",
 	},
 	notFoundTextStyle: {
 		fontWeight: "bold",

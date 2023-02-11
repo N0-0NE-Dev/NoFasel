@@ -3,12 +3,10 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import TabScreen from "./src/screens/TabScreen";
-import SelectScreen from "./src/screens/SelectScreen";
 import WatchScreen from "./src/screens/WatchScreen";
-import LoadingScreen from "./src/screens/LoadingScreen";
-import AllContentScreen from "./src/screens/AllContentScreen";
 import NewSelectScreen from "./src/screens/NewSelectScreen";
 import { Provider as PaperProvider, useTheme } from "react-native-paper";
+import GeneralSettingsScreen from "./src/screens/GeneralSettingsScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -31,21 +29,6 @@ const MyStack = () => {
 				component={TabScreen}
 				options={{
 					headerShown: false,
-					orientation: "default",
-				}}
-			/>
-			<Stack.Screen
-				name="Select"
-				component={SelectScreen}
-				options={{
-					orientation: "default",
-				}}
-			/>
-			<Stack.Screen
-				name="All Content"
-				component={AllContentScreen}
-				options={{
-					orientation: "default",
 				}}
 			/>
 			<Stack.Screen
@@ -58,21 +41,13 @@ const MyStack = () => {
 				}}
 			/>
 			<Stack.Screen
-				name="Loading"
-				component={LoadingScreen}
-				options={{
-					headerShown: false,
-					orientation: "default",
-				}}
-			/>
-			<Stack.Screen
 				name="New Select"
 				component={NewSelectScreen}
 				options={{
 					headerShown: false,
-					orientation: "default",
 				}}
 			/>
+			<Stack.Screen name="General Settings" component={GeneralSettingsScreen} />
 		</Stack.Navigator>
 	);
 };

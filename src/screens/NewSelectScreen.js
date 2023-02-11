@@ -31,10 +31,8 @@ import { WebView } from "react-native-webview";
 import Clipboard from "@react-native-clipboard/clipboard";
 import { Storage } from "../components/Storage";
 import { useIsFocused } from "@react-navigation/native";
-import { useDeviceOrientation } from "@react-native-community/hooks";
-
-const WINDOW_WIDTH = Dimensions.get("window").width;
-const WINDOW_HEIGHT = Dimensions.get("window").height;
+import { isTablet } from "react-native-device-info";
+import CentredActivityIndicator from "../components/CentredActivityIndicator";
 
 const getOverview = async (tmdbId, category) => {
 	return fetch(
@@ -264,7 +262,6 @@ const NewSelectScreen = ({ navigation, route }) => {
 	const watchlist = JSON.parse(Storage.getString("watchlist"));
 	const resume = JSON.parse(Storage.getString("resume"));
 	const isFocused = useIsFocused();
-	const orientation = useDeviceOrientation();
 
 	const [data, setData] = useState(null);
 	const [overview, setOverview] = useState(null);
@@ -301,7 +298,6 @@ const NewSelectScreen = ({ navigation, route }) => {
 		`;
 
 	useEffect(() => setRefresh(!refresh), [isFocused]);
-	useEffect(() => setRefresh(!refresh), [orientation]);
 
 	useEffect(() => {
 		if (seasons) {
@@ -505,130 +501,142 @@ const NewSelectScreen = ({ navigation, route }) => {
 
 	if (overview && cast) {
 		return (
-			<ScrollView style={{ backgroundColor: theme.colors.background, flex: 1 }}>
-				{qualities && (
-					<QualitySelector
-						visible={visible}
-						setVisible={setVisible}
-						itemList={qualities}
-						theme={theme}
-						handlePress={handleQualitySelect}
-					/>
-				)}
-
-				{seasons && (
-					<QualitySelector
-						visible={seasonsSelectorVisible}
-						setVisible={setSeasonsSelectorVisible}
-						itemList={seasons}
-						theme={theme}
-						handlePress={handleSeasonSwitch}
-					/>
-				)}
-
-				<ImageBackground
-					source={{ uri: data["Image Source"] }}
-					style={{
-						width: orientation == "portrait" ? WINDOW_WIDTH : WINDOW_HEIGHT,
-						height:
-							orientation == "portrait"
-								? WINDOW_HEIGHT * 0.4
-								: WINDOW_WIDTH * 0.75,
-					}}
-				>
-					<IconButton
-						icon="arrow-left"
-						size={32}
-						onPress={() => navigation.goBack()}
-						iconColor={theme.colors.primary}
-					/>
-				</ImageBackground>
-
-				<View style={styles.titleParentStyle}>
-					<View>
-						<Text style={styles.titleStyle}>{data["Title"]}</Text>
-						<View style={{ flexDirection: "row" }}>
-							<FontAwesome
-								name="star"
-								size={24}
-								color={theme.colors.primary}
-								style={{ marginHorizontal: 10 }}
-							/>
-							<Text>{data["Rating"] ? data["Rating"] : "N/A"}</Text>
-						</View>
-					</View>
-					<IconButton
-						icon={inWatchList ? "bookmark-minus" : "bookmark-minus-outline"}
-						size={28}
-						onPress={handleWatchList}
-					/>
-				</View>
-
-				{showLoading && (
-					<View style={{ justifyContent: "center", padding: 20 }}>
-						<ActivityIndicator size={35} />
-					</View>
-				)}
-
-				<View>
-					{qualities ? (
-						<Buttons
+			<View style={{ backgroundColor: theme.colors.background, flex: 1 }}>
+				<ScrollView>
+					{qualities && (
+						<QualitySelector
+							visible={visible}
+							setVisible={setVisible}
+							itemList={qualities}
 							theme={theme}
-							showModal={() => setVisible(true)}
-							setType={setType}
-						/>
-					) : (
-						<WebView
-							source={{ uri: webpageUrl }}
-							injectedJavaScript={jsCode}
-							onMessage={(event) => {
-								setQualities(JSON.parse(event.nativeEvent.data));
-								setShowLoading(false);
-							}}
+							handlePress={handleQualitySelect}
 						/>
 					)}
 
-					<PostTextContent
-						text={overview}
-						moreTextColor={theme.colors.primary}
-					/>
-					<CastList castList={cast} />
-				</View>
-
-				{selectedSeason && (
-					<Pressable
-						style={{
-							flexDirection: "row-reverse",
-							margin: 10,
-							alignItems: "center",
-						}}
-						onPress={() => setSeasonsSelectorVisible(true)}
-					>
-						<Text style={{ color: theme.colors.primary, fontSize: 16 }}>
-							{selectedSeason[0]}
-						</Text>
-						<FontAwesome
-							name="chevron-down"
-							size={16}
-							color={theme.colors.primary}
-							style={{ paddingHorizontal: 4 }}
+					{seasons && (
+						<QualitySelector
+							visible={seasonsSelectorVisible}
+							setVisible={setSeasonsSelectorVisible}
+							itemList={seasons}
+							theme={theme}
+							handlePress={handleSeasonSwitch}
 						/>
-					</Pressable>
-				)}
+					)}
 
-				{episodes.length > 0 && (
-					<ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-						{episodes.map(({ label, key }) => (
-							<EpisodeCard
-								label={label}
-								posterSource={data["Image Source"]}
-								source={key}
-								setWebpageUrl={setWebpageUrl}
-								key={key}
-							/>
+					{isTablet() ||
+						(orientation !== "landscape" && (
+							<ImageBackground
+								source={{ uri: data["Image Source"] }}
+								style={{
+									width: Dimensions.get("window").width,
+									height: Dimensions.get("window").height * 0.4,
+								}}
+							>
+								<LinearGradient
+									colors={["rgba(0, 0, 0, 0)", "rgba(0, 0, 0, 0.5)"]}
+									start={{ x: 0, y: 1 }}
+									end={{ x: 0, y: 0 }}
+									style={{ flex: 1 }}
+								>
+									<IconButton
+										icon="arrow-left"
+										size={32}
+										onPress={() => navigation.goBack()}
+										iconColor={theme.colors.primary}
+									/>
+								</LinearGradient>
+							</ImageBackground>
 						))}
-					</ScrollView>
-				)}
+
+					<View style={styles.titleParentStyle}>
+						<View>
+							<Text style={styles.titleStyle}>{data["Title"]}</Text>
+							<View style={{ flexDirection: "row" }}>
+								<FontAwesome
+									name="star"
+									size={24}
+									color={theme.colors.primary}
+									style={{ marginHorizontal: 10 }}
+								/>
+								<Text>{data["Rating"] ? data["Rating"] : "N/A"}</Text>
+							</View>
+						</View>
+						<IconButton
+							icon={inWatchList ? "bookmark-minus" : "bookmark-minus-outline"}
+							size={28}
+							onPress={handleWatchList}
+						/>
+					</View>
+
+					{showLoading && (
+						<View style={{ justifyContent: "center", padding: 20 }}>
+							<ActivityIndicator size={35} />
+						</View>
+					)}
+
+					<View>
+						{qualities ? (
+							<Buttons
+								theme={theme}
+								showModal={() => setVisible(true)}
+								setType={setType}
+							/>
+						) : (
+							<WebView
+								source={{ uri: webpageUrl }}
+								injectedJavaScript={jsCode}
+								onMessage={(event) => {
+									setQualities(JSON.parse(event.nativeEvent.data));
+									setShowLoading(false);
+								}}
+							/>
+						)}
+
+						<PostTextContent
+							text={overview}
+							moreTextColor={theme.colors.primary}
+						/>
+						<CastList castList={cast} />
+					</View>
+
+					{selectedSeason && (
+						<Pressable
+							style={{
+								flexDirection: "row-reverse",
+								margin: 10,
+								alignItems: "center",
+							}}
+							onPress={() => setSeasonsSelectorVisible(true)}
+						>
+							<Text style={{ color: theme.colors.primary, fontSize: 16 }}>
+								{selectedSeason[0]}
+							</Text>
+							<FontAwesome
+								name="chevron-down"
+								size={16}
+								color={theme.colors.primary}
+								style={{ paddingHorizontal: 4 }}
+							/>
+						</Pressable>
+					)}
+
+					{episodes.length > 0 && (
+						<ScrollView
+							horizontal={true}
+							showsHorizontalScrollIndicator={false}
+						>
+							{episodes.map(({ label, key }) => (
+								<EpisodeCard
+									label={label}
+									posterSource={data["Image Source"]}
+									source={key}
+									setWebpageUrl={setWebpageUrl}
+									key={key}
+								/>
+							))}
+						</ScrollView>
+					)}
+				</ScrollView>
 				<Snackbar
 					visible={snackbarVisible}
 					onDismiss={() => setSeasonsSelectorVisible(false)}
@@ -639,32 +647,14 @@ const NewSelectScreen = ({ navigation, route }) => {
 				>
 					Added to Watchlist
 				</Snackbar>
-			</ScrollView>
-		);
-	} else {
-		return (
-			<View
-				style={{
-					flex: 1,
-					justifyContent: "center",
-					backgroundColor: theme.colors.background,
-				}}
-			>
-				<ActivityIndicator size={50} />
 			</View>
 		);
+	} else {
+		return <CentredActivityIndicator />;
 	}
 };
 
 const styles = StyleSheet.create({
-	imageStylePortrait: {
-		width: WINDOW_WIDTH,
-		height: WINDOW_HEIGHT * 0.4,
-	},
-	imageStyleLandscape: {
-		width: WINDOW_WIDTH,
-		height: WINDOW_HEIGHT * 0.75,
-	},
 	buttonStyle: {
 		marginVertical: 10,
 		marginHorizontal: 5,

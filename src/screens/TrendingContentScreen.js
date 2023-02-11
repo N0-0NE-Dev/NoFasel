@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, ScrollView } from "react-native";
+import { ScrollView } from "react-native";
 import * as FileSystem from "expo-file-system";
 import TrendingContentSection from "../components/TrendingContentSection";
 import FeaturedContentCardList from "../components/FeaturedContentCardList";
-import { ActivityIndicator } from "react-native-paper";
+import { useDeviceOrientation } from "@react-native-community/hooks";
+import CentredActivityIndicator from "../components/CentredActivityIndicator";
+import { isTablet } from "react-native-device-info";
 
 const TrendingContentScreen = ({ navigation }) => {
 	const [data, setData] = useState(null);
 	const listData = require("../data/common.json").categories.slice(0, 5);
+	const orientation = useDeviceOrientation();
 
 	useEffect(() => {
 		FileSystem.readAsStringAsync(
@@ -18,7 +21,9 @@ const TrendingContentScreen = ({ navigation }) => {
 	if (data) {
 		return (
 			<ScrollView style={{ flex: 1 }}>
-				<FeaturedContentCardList navigation={navigation} />
+				{orientation == "portrait" && !isTablet() && (
+					<FeaturedContentCardList navigation={navigation} />
+				)}
 				{listData.map(({ label, key }) => (
 					<TrendingContentSection
 						data={data[key]}
@@ -31,19 +36,8 @@ const TrendingContentScreen = ({ navigation }) => {
 			</ScrollView>
 		);
 	} else {
-		return (
-			<View style={styles.indicatorParentStyle}>
-				<ActivityIndicator size={50} />
-			</View>
-		);
+		return <CentredActivityIndicator />;
 	}
 };
-
-const styles = StyleSheet.create({
-	indicatorParentStyle: {
-		flex: 1,
-		justifyContent: "center",
-	},
-});
 
 export default TrendingContentScreen;

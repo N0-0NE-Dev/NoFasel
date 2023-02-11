@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
 		fontSize: 12,
 		borderRadius: 10,
 		color: "black",
+		fontWeight: "bold",
 	},
 	titleStyle: {
 		textAlign: "center",

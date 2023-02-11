@@ -19,7 +19,7 @@ const ContentCardsList = ({
 	if (horizontal) {
 		numColumns = 1;
 	} else if (!horizontal && isTablet()) {
-		numColumns = 3;
+		numColumns = 5;
 	} else {
 		numColumns = 2;
 	}
