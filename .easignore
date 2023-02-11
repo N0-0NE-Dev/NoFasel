@@ -69,3 +69,11 @@ android/keystore.properties
 dist
 /fastlane/
 /.github/
+.gitignore
+LICENSE
+package-lock.json
+package.json
+SECURITY.md
+README.md
+CONTRIBUTING.md
+CODE_OF_CONDUCT.md
