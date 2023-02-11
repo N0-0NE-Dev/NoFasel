@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Dimensions, ImageBackground } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
-import { Button, useTheme, Text } from "react-native-paper";
+import { Button, Text } from "react-native-paper";
 
 const FeaturedContentCard = ({
 	navigation,
@@ -11,8 +11,6 @@ const FeaturedContentCard = ({
 	category,
 	id,
 }) => {
-	const theme = useTheme();
-
 	return (
 		<ImageBackground source={{ uri: imageSource }} style={styles.imageStyle}>
 			<LinearGradient
@@ -37,25 +35,13 @@ const FeaturedContentCard = ({
 						icon="play-circle"
 						style={styles.buttonStyle}
 						onPress={() =>
-							navigation.navigate("Select", {
+							navigation.navigate("New Select", {
 								category: category,
 								id: id,
 							})
 						}
 					>
 						Play
-					</Button>
-
-					<Button
-						icon="plus"
-						mode="outlined"
-						style={{
-							...styles.buttonStyle,
-							borderColor: theme.colors.primary,
-							borderWidth: 2,
-						}}
-					>
-						My List
 					</Button>
 				</View>
 			</LinearGradient>

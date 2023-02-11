@@ -47,6 +47,7 @@ const FeaturedContentCardList = ({ navigation }) => {
 						category={item["Category"]}
 						id={item["key"]}
 						navigation={navigation}
+						rating={item["Rating"] ? item["Rating"] : "N/A"}
 					/>
 				))}
 			</ScrollView>
