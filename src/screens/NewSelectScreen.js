@@ -33,6 +33,7 @@ import { Storage } from "../components/Storage";
 import { useIsFocused } from "@react-navigation/native";
 import { isTablet } from "react-native-device-info";
 import CentredActivityIndicator from "../components/CentredActivityIndicator";
+import { useDeviceOrientation } from "@react-native-community/hooks";
 
 const getOverview = async (tmdbId, category) => {
 	return fetch(
@@ -277,6 +278,7 @@ const NewSelectScreen = ({ navigation, route }) => {
 	const [seasonsSelectorVisible, setSeasonsSelectorVisible] = useState(false);
 	const [refresh, setRefresh] = useState(false);
 	const [snackbarVisible, setSnackbarVisible] = useState(false);
+	const orientation = useDeviceOrientation();
 
 	const [showLoading, setShowLoading] = useState(
 		category == "movies" ? true : false
@@ -298,6 +300,7 @@ const NewSelectScreen = ({ navigation, route }) => {
 		`;
 
 	useEffect(() => setRefresh(!refresh), [isFocused]);
+	useEffect(() => setRefresh(!refresh), [orientation]);
 
 	useEffect(() => {
 		if (seasons) {
@@ -341,7 +344,8 @@ const NewSelectScreen = ({ navigation, route }) => {
 	useEffect(() => {
 		if (data) {
 			if (category == "arabic-movies") {
-				setWebpageUrl(data["Soruce"]);
+				setShowLoading(true);
+				setWebpageUrl(data["Source"]);
 			} else {
 				// pass
 			}

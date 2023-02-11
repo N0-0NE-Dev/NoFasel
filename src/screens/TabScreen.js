@@ -100,8 +100,6 @@ const TabScreen = ({ navigation }) => {
 						const fetchedHashes = JSON.parse(rawFetchedHashes);
 
 						Object.keys(existingHashes).forEach((key) => {
-							console.log(key);
-
 							if (existingHashes[key] !== fetchedHashes[key]) {
 								FileSystem.downloadAsync(
 									`https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/${key}.json`,
