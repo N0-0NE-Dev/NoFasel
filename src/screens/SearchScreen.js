@@ -67,6 +67,8 @@ const SearchScreen = ({ navigation }) => {
 	};
 
 	useEffect(() => {
+		setStart(0);
+		setEnd(20);
 		if (allData && featuredContent) {
 			if (searchText !== "") {
 				var searched = allData.content.filter((item) => {
