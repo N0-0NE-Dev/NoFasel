@@ -107,7 +107,6 @@ const TabScreen = ({ navigation }) => {
 							}
 						});
 					})
-					.catch((e) => console.error(e))
 					.catch((e) => {
 						console.error(e);
 						fileUrls.forEach((url) => {
