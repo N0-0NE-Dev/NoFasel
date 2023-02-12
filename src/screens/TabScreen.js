@@ -15,6 +15,7 @@ import {
 } from "react-native-paper";
 
 const TabScreen = ({ navigation }) => {
+	const fileUrls = require("../data/common.json").fileUrls;
 	const [contentUpdated, setContentUpdated] = useState(false);
 	const [loggedin, setLoggedin] = useState(false);
 	const [index, setIndex] = useState(0);
@@ -71,31 +72,18 @@ const TabScreen = ({ navigation }) => {
 					}
 					`;
 
-	const fileUrls = [
-		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/all-content.json",
-		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/anime.json",
-		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/asian-series.json",
-		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/movies.json",
-		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/series.json",
-		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/trending-content.json",
-		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/tvshows.json",
-		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/arabic-series.json",
-		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/arabic-movies.json",
-		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/featured-content.json",
-		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/file-hashes.json",
-	];
-
 	useEffect(() => {
 		fetch(
-			"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/file-hashes.json"
+			"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/file-hashes.json",
+			{ cache: "no-store" }
 		)
 			.then((resp) => resp.text())
 			.then((rawFetchedHashes) => {
+				let progress = 0;
 				FileSystem.readAsStringAsync(
 					FileSystem.documentDirectory + "file-hashes.json"
 				)
 					.then((rawExistingHashes) => {
-						let progress = 0;
 						const existingHashes = JSON.parse(rawExistingHashes);
 						const fetchedHashes = JSON.parse(rawFetchedHashes);
 
@@ -119,9 +107,9 @@ const TabScreen = ({ navigation }) => {
 							}
 						});
 					})
+					.catch((e) => console.error(e))
 					.catch((e) => {
 						console.error(e);
-						let progress = 0;
 						fileUrls.forEach((url) => {
 							const fileName = url.split("/").slice(-1)[0];
 							FileSystem.downloadAsync(

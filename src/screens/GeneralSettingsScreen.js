@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { View, Pressable } from "react-native";
 import { useTheme, Text, Switch } from "react-native-paper";
 import { Storage } from "../components/Storage";
+import DefaultSettingsButton from "../components/DefaultSettingsButton";
 
-const GeneralSettingsScreen = () => {
+const GeneralSettingsScreen = ({ navigation }) => {
 	const theme = useTheme();
 	const [useProxy, setUseProxy] = useState(Storage.getBoolean("useProxy"));
 
@@ -32,11 +33,22 @@ const GeneralSettingsScreen = () => {
 					},
 				]}
 			>
-				<Text style={{ fontSize: 20, fontWeight: "bold" }}>
+				<Text
+					style={{
+						fontSize: 20,
+						fontWeight: "bold",
+						color: theme.colors.primary,
+					}}
+				>
 					Use Proxy for Akwam
 				</Text>
 				<Switch value={useProxy} onValueChange={() => setUseProxy(!useProxy)} />
 			</Pressable>
+			<DefaultSettingsButton
+				label="Force Update Content"
+				iconName="update"
+				onPress={() => navigation.navigate("Loading")}
+			/>
 		</View>
 	);
 };

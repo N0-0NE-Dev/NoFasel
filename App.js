@@ -7,6 +7,8 @@ import WatchScreen from "./src/screens/WatchScreen";
 import NewSelectScreen from "./src/screens/NewSelectScreen";
 import { Provider as PaperProvider, useTheme } from "react-native-paper";
 import GeneralSettingsScreen from "./src/screens/GeneralSettingsScreen";
+import AboutScreen from "./src/screens/AboutScreen";
+import LoadingScreen from "./src/screens/LoadingScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -47,7 +49,15 @@ const MyStack = () => {
 					headerShown: false,
 				}}
 			/>
+			<Stack.Screen
+				name="Loading"
+				component={LoadingScreen}
+				options={{
+					headerShown: false,
+				}}
+			/>
 			<Stack.Screen name="General Settings" component={GeneralSettingsScreen} />
+			<Stack.Screen name="About" component={AboutScreen} />
 		</Stack.Navigator>
 	);
 };

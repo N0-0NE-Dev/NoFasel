@@ -44,7 +44,7 @@ const getOverview = async (tmdbId, category) => {
 		.then((response) => response.json())
 		.then((json) => {
 			if (json.overview) {
-				return json.overview;
+				return json.overview + " (TMDb)";
 			} else {
 				return "N/A";
 			}
@@ -123,13 +123,18 @@ const CastCard = ({ name, role, imageUrl }) => {
 	);
 };
 
-const Buttons = ({ showModal, setType, theme }) => {
+const Buttons = ({ showModal, setType, theme, tmdbId, category }) => {
+	const defaultBehaviour = (label) => {
+		showModal();
+		setType(label);
+	};
+
 	const buttonsData = [
 		{
 			mode: "contained",
 			icon: "play-circle",
 			label: "Play",
-			color: null,
+			onPress: () => defaultBehaviour("Play"),
 		},
 		{
 			mode: "contained",
@@ -137,18 +142,34 @@ const Buttons = ({ showModal, setType, theme }) => {
 			type: "vlc",
 			label: "Open In VLC",
 			color: "orange",
+			onPress: () => defaultBehaviour("Open In VLC"),
+		},
+		{
+			mode: "contained",
+			icon: require("../assets/TMDbLogo.png"),
+			label: "TMDb",
+			color: "#0d253f",
+			labelColor: "white",
+			onPress: () =>
+				Linking.openURL(
+					`https://www.themoviedb.org/${
+						category == "movies" ? "movie" : "tv"
+					}/${tmdbId}`
+				),
 		},
 		{
 			mode: "outlined",
 			icon: "tray-arrow-down",
 			label: "Download",
-			color: null,
+			onPress: () => defaultBehaviour("Download"),
+			labelColor: theme.colors.primary,
 		},
 		{
 			mode: "outlined",
 			icon: "content-copy",
 			label: "Copy",
-			color: null,
+			onPress: () => defaultBehaviour("Copy"),
+			labelColor: theme.colors.primary,
 		},
 	];
 	return (
@@ -159,14 +180,12 @@ const Buttons = ({ showModal, setType, theme }) => {
 			renderItem={({ item }) => {
 				return (
 					<Button
+						labelStyle={{ color: item.labelColor }}
 						mode={item.mode}
 						icon={item.icon}
-						onPress={() => {
-							showModal();
-							setType(item.label);
-						}}
+						onPress={item.onPress}
 						buttonColor={item.color}
-						style={{ ...styles.buttonStyle, borderColor: theme.colors.primary }}
+						style={styles.buttonStyle}
 					>
 						{item.label}
 					</Button>
@@ -345,7 +364,7 @@ const NewSelectScreen = ({ navigation, route }) => {
 		if (data) {
 			if (category == "arabic-movies") {
 				setShowLoading(true);
-				setWebpageUrl(data["Source"]);
+				setTimeout(() => setWebpageUrl(data["Source"]), 250);
 			} else {
 				// pass
 			}
@@ -354,7 +373,7 @@ const NewSelectScreen = ({ navigation, route }) => {
 
 	useEffect(() => {
 		if (category === "movies" && !webpageUrl) {
-			setWebpageUrl(`https://www.faselhd.ws/?p=${id}`);
+			setTimeout(() => setWebpageUrl(`https://www.faselhd.ws/?p=${id}`), 250);
 		} else if (category.includes("arabic") && webpageUrl) {
 			fetch(
 				useProxy
@@ -506,7 +525,7 @@ const NewSelectScreen = ({ navigation, route }) => {
 	if (overview && cast) {
 		return (
 			<View style={{ backgroundColor: theme.colors.background, flex: 1 }}>
-				<ScrollView>
+				<ScrollView scrollEnabled={!showLoading}>
 					{qualities && (
 						<QualitySelector
 							visible={visible}
@@ -569,6 +588,7 @@ const NewSelectScreen = ({ navigation, route }) => {
 							icon={inWatchList ? "bookmark-minus" : "bookmark-minus-outline"}
 							size={28}
 							onPress={handleWatchList}
+							iconColor={theme.colors.primary}
 						/>
 					</View>
 
@@ -584,6 +604,8 @@ const NewSelectScreen = ({ navigation, route }) => {
 								theme={theme}
 								showModal={() => setVisible(true)}
 								setType={setType}
+								tmdbId={data["TMDb ID"]}
+								category={category}
 							/>
 						) : (
 							<WebView
