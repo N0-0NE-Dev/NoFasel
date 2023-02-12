@@ -71,8 +71,6 @@ dist
 /.github/
 .gitignore
 LICENSE
-package-lock.json
-package.json
 SECURITY.md
 README.md
 CONTRIBUTING.md
