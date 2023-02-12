@@ -72,60 +72,43 @@ const TabScreen = ({ navigation }) => {
 					}
 					`;
 
-	useEffect(() => {
-		fetch(
-			"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/file-hashes.json",
-			{ cache: "no-store" }
-		)
-			.then((resp) => resp.text())
-			.then((rawFetchedHashes) => {
-				let progress = 0;
-				FileSystem.readAsStringAsync(
-					FileSystem.documentDirectory + "file-hashes.json"
-				)
-					.then((rawExistingHashes) => {
-						const existingHashes = JSON.parse(rawExistingHashes);
-						const fetchedHashes = JSON.parse(rawFetchedHashes);
-
-						Object.keys(existingHashes).forEach((key) => {
-							if (existingHashes[key] !== fetchedHashes[key]) {
-								FileSystem.downloadAsync(
-									`https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/${key}.json`,
-									FileSystem.documentDirectory + key + ".json"
-								).then(() => progress++);
-							} else {
-								progress++;
-							}
-
-							if (progress === Object.keys(existingHashes).length) {
-								FileSystem.downloadAsync(
-									"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/file-hashes.json",
-									FileSystem.documentDirectory + "file-hashes.json"
-								).then(() => setContentUpdated(true));
-							} else {
-								// pass
-							}
-						});
-					})
-					.catch((e) => {
-						console.error(e);
-						fileUrls.forEach((url) => {
-							const fileName = url.split("/").slice(-1)[0];
-							FileSystem.downloadAsync(
-								url,
-								FileSystem.documentDirectory + fileName
-							).then(() => {
-								progress++;
-								if (progress === fileUrls.length) {
-									setContentUpdated(true);
-								} else {
-									// pass
-								}
-							});
-						});
-					});
+	const updateContent = () => {
+		fileUrls.forEach((url) => {
+			const fileName = url.split("/").slice(-1)[0];
+			FileSystem.downloadAsync(
+				url,
+				FileSystem.documentDirectory + fileName
+			).then(() => {
+				progress++;
+				if (progress == fileUrls.length) {
+					setContentUpdated(true);
+				} else {
+					// pass
+				}
 			});
-	}, []);
+		});
+	};
+
+	fetch(
+		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/last-scraped.txt"
+	)
+		.then((response) => response.text())
+		.then((text) => {
+			const newestDate = new Date(text);
+			FileSystem.readAsStringAsync(
+				FileSystem.documentDirectory + "last-scraped.txt"
+			)
+				.then((date) => {
+					const currentDate = new Date(date);
+
+					if (newestDate > currentDate) {
+						updateContent();
+					} else {
+						setContentUpdated(true);
+					}
+				})
+				.catch(() => updateContent());
+		});
 
 	if (!Storage.contains("useProxy")) {
 		Storage.set("useProxy", false);
