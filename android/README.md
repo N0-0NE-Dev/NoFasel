@@ -2,7 +2,9 @@
 
 ## Prerequisites:
 
-You must have node 16, jdk 11 and android studio downloaded and configured according to the react native guide found [here](https://reactnative.dev/docs/environment-setup).
+1. You must have node 16, jdk 11 and android studio downloaded and configured according to the react native guide found [here](https://reactnative.dev/docs/environment-setup).
+
+2. You must have a [premium](https://www.faselhd.club/promo) fasel account and a [TMDb](https://www.themoviedb.org/) Api key.
 
 ## Steps:
 
@@ -12,13 +14,21 @@ You must have node 16, jdk 11 and android studio downloaded and configured accor
    git clone https://github.com/N0-0NE-Dev/NoFasel
    ```
 
-2. Install the dependencies:
+2. Create a `.env` file in the root directory with the following content:
+
+   ```
+   FASEL_EMAIL=PUT_YOUR_FASEL_ACCOUNT_EMAIL_HERE
+   FASEL_PASSWORD=PUT_YOUR_FASEL_ACCOUNT_PASSWORD_HERE
+   TMDB_API_KEY=PUT_YOUR_TMDB_API_KEY_HERE
+   ```
+
+3. Install the dependencies:
 
    ```
    npm install
    ```
 
-3. Generate a release keystore:
+4. Generate a release keystore:
 
    ```
    keytool -genkey -v -keystore your_key_name.keystore -alias your_key_alias -keyalg RSA -keysize 2048 -validity 10000
@@ -26,9 +36,9 @@ You must have node 16, jdk 11 and android studio downloaded and configured accor
 
    Change `your_key_name` and `your_key_alias` to whatever you want. If you already have a keystore you use to sign apps skip this step.
 
-4. Move the generated (or existing) keystore to `./android/app`.
+5. Move the generated (or existing) keystore to `./android/app`.
 
-5. In `./android/app` create a file named `keystore.properties` with the following content:
+6. In `./android/app` create a file named `keystore.properties` with the following content:
 
    ```
    storePassword=PUT_YOUR_KEYSTORE_PASSWORD_HERE
@@ -37,21 +47,20 @@ You must have node 16, jdk 11 and android studio downloaded and configured accor
    storeFile=PUT_YOUR_KEYSTORE_FILE_NAME_HERE
    ```
 
-6. Change the directory to the android:
+7. Open a terminal window in the android directory.
 
-   To build the release apk run:
+8. 
+   * To build the release apk run:
+      ```
+      gradlew assembleRelease
+      ```
 
-   ```
-   gradlew assembleRelease
-   ```
+   * To build the development client run:
+      ```
+         gradlew assembleDebug
+      ```
 
-   To build the development client run:
-
-   ```
-   gradlew assembleDebug
-   ```
-
-7. You can find the apk file in `./android/build/outputs/apk/release` or `./android/build/outputs/apk/debug` depending on which command you used.
+9. You can find the apk file in `./android/build/outputs/apk/release` or `./android/build/outputs/apk/debug` depending on which command you used.
 
 ## Note:
 

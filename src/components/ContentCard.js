@@ -1,19 +1,41 @@
 import React from "react";
-import { Pressable, Image, Text, StyleSheet } from "react-native";
-import { Storage } from "./Storage";
+import { Pressable, StyleSheet, ImageBackground } from "react-native";
+import { Text, useTheme } from "react-native-paper";
 
-const darkTheme = Storage.getBoolean("darkTheme");
+const ContentCard = ({
+	navigation,
+	imageSource,
+	id,
+	category,
+	width,
+	height,
+	rating,
+	title,
+}) => {
+	const theme = useTheme();
 
-const ContentCard = ({ navigation, imageSource, title, id, category }) => {
 	return (
 		<Pressable
-			style={styles.patentStyle}
+			style={{ width: width, margin: 5 }}
 			onPress={() =>
-				navigation.navigate("Select", { id: id, category: category })
+				navigation.navigate("New Select", { id: id, category: category })
 			}
 		>
-			<Image style={styles.imageStyle} source={{ uri: imageSource }} />
-			<Text numberOfLines={1} style={styles.textStyle}>
+			<ImageBackground
+				style={{ width: width, height: height }}
+				imageStyle={{ borderRadius: 15 }}
+				source={{ uri: imageSource }}
+			>
+				<Text
+					style={{
+						...styles.ratingTextStyle,
+						backgroundColor: theme.colors.primary,
+					}}
+				>
+					{rating ? rating : "N/A"}
+				</Text>
+			</ImageBackground>
+			<Text numberOfLines={1} style={styles.titleStyle}>
 				{title}
 			</Text>
 		</Pressable>
@@ -21,21 +43,20 @@ const ContentCard = ({ navigation, imageSource, title, id, category }) => {
 };
 
 const styles = StyleSheet.create({
-	patentStyle: {
-		width: 120,
-		margin: 5,
-	},
-	imageStyle: {
-		width: 120,
-		height: 180,
-		borderRadius: 15,
-		marginTop: 3,
-	},
-	textStyle: {
+	ratingTextStyle: {
+		width: 40,
+		margin: 3,
+		padding: 5,
 		textAlign: "center",
-		fontSize: 16,
-		color: darkTheme ? "white" : "black",
-		marginBottom: 3,
+		fontSize: 12,
+		borderRadius: 10,
+		color: "black",
+		fontWeight: "bold",
+	},
+	titleStyle: {
+		textAlign: "center",
+		fontSize: 14,
+		marginVertical: 3,
 	},
 });
 

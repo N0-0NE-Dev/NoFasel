@@ -1,7 +1,7 @@
 <h1 align="center">NoFasel</h1>
 
 <p align="center">
-   <img src="https://i.imgur.com/NvLCO9U.png" width="100px" height="100px">
+   <img src="https://imgpile.com/images/d0xOt8.png" width="100px" height="100px">
 </p>
 
 <div align="center">
@@ -31,15 +31,15 @@ A streaming app with zero ads built in react native with [scrapers](https://gith
 ## 📱 Screenshots:
 
    <p float="left">
-      <img src="https://i.imgur.com/SwPY24el.png" width="30%" /> 
-      <img src="https://i.imgur.com/aCm9vOWl.png" width="30%" /> 
-      <img src="https://i.imgur.com/SY76kbKl.png" width="30%" /> 
-      <img src="https://i.imgur.com/5l3L5Mvl.png" width="30%" /> 
-      <img src="https://i.imgur.com/CATSRhLl.png" width="30%" /> 
-      <img src="https://i.imgur.com/hWfGkWal.png" width="30%" /> 
-      <img src="https://i.imgur.com/tSySR0fl.png" width="30%" /> 
-      <img src="https://i.imgur.com/pIDzfW0l.png" width="30%" /> 
-      <img src="https://i.imgur.com/bEkYPZBl.png" width="30%" /> 
+      <img src="https://imgpile.com/images/d0xSx4.jpg" width="30%" /> 
+      <img src="https://imgpile.com/images/d0x6kk.jpg" width="30%" /> 
+      <img src="https://imgpile.com/images/d0x3iu.jpg" width="30%" /> 
+      <img src="https://imgpile.com/images/d0xpnM.jpg" width="30%" /> 
+      <img src="https://imgpile.com/images/d0xZo2.jpg" width="30%" /> 
+      <img src="https://imgpile.com/images/d0xaZG.jpg" width="30%" /> 
+      <img src="https://imgpile.com/images/d0xjda.jpg" width="30%" /> 
+      <img src="https://imgpile.com/images/d0xyrX.jpg" width="30%" /> 
+      <img src="https://imgpile.com/images/d0K4vh.jpg" width="30%" /> 
    </p>
 
 ## ⬇️ Download:

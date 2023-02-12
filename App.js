@@ -3,32 +3,26 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import TabScreen from "./src/screens/TabScreen";
-import SelectScreen from "./src/screens/SelectScreen";
 import WatchScreen from "./src/screens/WatchScreen";
+import NewSelectScreen from "./src/screens/NewSelectScreen";
+import { Provider as PaperProvider, useTheme } from "react-native-paper";
+import GeneralSettingsScreen from "./src/screens/GeneralSettingsScreen";
+import AboutScreen from "./src/screens/AboutScreen";
 import LoadingScreen from "./src/screens/LoadingScreen";
-import { Storage } from "./src/components/Storage";
-import AllContentScreen from "./src/screens/AllContentScreen";
-import SearchScreen from "./src/screens/SearchScreen";
 
-if (!Storage.contains("darkTheme")) {
-	Storage.set("darkTheme", false);
-} else {
-	// pass
-}
-
-const darkTheme = Storage.getBoolean("darkTheme");
 const Stack = createNativeStackNavigator();
 
 const MyStack = () => {
+	const theme = useTheme();
+
 	return (
 		<Stack.Navigator
 			initialRouteName="Tab"
 			screenOptions={{
-				statusBarColor: darkTheme ? "black" : "white",
-				statusBarStyle: darkTheme ? "light" : "dark",
-				headerStyle: { backgroundColor: darkTheme ? "black" : "white" },
-				headerTintColor: darkTheme ? "white" : "black",
-				contentStyle: { backgroundColor: darkTheme ? "#18191a" : "#eee" },
+				statusBarColor: theme.dark ? "black" : "white",
+				statusBarStyle: theme.dark ? "light" : "dark",
+				headerStyle: { backgroundColor: theme.dark ? "black" : "white" },
+				headerTintColor: theme.dark ? "white" : "black",
 				navigationBarHidden: true,
 			}}
 		>
@@ -37,21 +31,6 @@ const MyStack = () => {
 				component={TabScreen}
 				options={{
 					headerShown: false,
-					orientation: "default",
-				}}
-			/>
-			<Stack.Screen
-				name="Select"
-				component={SelectScreen}
-				options={{
-					orientation: "default",
-				}}
-			/>
-			<Stack.Screen
-				name="All Content"
-				component={AllContentScreen}
-				options={{
-					orientation: "default",
 				}}
 			/>
 			<Stack.Screen
@@ -64,29 +43,32 @@ const MyStack = () => {
 				}}
 			/>
 			<Stack.Screen
+				name="New Select"
+				component={NewSelectScreen}
+				options={{
+					headerShown: false,
+				}}
+			/>
+			<Stack.Screen
 				name="Loading"
 				component={LoadingScreen}
 				options={{
 					headerShown: false,
-					orientation: "default",
 				}}
 			/>
-			<Stack.Screen
-				name="Search"
-				component={SearchScreen}
-				options={{
-					orientation: "default",
-				}}
-			/>
+			<Stack.Screen name="General Settings" component={GeneralSettingsScreen} />
+			<Stack.Screen name="About" component={AboutScreen} />
 		</Stack.Navigator>
 	);
 };
 
 const App = () => {
 	return (
-		<NavigationContainer>
-			<MyStack />
-		</NavigationContainer>
+		<PaperProvider>
+			<NavigationContainer>
+				<MyStack />
+			</NavigationContainer>
+		</PaperProvider>
 	);
 };
 
