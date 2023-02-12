@@ -401,6 +401,7 @@ const NewSelectScreen = ({ navigation, route }) => {
 			data
 		) {
 			const episodes = [];
+
 			const rawEpisodes = contentWithSeasons.includes(category)
 				? data["Seasons"][selectedSeason[1]]["Episodes"]
 				: data["Episodes"];
@@ -408,7 +409,7 @@ const NewSelectScreen = ({ navigation, route }) => {
 			Object.entries(rawEpisodes).forEach((episode) => {
 				episodes.push({
 					label: `Episode ${episode[1]["Episode Number"]}`,
-					key: episode[0],
+					key: category == "arabic-series" ? episode[1]["Source"] : episode[0],
 				});
 			});
 			setEpisodes(episodes);
