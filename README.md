@@ -49,3 +49,7 @@ Go to [releases](https://github.com/N0-0NE-Dev/NoFasel/releases) page and downlo
 <a href="https://apt.izzysoft.de/fdroid/index/apk/com.n00nedev.nofasel">
    <img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" width="40%">
 </a>
+
+## 🪲 Bugs
+
+Please make sure you on the latest version and restart the app at lease twice before reporting any bugs.
