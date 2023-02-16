@@ -15,7 +15,8 @@ import {
 } from "react-native-paper";
 
 const TabScreen = ({ navigation }) => {
-	const fileUrls = require("../data/common.json").fileUrls;
+	const common = require("../data/common.json")
+	const fileUrls = common.fileUrls;
 	const [contentUpdated, setContentUpdated] = useState(false);
 	const [loggedin, setLoggedin] = useState(false);
 	const [index, setIndex] = useState(0);
@@ -129,7 +130,7 @@ const TabScreen = ({ navigation }) => {
 	}
 
 	const handleNavigationChange = (webViewState) => {
-		if (webViewState.url === "https://www.faselhd.ws/") {
+		if (webViewState.url === "https://www.faselhd.ac/") {
 			setLoggedin(true);
 		} else {
 			// pass
@@ -157,7 +158,7 @@ const TabScreen = ({ navigation }) => {
 				<ActivityIndicator size={50} />
 				<View>
 					<WebView
-						source={{ uri: "https://www.faselhd.ws/account/login" }}
+						source={{ uri: common.faselBaseUrl + "account/login" }}
 						injectedJavaScript={jsCode}
 						sharedCookiesEnabled={true}
 						onNavigationStateChange={handleNavigationChange}

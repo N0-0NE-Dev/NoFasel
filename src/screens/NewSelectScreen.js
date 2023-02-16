@@ -275,6 +275,7 @@ const QualitySelector = ({
 };
 
 const NewSelectScreen = ({ navigation, route }) => {
+	const faselBaseUrl = require("../data/common.json").faselBaseUrl;
 	const { id, category } = route.params;
 	const theme = useTheme();
 	const useProxy = Storage.getBoolean("useProxy");
@@ -373,7 +374,7 @@ const NewSelectScreen = ({ navigation, route }) => {
 
 	useEffect(() => {
 		if (category === "movies" && !webpageUrl) {
-			setTimeout(() => setWebpageUrl(`https://www.faselhd.ws/?p=${id}`), 250);
+			setTimeout(() => setWebpageUrl(`${faselBaseUrl}?p=${id}`), 250);
 		} else if (category.includes("arabic") && webpageUrl) {
 			fetch(
 				useProxy
@@ -449,7 +450,7 @@ const NewSelectScreen = ({ navigation, route }) => {
 					setShowLoading(true);
 					setQualities(null);
 					if (category == "anime" || contentWithSeasons.includes(category)) {
-						setWebpageUrl(`https://www.faselhd.ws/?p=${source}`);
+						setWebpageUrl(`${faselBaseUrl}?p=${source}`);
 					} else {
 						setWebpageUrl(source);
 					}

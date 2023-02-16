@@ -67,5 +67,6 @@
 		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/featured-content.json",
 		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/file-hashes.json",
 		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/last-scraped.txt"
-	]
+	],
+	"faselBaseUrl": "https://www.faselhd.ac/"
 }
