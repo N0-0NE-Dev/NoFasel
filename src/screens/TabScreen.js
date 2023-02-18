@@ -15,6 +15,7 @@ import {
 } from "react-native-paper";
 
 const TabScreen = ({ navigation }) => {
+	let progress = 0;
 	const common = require("../data/common.json")
 	const fileUrls = common.fileUrls;
 	const [contentUpdated, setContentUpdated] = useState(false);
