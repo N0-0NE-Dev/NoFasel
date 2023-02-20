@@ -21,9 +21,10 @@ const MyStack = () => {
 			screenOptions={{
 				statusBarColor: theme.dark ? "black" : "white",
 				statusBarStyle: theme.dark ? "light" : "dark",
-				headerStyle: { backgroundColor: theme.dark ? "black" : "white" },
+				headerStyle: { backgroundColor: theme.colors.background },
 				headerTintColor: theme.dark ? "white" : "black",
 				navigationBarHidden: true,
+				headerShadowVisible: false
 			}}
 		>
 			<Stack.Screen

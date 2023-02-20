@@ -22,14 +22,12 @@ const DefaultSettingsButton = ({ label, onPress, iconName }) => {
 		>
 			<MaterialCommunityIcons
 				name={iconName}
-				size={32}
-				color={theme.colors.primary}
+				size={26}
+				color={theme.dark ? "white" : "black"}
 			/>
 			<Text
 				style={{
-					fontSize: 20,
-					fontWeight: "bold",
-					color: theme.colors.primary,
+					fontSize: 18,
 					paddingHorizontal: 25,
 				}}
 			>

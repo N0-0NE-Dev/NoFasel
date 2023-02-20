@@ -35,9 +35,7 @@ const GeneralSettingsScreen = ({ navigation }) => {
 			>
 				<Text
 					style={{
-						fontSize: 20,
-						fontWeight: "bold",
-						color: theme.colors.primary,
+						fontSize: 18,
 					}}
 				>
 					Use Proxy for Akwam
