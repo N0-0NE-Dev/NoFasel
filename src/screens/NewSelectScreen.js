@@ -583,7 +583,9 @@ const NewSelectScreen = ({ navigation, route }) => {
 									color={theme.colors.primary}
 									style={{ marginHorizontal: 10 }}
 								/>
-								<Text>{data["Rating"] ? data["Rating"] : "N/A"}</Text>
+								<Text style={{ fontWeight: "bold" }}>
+									{data["Rating"] ? data["Rating"] : "N/A"}
+								</Text>
 							</View>
 						</View>
 						<IconButton
@@ -619,7 +621,12 @@ const NewSelectScreen = ({ navigation, route }) => {
 								}}
 							/>
 						)}
-
+						<View style={{ flexDirection: "row", margin: 10 }}>
+							<Text>Genres: </Text>
+							{data["Genres"].map((genre) => (
+								<Text style={{ marginHorizontal: 7.5 }}>{genre}</Text>
+							))}
+						</View>
 						<PostTextContent
 							text={overview}
 							moreTextColor={theme.colors.primary}
