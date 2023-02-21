@@ -9,6 +9,8 @@ import { Provider as PaperProvider, useTheme } from "react-native-paper";
 import GeneralSettingsScreen from "./src/screens/GeneralSettingsScreen";
 import AboutScreen from "./src/screens/AboutScreen";
 import LoadingScreen from "./src/screens/LoadingScreen";
+import { Storage } from "./src/components/Storage";
+import StartupScreen from "./src/screens/StartupScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -17,14 +19,18 @@ const MyStack = () => {
 
 	return (
 		<Stack.Navigator
-			initialRouteName="Tab"
+			initialRouteName={
+				Storage.contains("provider") && Storage.contains("preferredLanguage")
+					? "Tab"
+					: "Startup"
+			}
 			screenOptions={{
 				statusBarColor: theme.dark ? "black" : "white",
 				statusBarStyle: theme.dark ? "light" : "dark",
 				headerStyle: { backgroundColor: theme.colors.background },
 				headerTintColor: theme.dark ? "white" : "black",
 				navigationBarHidden: true,
-				headerShadowVisible: false
+				headerShadowVisible: false,
 			}}
 		>
 			<Stack.Screen
@@ -46,16 +52,17 @@ const MyStack = () => {
 			<Stack.Screen
 				name="New Select"
 				component={NewSelectScreen}
-				options={{
-					headerShown: false,
-				}}
+				options={{ headerShown: false }}
 			/>
 			<Stack.Screen
 				name="Loading"
 				component={LoadingScreen}
-				options={{
-					headerShown: false,
-				}}
+				options={{ headerShown: false }}
+			/>
+			<Stack.Screen
+				name="Startup"
+				component={StartupScreen}
+				options={{ headerShown: false }}
 			/>
 			<Stack.Screen name="General Settings" component={GeneralSettingsScreen} />
 			<Stack.Screen name="About" component={AboutScreen} />
