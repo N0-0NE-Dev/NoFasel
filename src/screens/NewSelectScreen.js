@@ -378,7 +378,7 @@ const NewSelectScreen = ({ navigation, route }) => {
 		} else if (category.includes("arabic") && webpageUrl) {
 			fetch(
 				useProxy
-					? `https://api.codetabs.com/v1/proxy?quest=${webpageUrl}`
+					? `https://api.codetabs.com/v1/tmp/?quest=${webpageUrl}`
 					: webpageUrl
 			)
 				.then((resp) => resp.text())
