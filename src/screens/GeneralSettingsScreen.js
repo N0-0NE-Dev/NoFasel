@@ -3,6 +3,7 @@ import { View, Pressable } from "react-native";
 import { useTheme, Text, Switch } from "react-native-paper";
 import { Storage } from "../components/Storage";
 import DefaultSettingsButton from "../components/DefaultSettingsButton";
+import RNRestart from "react-native-restart";
 
 const GeneralSettingsScreen = ({ navigation }) => {
 	const theme = useTheme();
@@ -42,6 +43,16 @@ const GeneralSettingsScreen = ({ navigation }) => {
 				</Text>
 				<Switch value={useProxy} onValueChange={() => setUseProxy(!useProxy)} />
 			</Pressable>
+			<DefaultSettingsButton
+				label="Change Provider"
+				fontSize={18}
+				iconName="closed-caption"
+				onPress={() => {
+					Storage.delete("provider");
+					Storage.delete("preferedLanguage");
+					RNRestart.Restart();
+				}}
+			/>
 			<DefaultSettingsButton
 				label="Force Update Content"
 				iconName="update"

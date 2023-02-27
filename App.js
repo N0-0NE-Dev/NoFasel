@@ -19,11 +19,7 @@ const MyStack = () => {
 
 	return (
 		<Stack.Navigator
-			initialRouteName={
-				Storage.contains("provider") && Storage.contains("preferredLanguage")
-					? "Tab"
-					: "Startup"
-			}
+			initialRouteName={Storage.contains("provider") ? "Tab" : "Startup"}
 			screenOptions={{
 				statusBarColor: theme.dark ? "black" : "white",
 				statusBarStyle: theme.dark ? "light" : "dark",
@@ -31,6 +27,7 @@ const MyStack = () => {
 				headerTintColor: theme.dark ? "white" : "black",
 				navigationBarHidden: true,
 				headerShadowVisible: false,
+				contentStyle: { backgroundColor: theme.colors.background },
 			}}
 		>
 			<Stack.Screen

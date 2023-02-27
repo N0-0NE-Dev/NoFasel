@@ -16,12 +16,16 @@ import {
 
 const TabScreen = ({ navigation }) => {
 	let progress = 0;
-	const common = require("../data/common.json")
-	const fileUrls = common.fileUrls;
+	const common = require("../data/common.json");
 	const [contentUpdated, setContentUpdated] = useState(false);
 	const [loggedin, setLoggedin] = useState(false);
 	const [index, setIndex] = useState(0);
 	const theme = useTheme();
+	const provider = Storage.getString("provider");
+
+	const fileUrls =
+		provider == "fasel" ? common.fileUrlsFasel : common.fileUrlsHdw;
+
 	const [routes] = useState([
 		{
 			key: "home",

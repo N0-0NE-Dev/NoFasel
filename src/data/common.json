@@ -1,15 +1,55 @@
 {
+	"userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/110.0",
 	"faselBaseUrl": "https://www.faselhd.ac/",
-	"categories": [
-		{ "label": "Movies", "key": "movies" },
-		{ "label": "Series", "key": "series" },
-		{ "label": "Anime", "key": "anime" },
-		{ "label": "Asian Series", "key": "asian-series" },
-		{ "label": "Arabic Series", "key": "arabic-series" },
-		{ "label": "Arabic Movies", "key": "arabic-movies" },
-		{ "label": "TV Shows", "key": "tvshows" }
+	"categoriesFasel": [
+		{
+			"label": "Movies",
+			"key": "movies"
+		},
+		{
+			"label": "Series",
+			"key": "series"
+		},
+		{
+			"label": "Anime",
+			"key": "anime"
+		},
+		{
+			"label": "Asian Series",
+			"key": "asian-series"
+		},
+		{
+			"label": "Arabic Series",
+			"key": "arabic-series"
+		},
+		{
+			"label": "Arabic Movies",
+			"key": "arabic-movies"
+		},
+		{
+			"label": "TV Shows",
+			"key": "tvshows"
+		}
 	],
-	"fileUrls": [
+	"categoriesHdw": [
+		{
+			"label": "Movies",
+			"key": "hdwmovies"
+		},
+		{
+			"label": "Series",
+			"key": "hdwseries"
+		},
+		{
+			"label": "Arabic Series",
+			"key": "arabic-series"
+		},
+		{
+			"label": "Arabic Movies",
+			"key": "arabic-movies"
+		}
+	],
+	"fileUrlsFasel": [
 		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/all-content.json",
 		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/anime.json",
 		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/asian-series.json",
@@ -20,10 +60,55 @@
 		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/arabic-series.json",
 		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/arabic-movies.json",
 		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/featured-content.json",
-		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/file-hashes.json",
 		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/last-scraped.txt"
 	],
-	"genres": [
+	"fileUrlsHdw": [
+		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/arabic-series.json",
+		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/arabic-movies.json",
+		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/last-scraped.txt",
+		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/hdw-featured-content.json",
+		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/hdw-trending-content.json",
+		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/hdw-all-content.json",
+		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/hdwmovies.json",
+		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/hdwseries.json"
+	],
+	"genresHdw": [
+		"Comedy",
+		"Music",
+		"Drama",
+		"Mystery",
+		"Ramadan",
+		"Crime",
+		"Horror",
+		"Action.Adventure",
+		"Comedy.Romance",
+		"Drime",
+		"Adcenture",
+		"Netflix",
+		"History",
+		"Biography",
+		"Kids",
+		"Short",
+		"Sports",
+		"Animation",
+		"Documentary",
+		"Science Fiction",
+		"Animated",
+		"Sci-Fi",
+		"Western",
+		"Fantasy",
+		"Adevnture",
+		"Musical",
+		"Romance",
+		"Action",
+		"War",
+		"Family",
+		"Sport",
+		"Dubbed",
+		"Adventure",
+		"Thriller"
+	],
+	"genresFasel": [
 		"Netflix",
 		"Ramadan",
 		"Fantasy",
@@ -68,377 +153,5 @@
 		"Short",
 		"Action",
 		"Supernatural"
-	],
-	"languagsData": [
-		{
-			"code": "af",
-			"name": "Afrikaans",
-			"flag": "https://imgpile.com/images/d3Ydwk.gif"
-		},
-		{
-			"code": "sq",
-			"name": "Albanian",
-			"flag": "https://imgpile.com/images/d3YhsM.jpg"
-		},
-		{
-			"code": "ar",
-			"name": "Arabic",
-			"flag": "https://imgpile.com/images/d3Y9W4.jpg"
-		},
-		{
-			"code": "an",
-			"name": "Aragonese",
-			"flag": "https://imgpile.com/images/d3YGKG.png"
-		},
-		{
-			"code": "hy",
-			"name": "Armenian",
-			"flag": "https://imgpile.com/images/d3YM9h.png"
-		},
-		{
-			"code": "at",
-			"name": "Asturian",
-			"flag": "https://imgpile.com/images/d3YJzE.png"
-		},
-		{
-			"code": "eu",
-			"name": "Basque",
-			"flag": "https://imgpile.com/images/d3YP3r.png"
-		},
-		{
-			"code": "be",
-			"name": "Belarusian",
-			"flag": "https://imgpile.com/images/d3Yi5R.png"
-		},
-		{
-			"code": "bn",
-			"name": "Bengali",
-			"flag": "https://imgpile.com/images/d3Yssg.jpg"
-		},
-		{
-			"code": "bs",
-			"name": "Bosnian",
-			"flag": "https://imgpile.com/images/d3YX8x.png"
-		},
-		{
-			"code": "br",
-			"name": "Breton",
-			"flag": "https://imgpile.com/images/d3YH3j.png"
-		},
-		{
-			"code": "bg",
-			"name": "Bulgarian",
-			"flag": "https://imgpile.com/images/d3Y2cC.png"
-		},
-		{
-			"code": "my",
-			"name": "Burmese",
-			"flag": "https://imgpile.com/images/d3YAWS.jpg"
-		},
-		{
-			"code": "ca",
-			"name": "Catalan",
-			"flag": "https://imgpile.com/images/d3YSu4.png"
-		},
-		{
-			"code": "zh-cn",
-			"name": "Chinese (simplified)",
-			"flag": "https://imgpile.com/images/d3Yeea.jpg"
-		},
-		{
-			"code": "cs",
-			"name": "Czech",
-			"flag": "https://imgpile.com/images/d3YyCX.png"
-		},
-		{
-			"code": "da",
-			"name": "Danish",
-			"flag": "https://imgpile.com/images/d3i4Vh.png"
-		},
-		{
-			"code": "nl",
-			"name": "Dutch",
-			"flag": "https://imgpile.com/images/d3iIRr.png"
-		},
-		{
-			"code": "en",
-			"name": "English",
-			"flag": "https://imgpile.com/images/d3iufR.png"
-		},
-		{
-			"code": "eo",
-			"name": "Esperanto",
-			"flag": "https://imgpile.com/images/d3i7Bg.png"
-		},
-		{
-			"code": "et",
-			"name": "Estonian",
-			"flag": "https://imgpile.com/images/d3ssnN.png"
-		},
-		{
-			"code": "fi",
-			"name": "Finnish",
-			"flag": "https://imgpile.com/images/d3sctW.pngs"
-		},
-		{
-			"code": "fr",
-			"name": "French",
-			"flag": "https://imgpile.com/images/d3sfoP.png"
-		},
-		{
-			"code": "ka",
-			"name": "Georgian",
-			"flag": "https://imgpile.com/images/d3slZ1.png"
-		},
-		{
-			"code": "de",
-			"name": "German",
-			"flag": "https://imgpile.com/images/d3srdL.png"
-		},
-		{
-			"code": "gl",
-			"name": "Galician",
-			"flag": "https://imgpile.com/images/d3s8gj.png"
-		},
-		{
-			"code": "el",
-			"name": "Greek",
-			"flag": "https://imgpile.com/images/d3sXUo.jpg"
-		},
-		{
-			"code": "hi",
-			"name": "Hindi",
-			"flag": "https://imgpile.com/images/d3sHiC.jpg"
-		},
-		{
-			"code": "hr",
-			"name": "Croatian",
-			"flag": "https://imgpile.com/images/d3sokS.jpg"
-		},
-		{
-			"code": "hu",
-			"name": "Hungarian",
-			"flag": "https://imgpile.com/images/d3s2n8.png"
-		},
-		{
-			"code": "is",
-			"name": "Icelandic",
-			"flag": "https://imgpile.com/images/d3sLo3.jpg"
-		},
-		{
-			"code": "id",
-			"name": "Indonesian",
-			"flag": "https://imgpile.com/images/d3sOZl.jpg"
-		},
-		{
-			"code": "it",
-			"name": "Italian",
-			"flag": "https://imgpile.com/images/d3s0hw.jpg"
-		},
-		{
-			"code": "ja",
-			"name": "Japanese",
-			"flag": "https://imgpile.com/images/d3sv0M.jpg"
-		},
-		{
-			"code": "kk",
-			"name": "Kazakh",
-			"flag": "https://imgpile.com/images/d3sahX.png"
-		},
-		{
-			"code": "km",
-			"name": "Khmer",
-			"flag": "https://imgpile.com/images/d3sezh.jpg"
-		},
-		{
-			"code": "ko",
-			"name": "Korean",
-			"flag": "https://imgpile.com/images/d3cABR.jpg"
-		},
-		{
-			"code": "lv",
-			"name": "Latvian",
-			"flag": "https://imgpile.com/images/d3c0AN.jpg"
-		},
-		{
-			"code": "lt",
-			"name": "Lithuanian",
-			"flag": "https://imgpile.com/images/d3c3Rx.png"
-		},
-		{
-			"code": "lb",
-			"name": "Luxembourgish",
-			"flag": "https://imgpile.com/images/d3c6cj.jpg"
-		},
-		{
-			"code": "mk",
-			"name": "Macedonian",
-			"flag": "https://imgpile.com/images/d3cejb.jpg"
-		},
-		{
-			"code": "ml",
-			"name": "Malayalam",
-			"flag": "https://imgpile.com/images/d3sHiC.jpg"
-		},
-		{
-			"code": "ms",
-			"name": "Malay",
-			"flag": "https://imgpile.com/images/d3fufi.jpg"
-		},
-		{
-			"code": "ma",
-			"name": "Manipuri",
-			"flag": "https://imgpile.com/images/d3f7Fu.jpg"
-		},
-		{
-			"code": "mn",
-			"name": "Mongolian",
-			"flag": "https://imgpile.com/images/d3fUuk.png"
-		},
-		{
-			"code": "no",
-			"name": "Norwegian",
-			"flag": "https://imgpile.com/images/d3fwJM.jpg"
-		},
-		{
-			"code": "oc",
-			"name": "Occitan",
-			"flag": "https://imgpile.com/images/d3fYDW.png"
-		},
-		{
-			"code": "fa",
-			"name": "Persian",
-			"flag": "https://imgpile.com/images/d3fz7o.jpg"
-		},
-		{
-			"code": "pl",
-			"name": "Polish",
-			"flag": "https://imgpile.com/images/d3fVLS.png"
-		},
-		{
-			"code": "pt-pt",
-			"name": "Portuguese",
-			"flag": "https://imgpile.com/images/d3fXy8.png"
-		},
-		{
-			"code": "ru",
-			"name": "Russian",
-			"flag": "https://imgpile.com/images/d3fqX3.jpg"
-		},
-		{
-			"code": "sr",
-			"name": "Serbian",
-			"flag": "https://imgpile.com/images/d3feNr.jpg"
-		},
-		{
-			"code": "si",
-			"name": "Sinhalese",
-			"flag": "https://imgpile.com/images/d3luSP.jpg"
-		},
-		{
-			"code": "sk",
-			"name": "Slovak",
-			"flag": "https://imgpile.com/images/d3lNd1.jpg"
-		},
-		{
-			"code": "sl",
-			"name": "Slovenian",
-			"flag": "https://imgpile.com/images/d3lNd1.jpg"
-		},
-		{
-			"code": "es",
-			"name": "Spanish",
-			"flag": "https://imgpile.com/images/d3lwgx.png"
-		},
-		{
-			"code": "sw",
-			"name": "Swahili",
-			"flag": "https://imgpile.com/images/d3l9t8.jpg"
-		},
-		{
-			"code": "sv",
-			"name": "Swedish",
-			"flag": "https://imgpile.com/images/d3lCob.png"
-		},
-		{
-			"code": "sy",
-			"name": "Syriac",
-			"flag": "https://imgpile.com/images/d3lDS3.png"
-		},
-		{
-			"code": "ta",
-			"name": "Tamil",
-			"flag": "https://imgpile.com/images/d3lKgF.jpg"
-		},
-		{
-			"code": "te",
-			"name": "Telugu",
-			"flag": "https://imgpile.com/images/d3sHiC.jpg"
-		},
-		{
-			"code": "tl",
-			"name": "Tagalog",
-			"flag": "https://imgpile.com/images/d3lfo2.png"
-		},
-		{
-			"code": "th",
-			"name": "Thai",
-			"flag": "https://imgpile.com/images/d3llZG.jpg"
-		},
-		{
-			"code": "tr",
-			"name": "Turkish",
-			"flag": "https://imgpile.com/images/d3lrda.png"
-		},
-		{
-			"code": "uk",
-			"name": "Ukrainian",
-			"flag": "https://imgpile.com/images/d3lzrX.png"
-		},
-		{
-			"code": "ur",
-			"name": "Urdu",
-			"flag": "https://imgpile.com/images/d3l8vh.jpg"
-		},
-		{
-			"code": "uz",
-			"name": "Uzbek",
-			"flag": "https://imgpile.com/images/d3lXUE.png"
-		},
-		{
-			"code": "vi",
-			"name": "Vietnamese",
-			"flag": "https://imgpile.com/images/d3lHir.jpg"
-		},
-		{
-			"code": "ro",
-			"name": "Romanian",
-			"flag": "https://imgpile.com/images/d3lo0R.png"
-		},
-		{
-			"code": "pt-br",
-			"name": "Portuguese (Brazilian)",
-			"flag": "https://imgpile.com/images/d3l2ng.jpg"
-		},
-		{
-			"code": "me",
-			"name": "Montenegrin",
-			"flag": "https://imgpile.com/images/d3lAxc.png"
-		},
-		{
-			"code": "zh-tw",
-			"name": "Chinese (traditional)",
-			"flag": "https://imgpile.com/images/d3Yeea.jpg"
-		},
-		{
-			"code": "ze",
-			"name": "Chinese bilingual",
-			"flag": "https://imgpile.com/images/d3Yeea.jpg"
-		},
-		{
-			"code": "se",
-			"name": "Northern Sami",
-			"flag": "https://imgpile.com/images/d3lLqN.jpg"
-		}
 	]
 }

@@ -2,16 +2,24 @@ import React, { useState, useEffect, useRef } from "react";
 import FeaturedContentCard from "./FeaturedContentCard";
 import * as FileSystem from "expo-file-system";
 import { Dimensions, ScrollView } from "react-native";
+import { Storage } from "./Storage";
 
 const FeaturedContentCardList = ({ navigation }) => {
 	const [data, setData] = useState();
 	const [currentPosition, setCurrentPosition] = useState(0);
 	const scrollViewRef = useRef();
+	let filePath = "";
+
+	if (Storage.getString("provider") == "fasel") {
+		filePath = FileSystem.documentDirectory + "featured-content.json";
+	} else {
+		filePath = FileSystem.documentDirectory + "hdw-featured-content.json";
+	}
 
 	useEffect(() => {
-		FileSystem.readAsStringAsync(
-			FileSystem.documentDirectory + "featured-content.json"
-		).then((data) => setData(JSON.parse(data)));
+		FileSystem.readAsStringAsync(filePath).then((data) =>
+			setData(JSON.parse(data))
+		);
 	}, []);
 
 	useEffect(() => {

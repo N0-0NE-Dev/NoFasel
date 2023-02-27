@@ -8,12 +8,15 @@ import ToggleButton from "../components/ToggleButton";
 import { useTheme, Text, Button } from "react-native-paper";
 import CentredActivityIndicator from "../components/CentredActivityIndicator";
 import ContentCard from "../components/ContentCard";
+import { Storage } from "../components/Storage";
 
 const SearchScreen = ({ navigation }) => {
+	const provider = Storage.getString("provider");
 	const common = require("../data/common.json");
-	const categories = common.categories;
-	const genres = common.genres;
+	const genres = provider == "fasel" ? common.genresFasel : common.genresHdw;
 	const theme = useTheme();
+	let allContentPath = "";
+	let featuredContentPath = "";
 
 	const [searchText, setSearchText] = useState("");
 	const [allData, setAllData] = useState(null);
@@ -25,6 +28,9 @@ const SearchScreen = ({ navigation }) => {
 	const [start, setStart] = useState(0);
 	const [end, setEnd] = useState(20);
 	const pageNumber = end / 20;
+
+	const categories =
+		provider == "fasel" ? common.categoriesFasel : common.categoriesHdw;
 
 	const handleNext = () => {
 		setStart(end);
@@ -40,16 +46,28 @@ const SearchScreen = ({ navigation }) => {
 		}
 	};
 
+	if (provider == "fasel") {
+		allContentPath = FileSystem.documentDirectory + "all-content.json";
+
+		featuredContentPath =
+			FileSystem.documentDirectory + "featured-content.json";
+	} else {
+		allContentPath = FileSystem.documentDirectory + "hdw-all-content.json";
+
+		featuredContentPath =
+			FileSystem.documentDirectory + "hdw-featured-content.json";
+	}
+
 	useEffect(() => {
-		FileSystem.readAsStringAsync(
-			FileSystem.documentDirectory + "all-content.json"
-		).then((allData) => setAllData(JSON.parse(allData)));
-		FileSystem.readAsStringAsync(
-			FileSystem.documentDirectory + "featured-content.json"
-		).then((featuredContent) => {
-			setFeaturedContent(JSON.parse(featuredContent));
-			setData(JSON.parse(featuredContent).content);
-		});
+		FileSystem.readAsStringAsync(allContentPath).then((allData) =>
+			setAllData(JSON.parse(allData))
+		);
+		FileSystem.readAsStringAsync(featuredContentPath).then(
+			(featuredContent) => {
+				setFeaturedContent(JSON.parse(featuredContent));
+				setData(JSON.parse(featuredContent).content);
+			}
+		);
 	}, []);
 
 	const applyFilter = (item) => {

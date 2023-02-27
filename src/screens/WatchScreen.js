@@ -55,7 +55,7 @@ const WatchScreen = ({ route, navigation }) => {
 						</head>
 						<body style="margin: 0;">
 							<video id="player" style="width: 100%; height: 100%; background: #000;" controls autoplay>
-								<source src=${source + "#t=" + startTime}>
+								<source src="${source}">
 							</video>
 
 							<script>
@@ -63,6 +63,7 @@ const WatchScreen = ({ route, navigation }) => {
 
 								player.addEventListener("loadeddata", () => {
 									window.ReactNativeWebView.postMessage("duration: " + String(player.duration));
+									player.currentTime = ${startTime}
 								}, false)
 								
 								player.addEventListener("timeupdate", () => {
@@ -71,6 +72,8 @@ const WatchScreen = ({ route, navigation }) => {
 							</script>
 						</body>
 					</html>`;
+
+	useEffect(() => console.log(html), []);
 
 	return (
 		<View

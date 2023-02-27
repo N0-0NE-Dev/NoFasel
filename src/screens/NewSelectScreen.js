@@ -172,6 +172,7 @@ const Buttons = ({ showModal, setType, theme, tmdbId, category }) => {
 			labelColor: theme.colors.primary,
 		},
 	];
+
 	return (
 		<FlatList
 			horizontal={true}
@@ -186,6 +187,7 @@ const Buttons = ({ showModal, setType, theme, tmdbId, category }) => {
 						onPress={item.onPress}
 						buttonColor={item.color}
 						style={styles.buttonStyle}
+						key={item.label}
 					>
 						{item.label}
 					</Button>
@@ -275,11 +277,14 @@ const QualitySelector = ({
 };
 
 const NewSelectScreen = ({ navigation, route }) => {
-	const faselBaseUrl = require("../data/common.json").faselBaseUrl;
+	const provider = Storage.getString("provider");
+	const common = require("../data/common.json");
+	const faselBaseUrl = common.faselBaseUrl;
+	const userAgent = common.userAgent;
 	const { id, category } = route.params;
 	const theme = useTheme();
 	const useProxy = Storage.getBoolean("useProxy");
-	const contentWithSeasons = ["series", "tvshows", "asian-series"];
+	const contentWithSeasons = ["series", "tvshows", "asian-series", "hdwseries"];
 	const watchlist = JSON.parse(Storage.getString("watchlist"));
 	const resume = JSON.parse(Storage.getString("resume"));
 	const isFocused = useIsFocused();
@@ -373,7 +378,7 @@ const NewSelectScreen = ({ navigation, route }) => {
 	}, [data]);
 
 	useEffect(() => {
-		if (category === "movies" && !webpageUrl) {
+		if (category == "movies" && !webpageUrl) {
 			setTimeout(() => setWebpageUrl(`${faselBaseUrl}?p=${id}`), 250);
 		} else if (category.includes("arabic") && webpageUrl) {
 			fetch(
@@ -420,6 +425,8 @@ const NewSelectScreen = ({ navigation, route }) => {
 				seasons[`Season ${season[1]["Season Number"]}`] = season[0];
 			});
 			setSeasons(seasons);
+		} else {
+			// pass
 		}
 	}, [data, webpageUrl, selectedSeason]);
 
@@ -435,12 +442,44 @@ const NewSelectScreen = ({ navigation, route }) => {
 
 	useEffect(() => {
 		if (data) {
-			getOverview(data["TMDb ID"], category).then((json) => setOverview(json));
-			getCast(data["TMDb ID"], category).then((json) => setCast(json));
+			const tmdbId = data["TMDb ID"];
+			getOverview(tmdbId, category).then((json) => setOverview(json));
+			getCast(tmdbId, category).then((json) => setCast(json));
 		} else {
 			// pass
 		}
 	}, [data]);
+
+	const getHdwSource = () => {
+		if (category == "hdwmovies" || selectedEpisode) {
+			setShowLoading(true);
+			fetch(
+				`https://www.hdwatched.xyz/embed/${
+					category == "hdwmovies" ? id : selectedEpisode
+				}`,
+				{
+					credentials: "include",
+					headers: {
+						"User-Agent": userAgent,
+					},
+					method: "GET",
+					mode: "cors",
+				}
+			)
+				.then((resp) => resp.text())
+				.then((text) => {
+					let HTMLParser = require("fast-html-parser");
+					let root = HTMLParser.parse(text);
+					const source = root.querySelector("source").attributes.src;
+					setQualities({ "1080p": source });
+					setShowLoading(false);
+				});
+		} else {
+			// pass
+		}
+	};
+
+	useEffect(() => getHdwSource(), [selectedEpisode]);
 
 	const EpisodeCard = ({ label, posterSource, source }) => {
 		return (
@@ -449,10 +488,15 @@ const NewSelectScreen = ({ navigation, route }) => {
 					setSelectedEpisode(source);
 					setShowLoading(true);
 					setQualities(null);
-					if (category == "anime" || contentWithSeasons.includes(category)) {
+					if (
+						(category == "anime" || contentWithSeasons.includes(category)) &&
+						provider == "fasel"
+					) {
 						setWebpageUrl(`${faselBaseUrl}?p=${source}`);
-					} else {
+					} else if (category == "movies") {
 						setWebpageUrl(source);
+					} else {
+						// pass
 					}
 				}}
 			>
@@ -610,6 +654,7 @@ const NewSelectScreen = ({ navigation, route }) => {
 								setType={setType}
 								tmdbId={data["TMDb ID"]}
 								category={category}
+								provider={provider}
 							/>
 						) : (
 							<WebView
@@ -624,7 +669,9 @@ const NewSelectScreen = ({ navigation, route }) => {
 						<View style={{ flexDirection: "row", margin: 10 }}>
 							<Text>Genres: </Text>
 							{data["Genres"].map((genre) => (
-								<Text style={{ marginHorizontal: 7.5 }}>{genre}</Text>
+								<Text key={genre} style={{ marginHorizontal: 7.5 }}>
+									{genre}
+								</Text>
 							))}
 						</View>
 						<PostTextContent

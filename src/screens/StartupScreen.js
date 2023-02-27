@@ -1,40 +1,51 @@
-import React, { useState } from "react";
-import { View, Modal, StyleSheet, Pressable } from "react-native";
+import React from "react";
+import { View, StyleSheet } from "react-native";
 import { Storage } from "../components/Storage";
-import { useTheme, Dialog, Text, Button } from "react-native-paper";
+import { Text, Button } from "react-native-paper";
 
-const StartupScreen = () => {
-	const theme = useTheme();
-	const [languaDialogVisible, setLanguaDialogVisible] = useState(true);
-	const languages = require("../data/common.json").languagsData;
-
-	const hideDialog = () => setLanguaDialogVisible(false);
+const StartupScreen = ({ navigation }) => {
+	const handleProvider = (provider) => {
+		Storage.set("provider", provider);
+		navigation.navigate("Loading");
+	};
 
 	return (
-		<Dialog visible={languaDialogVisible} onDismiss={hideDialog}>
-			<Dialog.Title>Alert</Dialog.Title>
-			<Dialog.Content>
-				<Text>This is simple dialog</Text>
-			</Dialog.Content>
-			<Dialog.Actions>
-				<Button onPress={hideDialog}>Done</Button>
-			</Dialog.Actions>
-		</Dialog>
+		<View
+			style={{
+				flex: 1,
+				alignItems: "center",
+				margin: 20,
+				justifyContent: "center",
+			}}
+		>
+			<Text style={styles.textStyle}>Select Content Provider</Text>
+			<Text>(If the app worked for you before choose FaselHD)</Text>
+			<Button
+				mode="outlined"
+				style={{ marginTop: 10, borderWidth: 0 }}
+				labelStyle={{ fontSize: 18, padding: 10 }}
+				onPress={() => handleProvider("fasel")}
+			>
+				FaselHD
+			</Button>
+			<Button
+				mode="outlined"
+				style={{ marginTop: 10, borderWidth: 0 }}
+				labelStyle={{ fontSize: 18, padding: 10 }}
+				onPress={() => handleProvider("hdw")}
+			>
+				HDwatched
+			</Button>
+		</View>
 	);
 };
 
 const styles = StyleSheet.create({
-	modalBackgroundStyle: {
-		backgroundColor: "rgba(0,0,0,0.5)",
-		position: "absolute",
-		...StyleSheet.absoluteFillObject,
-		justifyContent: "center",
-		alignItems: "center",
-	},
-	modalViewStyle: {
-		marginHorizontal: 20,
-		borderRadius: 20,
-		alignItems: "center",
+	textStyle: {
+		fontSize: 20,
+		fontWeight: "bold",
+		marginHorizontal: 10,
+		marginBottom: 10,
 	},
 });
 
