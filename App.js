@@ -11,10 +11,13 @@ import AboutScreen from "./src/screens/AboutScreen";
 import LoadingScreen from "./src/screens/LoadingScreen";
 import { Storage } from "./src/components/Storage";
 import StartupScreen from "./src/screens/StartupScreen";
+import { useMaterialYouPalette } from "@assembless/react-native-material-you";
 
 const Stack = createNativeStackNavigator();
 
 const MyStack = () => {
+	const palette = useMaterialYouPalette();
+	console.log(palette)
 	const theme = useTheme();
 
 	return (
