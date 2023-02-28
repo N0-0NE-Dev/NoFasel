@@ -157,13 +157,13 @@ const Buttons = ({ showModal, setType, theme, tmdbId, category }) => {
 					}/${tmdbId}`
 				),
 		},
-		{
-			mode: "outlined",
-			icon: "tray-arrow-down",
-			label: "Download",
-			onPress: () => defaultBehaviour("Download"),
-			labelColor: theme.colors.primary,
-		},
+		// {
+		// 	mode: "outlined",
+		// 	icon: "tray-arrow-down",
+		// 	label: "Download",
+		// 	onPress: () => defaultBehaviour("Download"),
+		// 	labelColor: theme.colors.primary,
+		// },
 		{
 			mode: "outlined",
 			icon: "content-copy",
@@ -314,15 +314,23 @@ const NewSelectScreen = ({ navigation, route }) => {
 	);
 
 	const jsCode = `
-		var qualities = {};
-		var buttons = Array.prototype.slice.call(document.querySelector('.downloadLinks.isVip').querySelectorAll('a'));
-		buttons.shift();
-		buttons.forEach((item) => {
-			const label = item.href.split(']')[1].replace('[', '');
-			qualities[label] = item.href;
-		});
+	if (window.location.href.includes("fasel")) {
+		window.ReactNativeWebView.postMessage(document.getElementsByTagName("iframe")[0].src);	
+	} else {
+		let qualities = {};
+		[...document.getElementsByClassName("hd_btn")].forEach((button) => {
+			const dataUrl = button.getAttribute("data-url");
+
+			if (dataUrl.includes("master")) {
+				qualities["Auto"] = dataUrl;
+			} else {
+				const label = dataUrl.split("_").at(-2).split("d")[1].replace("b", "p");
+				qualities[label] = dataUrl;
+			}
+		})
 		window.ReactNativeWebView.postMessage(JSON.stringify(qualities));
-		`;
+	}
+	`;
 
 	useEffect(() => setRefresh(!refresh), [isFocused]);
 	useEffect(() => setRefresh(!refresh), [orientation]);
@@ -568,6 +576,20 @@ const NewSelectScreen = ({ navigation, route }) => {
 		setInWatchList(!inWatchList);
 	};
 
+	// return (
+	// 	<WebView
+	// 		ref={webViewRef}
+	// 		injectedJavaScript={jsCode}
+	// 		source={{ uri: webpageUrl }}
+	// 		onMessage={(event) => {
+	// 			console.log(event.nativeEvent.data);
+	// 			if (event.nativeEvent.data.includes("embed.scdn.to")) {
+	// 				setWebpageUrl(event.nativeEvent.data);
+	// 			}
+	// 		}}
+	// 	/>
+	// );
+
 	if (overview && cast) {
 		return (
 			<View style={{ backgroundColor: theme.colors.background, flex: 1 }}>
@@ -661,8 +683,15 @@ const NewSelectScreen = ({ navigation, route }) => {
 								source={{ uri: webpageUrl }}
 								injectedJavaScript={jsCode}
 								onMessage={(event) => {
-									setQualities(JSON.parse(event.nativeEvent.data));
-									setShowLoading(false);
+									console.log(event.nativeEvent.data);
+									if (event.nativeEvent.data.includes("embed.scdn.to")) {
+										setWebpageUrl(event.nativeEvent.data);
+									} else {
+										setShowLoading(false);
+										setQualities(JSON.parse(event.nativeEvent.data));
+									}
+									// setQualities(JSON.parse(event.nativeEvent.data));
+									// setShowLoading(false);
 								}}
 							/>
 						)}
