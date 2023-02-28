@@ -123,7 +123,7 @@ const CastCard = ({ name, role, imageUrl }) => {
 	);
 };
 
-const Buttons = ({ showModal, setType, theme, tmdbId, category }) => {
+const Buttons = ({ showModal, setType, theme, tmdbId, category, provider }) => {
 	const defaultBehaviour = (label) => {
 		showModal();
 		setType(label);
@@ -157,13 +157,6 @@ const Buttons = ({ showModal, setType, theme, tmdbId, category }) => {
 					}/${tmdbId}`
 				),
 		},
-		// {
-		// 	mode: "outlined",
-		// 	icon: "tray-arrow-down",
-		// 	label: "Download",
-		// 	onPress: () => defaultBehaviour("Download"),
-		// 	labelColor: theme.colors.primary,
-		// },
 		{
 			mode: "outlined",
 			icon: "content-copy",
@@ -172,6 +165,19 @@ const Buttons = ({ showModal, setType, theme, tmdbId, category }) => {
 			labelColor: theme.colors.primary,
 		},
 	];
+
+	if (provider == "hdw") {
+		const downloadButtonData = {
+			mode: "outlined",
+			icon: "tray-arrow-down",
+			label: "Download",
+			onPress: () => defaultBehaviour("Download"),
+			labelColor: theme.colors.primary,
+		};
+		buttonsData.splice(3, 0, downloadButtonData);
+	} else {
+		// pass
+	}
 
 	return (
 		<FlatList
