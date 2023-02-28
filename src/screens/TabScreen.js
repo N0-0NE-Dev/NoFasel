@@ -16,10 +16,10 @@ import {
 
 const TabScreen = ({ navigation }) => {
 	let progress = 0;
-        const provider = Storage.getString("provider");
+	const provider = Storage.getString("provider");
 	const common = require("../data/common.json");
-	const [contentUpdated, setContentUpdated] = useState(provider == "fasel" ? false : true);
-	const [loggedin, setLoggedin] = useState(false);
+	const [contentUpdated, setContentUpdated] = useState(false);
+	const [loggedin, setLoggedin] = useState(provider == "fasel" ? false : true);
 	const [index, setIndex] = useState(0);
 	const theme = useTheme();
 
@@ -161,14 +161,16 @@ const TabScreen = ({ navigation }) => {
 				}}
 			>
 				<ActivityIndicator size={50} />
-				<View>
-					<WebView
-						source={{ uri: common.faselBaseUrl + "account/login" }}
-						injectedJavaScript={jsCode}
-						sharedCookiesEnabled={true}
-						onNavigationStateChange={handleNavigationChange}
-					/>
-				</View>
+				{!loggedin && (
+					<View>
+						<WebView
+							source={{ uri: common.faselBaseUrl + "account/login" }}
+							injectedJavaScript={jsCode}
+							sharedCookiesEnabled={true}
+							onNavigationStateChange={handleNavigationChange}
+						/>
+					</View>
+				)}
 			</View>
 		);
 	}

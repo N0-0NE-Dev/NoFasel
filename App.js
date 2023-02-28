@@ -15,8 +15,6 @@ import StartupScreen from "./src/screens/StartupScreen";
 const Stack = createNativeStackNavigator();
 
 const MyStack = () => {
-	const palette = useMaterialYouPalette();
-	console.log(palette);
 	const theme = useTheme();
 
 	return (
