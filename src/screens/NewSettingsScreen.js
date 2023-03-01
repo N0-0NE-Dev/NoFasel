@@ -1,15 +1,11 @@
 import React from "react";
-import { View } from "react-native";
-import { useTheme } from "react-native-paper";
+import { SafeAreaView } from "react-native-safe-area-context";
 import DefaultSettingsButton from "../components/DefaultSettingsButton";
 
 const NewSettingsScreen = ({ navigation }) => {
-	const theme = useTheme();
-
 	return (
-		<View
+		<SafeAreaView
 			style={{
-				backgroundColor: theme.colors.background,
 				flex: 1,
 			}}
 		>
@@ -23,7 +19,7 @@ const NewSettingsScreen = ({ navigation }) => {
 				onPress={() => navigation.navigate("About")}
 				iconName="information"
 			/>
-		</View>
+		</SafeAreaView>
 	);
 };
 

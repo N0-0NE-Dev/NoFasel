@@ -73,8 +73,6 @@ const WatchScreen = ({ route, navigation }) => {
 						</body>
 					</html>`;
 
-	useEffect(() => console.log(html), []);
-
 	return (
 		<View
 			style={{ flex: 1, paddingBottom: viewPadding, backgroundColor: "black" }}

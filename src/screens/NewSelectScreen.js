@@ -34,6 +34,7 @@ import { useIsFocused } from "@react-navigation/native";
 import { isTablet } from "react-native-device-info";
 import CentredActivityIndicator from "../components/CentredActivityIndicator";
 import { useDeviceOrientation } from "@react-native-community/hooks";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const getOverview = async (tmdbId, category) => {
 	return fetch(
@@ -285,7 +286,6 @@ const QualitySelector = ({
 const NewSelectScreen = ({ navigation, route }) => {
 	const provider = Storage.getString("provider");
 	const common = require("../data/common.json");
-	const faselBaseUrl = common.faselBaseUrl;
 	const userAgent = common.userAgent;
 	const { id, category } = route.params;
 	const theme = useTheme();
@@ -320,22 +320,21 @@ const NewSelectScreen = ({ navigation, route }) => {
 	);
 
 	const jsCode = `
-	if (window.location.href.includes("fasel")) {
-		window.ReactNativeWebView.postMessage(document.getElementsByTagName("iframe")[0].src);	
-	} else {
-		let qualities = {};
-		[...document.getElementsByClassName("hd_btn")].forEach((button) => {
-			const dataUrl = button.getAttribute("data-url");
+	let qualities = {};
+	const buttons = [...document.getElementsByClassName("hd_btn")];
 
-			if (dataUrl.includes("master")) {
-				qualities["Auto"] = dataUrl;
-			} else {
-				const label = dataUrl.split("_").at(-2).split("d")[1].replace("b", "p");
-				qualities[label] = dataUrl;
-			}
-		})
-		window.ReactNativeWebView.postMessage(JSON.stringify(qualities));
-	}
+	buttons.forEach((button) => {
+		const dataUrl = button.getAttribute("data-url");
+
+		if (dataUrl.includes("master")) {
+			qualities["Auto"] = dataUrl;
+		} else {
+			const label = dataUrl.split("_").at(-2).split("d")[1].replace("b", "p");
+			qualities[label] = dataUrl;
+		}
+	})
+
+	window.ReactNativeWebView.postMessage(JSON.stringify(qualities));
 	`;
 
 	useEffect(() => setRefresh(!refresh), [isFocused]);
@@ -392,8 +391,14 @@ const NewSelectScreen = ({ navigation, route }) => {
 	}, [data]);
 
 	useEffect(() => {
-		if (category == "movies" && !webpageUrl) {
-			setTimeout(() => setWebpageUrl(`${faselBaseUrl}?p=${id}`), 250);
+		if (category == "movies" && !webpageUrl && data) {
+			setTimeout(
+				() =>
+					setWebpageUrl(
+						`https://embed.scdn.to/video_player?uid=0&vid=${data["Source"]}`
+					),
+				250
+			);
 		} else if (category.includes("arabic") && webpageUrl) {
 			fetch(
 				useProxy
@@ -429,7 +434,7 @@ const NewSelectScreen = ({ navigation, route }) => {
 			Object.entries(rawEpisodes).forEach((episode) => {
 				episodes.push({
 					label: `Episode ${episode[1]["Episode Number"]}`,
-					key: category == "arabic-series" ? episode[1]["Source"] : episode[0],
+					key: episode[1]["Source"],
 				});
 			});
 			setEpisodes(episodes);
@@ -464,8 +469,11 @@ const NewSelectScreen = ({ navigation, route }) => {
 		}
 	}, [data]);
 
-	const getHdwSource = () => {
-		if (category == "hdwmovies" || selectedEpisode) {
+	useEffect(() => {
+		if (
+			category == "hdwmovies" ||
+			(category == "hdwseries" && selectedEpisode)
+		) {
 			setShowLoading(true);
 			fetch(
 				`https://www.hdwatched.xyz/embed/${
@@ -491,9 +499,7 @@ const NewSelectScreen = ({ navigation, route }) => {
 		} else {
 			// pass
 		}
-	};
-
-	useEffect(() => getHdwSource(), [selectedEpisode]);
+	}, [selectedEpisode]);
 
 	const EpisodeCard = ({ label, posterSource, source }) => {
 		return (
@@ -506,9 +512,9 @@ const NewSelectScreen = ({ navigation, route }) => {
 						(category == "anime" || contentWithSeasons.includes(category)) &&
 						provider == "fasel"
 					) {
-						setWebpageUrl(`${faselBaseUrl}?p=${source}`);
-					} else if (category == "movies") {
-						setWebpageUrl(source);
+						setWebpageUrl(
+							`https://embed.scdn.to/video_player?uid=0&vid=${source}`
+						);
 					} else {
 						// pass
 					}
@@ -582,23 +588,9 @@ const NewSelectScreen = ({ navigation, route }) => {
 		setInWatchList(!inWatchList);
 	};
 
-	// return (
-	// 	<WebView
-	// 		ref={webViewRef}
-	// 		injectedJavaScript={jsCode}
-	// 		source={{ uri: webpageUrl }}
-	// 		onMessage={(event) => {
-	// 			console.log(event.nativeEvent.data);
-	// 			if (event.nativeEvent.data.includes("embed.scdn.to")) {
-	// 				setWebpageUrl(event.nativeEvent.data);
-	// 			}
-	// 		}}
-	// 	/>
-	// );
-
 	if (overview && cast) {
 		return (
-			<View style={{ backgroundColor: theme.colors.background, flex: 1 }}>
+			<SafeAreaView style={{ flex: 1 }}>
 				<ScrollView scrollEnabled={!showLoading}>
 					{qualities && (
 						<QualitySelector
@@ -689,15 +681,8 @@ const NewSelectScreen = ({ navigation, route }) => {
 								source={{ uri: webpageUrl }}
 								injectedJavaScript={jsCode}
 								onMessage={(event) => {
-									console.log(event.nativeEvent.data);
-									if (event.nativeEvent.data.includes("embed.scdn.to")) {
-										setWebpageUrl(event.nativeEvent.data);
-									} else {
-										setShowLoading(false);
-										setQualities(JSON.parse(event.nativeEvent.data));
-									}
-									// setQualities(JSON.parse(event.nativeEvent.data));
-									// setShowLoading(false);
+									setShowLoading(false);
+									setQualities(JSON.parse(event.nativeEvent.data));
 								}}
 							/>
 						)}
@@ -764,7 +749,7 @@ const NewSelectScreen = ({ navigation, route }) => {
 				>
 					Added to Watchlist
 				</Snackbar>
-			</View>
+			</SafeAreaView>
 		);
 	} else {
 		return <CentredActivityIndicator />;

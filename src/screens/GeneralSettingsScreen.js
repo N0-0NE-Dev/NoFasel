@@ -37,11 +37,12 @@ const GeneralSettingsScreen = ({ navigation }) => {
 				<Text
 					style={{
 						fontSize: 18,
+						fontWeight: "bold",
 					}}
 				>
 					Use Proxy for Akwam
 				</Text>
-				<Switch value={useProxy} onValueChange={() => setUseProxy(!useProxy)} />
+				<Switch value={useProxy} onValueChange={toggleUseProxy} />
 			</Pressable>
 			<DefaultSettingsButton
 				label="Change Provider"

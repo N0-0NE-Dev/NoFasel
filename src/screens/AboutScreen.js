@@ -22,6 +22,10 @@ const AboutScreen = () => {
 		return (
 			<View style={{ flex: 1, backgroundColor: theme.colors.background }}>
 				<DefaultSettingsButton
+					label="Donate"
+					onPress={() => Linking.openURL("https://ko-fi.com/ahmedbadawe")}
+				/>
+				<DefaultSettingsButton
 					label="Content Information Source"
 					onPress={() => Linking.openURL("https://www.themoviedb.org/")}
 				/>

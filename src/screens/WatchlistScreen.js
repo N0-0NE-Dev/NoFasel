@@ -4,6 +4,7 @@ import ContentCardsList from "../components/ContentCardsList";
 import { Storage } from "../components/Storage";
 import { useIsFocused } from "@react-navigation/native";
 import { Text, useTheme } from "react-native-paper";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const WatchlistScreen = ({ navigation }) => {
 	const [refresh, setRefresh] = useState(false);
@@ -15,7 +16,7 @@ const WatchlistScreen = ({ navigation }) => {
 
 	if (Object.entries(storedData).length !== 0) {
 		return (
-			<View style={{ flex: 1 }}>
+			<SafeAreaView style={{ flex: 1 }}>
 				<View style={{ marginTop: 10 }}>
 					<ContentCardsList
 						navigation={navigation}
@@ -25,7 +26,7 @@ const WatchlistScreen = ({ navigation }) => {
 						height={270}
 					/>
 				</View>
-			</View>
+			</SafeAreaView>
 		);
 	} else {
 		return (

@@ -25,7 +25,6 @@ const MyStack = () => {
 				statusBarStyle: theme.dark ? "light" : "dark",
 				headerStyle: { backgroundColor: theme.colors.background },
 				headerTintColor: theme.dark ? "white" : "black",
-				navigationBarHidden: true,
 				headerShadowVisible: false,
 				contentStyle: { backgroundColor: theme.colors.background },
 			}}
@@ -44,6 +43,7 @@ const MyStack = () => {
 					headerShown: false,
 					orientation: "all",
 					statusBarHidden: true,
+					navigationBarHidden: true
 				}}
 			/>
 			<Stack.Screen

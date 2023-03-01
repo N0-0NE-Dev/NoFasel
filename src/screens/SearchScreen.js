@@ -9,6 +9,7 @@ import { useTheme, Text, Button } from "react-native-paper";
 import CentredActivityIndicator from "../components/CentredActivityIndicator";
 import ContentCard from "../components/ContentCard";
 import { Storage } from "../components/Storage";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const SearchScreen = ({ navigation }) => {
 	const provider = Storage.getString("provider");
@@ -120,160 +121,162 @@ const SearchScreen = ({ navigation }) => {
 
 	if (data !== null) {
 		return (
-			<ScrollView>
-				<View style={styles.searchBarParentStyle}>
-					<TextInput
-						placeholder="Search"
-						mode="flat"
-						style={styles.searchBarStyle}
-						left={<TextInput.Icon icon="magnify" color="grey" />}
-						underlineColor="transparent"
-						activeUnderlineColor="transparent"
-						cursorColor="black"
-						onChangeText={(text) => setSearchText(text)}
-					/>
-					<FontAwesome
-						name="sliders"
-						size={27}
-						color={theme.colors.primary}
-						style={{
-							...styles.iconStyle,
-							backgroundColor: theme.colors.elevation.level4,
-						}}
-						onPress={() => bottomSheetRef.current.open()}
-					/>
-				</View>
-
-				{data.length === 0 && searchText !== "" ? (
-					<View style={styles.imageParentStyle}>
-						<Image
-							source={require("../assets/NotFound.png")}
-							style={{ width: 860 * 0.3, height: 571 * 0.3 }}
+			<SafeAreaView>
+				<ScrollView>
+					<View style={styles.searchBarParentStyle}>
+						<TextInput
+							placeholder="Search"
+							mode="flat"
+							style={styles.searchBarStyle}
+							left={<TextInput.Icon icon="magnify" color="grey" />}
+							underlineColor="transparent"
+							activeUnderlineColor="transparent"
+							cursorColor="black"
+							onChangeText={(text) => setSearchText(text)}
 						/>
-						<Text
+						<FontAwesome
+							name="sliders"
+							size={27}
+							color={theme.colors.primary}
 							style={{
-								...styles.notFoundTextStyle,
-								color: theme.colors.primary,
+								...styles.iconStyle,
+								backgroundColor: theme.colors.elevation.level4,
+							}}
+							onPress={() => bottomSheetRef.current.open()}
+						/>
+					</View>
+
+					{data.length === 0 && searchText !== "" ? (
+						<View style={styles.imageParentStyle}>
+							<Image
+								source={require("../assets/NotFound.png")}
+								style={{ width: 860 * 0.3, height: 571 * 0.3 }}
+							/>
+							<Text
+								style={{
+									...styles.notFoundTextStyle,
+									color: theme.colors.primary,
+								}}
+							>
+								Not Found
+							</Text>
+							<Text style={styles.descriptionTextStyle}>
+								Sorry, the keywords you entered could not be found. Try to check
+								again or search with different keywords.
+							</Text>
+						</View>
+					) : (
+						<ScrollView
+							horizontal={true}
+							contentContainerStyle={{
+								flexWrap: "wrap",
+								flex: 1,
+								justifyContent: "center",
 							}}
 						>
-							Not Found
-						</Text>
-						<Text style={styles.descriptionTextStyle}>
-							Sorry, the keywords you entered could not be found. Try to check
-							again or search with different keywords.
-						</Text>
-					</View>
-				) : (
-					<ScrollView
-						horizontal={true}
-						contentContainerStyle={{
-							flexWrap: "wrap",
-							flex: 1,
-							justifyContent: "center",
-						}}
-					>
-						{data.slice(start, end).map((item) => (
-							<ContentCard
-								width={180}
-								height={270}
-								navigation={navigation}
-								id={item["key"]}
-								category={item["Category"]}
-								title={item["Title"]}
-								rating={item["Rating"]}
-								imageSource={item["Image Source"]}
-								key={item["key"]}
-							/>
-						))}
-					</ScrollView>
-				)}
+							{data.slice(start, end).map((item) => (
+								<ContentCard
+									width={180}
+									height={270}
+									navigation={navigation}
+									id={item["key"]}
+									category={item["Category"]}
+									title={item["Title"]}
+									rating={item["Rating"]}
+									imageSource={item["Image Source"]}
+									key={item["key"]}
+								/>
+							))}
+						</ScrollView>
+					)}
 
-				{data.length > 20 && (
-					<View
-						style={{
-							flexDirection: "row",
-							justifyContent: "center",
-							alignItems: "center",
-						}}
-					>
-						{start > 0 && (
-							<Button
-								icon="chevron-left"
-								mode="outlined"
-								style={{ borderColor: "rgba(0, 0, 0, 0)" }}
-								labelStyle={{ fontSize: 15 }}
-								onPress={handlePrevious}
-							>
-								Previous
-							</Button>
-						)}
-						<Text>{pageNumber}</Text>
-						{end < data.length && (
-							<Button
-								mode="outlined"
-								icon="chevron-right"
-								style={{ borderColor: "rgba(0, 0, 0, 0)" }}
-								contentStyle={{ flexDirection: "row-reverse" }}
-								labelStyle={{ fontSize: 15 }}
-								onPress={handleNext}
-							>
-								Next
-							</Button>
-						)}
-					</View>
-				)}
+					{data.length > 20 && (
+						<View
+							style={{
+								flexDirection: "row",
+								justifyContent: "center",
+								alignItems: "center",
+							}}
+						>
+							{start > 0 && (
+								<Button
+									icon="chevron-left"
+									mode="outlined"
+									style={{ borderColor: "rgba(0, 0, 0, 0)" }}
+									labelStyle={{ fontSize: 15 }}
+									onPress={handlePrevious}
+								>
+									Previous
+								</Button>
+							)}
+							<Text>{pageNumber}</Text>
+							{end < data.length && (
+								<Button
+									mode="outlined"
+									icon="chevron-right"
+									style={{ borderColor: "rgba(0, 0, 0, 0)" }}
+									contentStyle={{ flexDirection: "row-reverse" }}
+									labelStyle={{ fontSize: 15 }}
+									onPress={handleNext}
+								>
+									Next
+								</Button>
+							)}
+						</View>
+					)}
 
-				<RBSheet
-					ref={bottomSheetRef}
-					closeOnDragDown={true}
-					closeOnPressMask={true}
-					height={800}
-					customStyles={{
-						wrapper: {
-							backgroundColor: "rgba(0, 0, 0, 0.75)",
-						},
-						draggableIcon: {
-							backgroundColor: theme.colors.primary,
-						},
-						container: {
-							borderRadius: 30,
-							backgroundColor: theme.colors.background,
-						},
-					}}
-				>
-					<Text style={styles.filterTitleStyle}>Filter</Text>
-					<View style={styles.separatorStyle} />
-					<Text style={styles.filterSectionStyle}>Categories</Text>
-					<View style={{ flexWrap: "wrap", flexDirection: "row" }}>
-						{categories.map((category) => (
-							<ToggleButton
-								title={category.label}
-								filters={appliedFilters}
-								setFilters={setAppliedFilters}
-								value={category.key}
-								key={category.key}
-							/>
-						))}
-					</View>
-					<Text style={styles.filterSectionStyle}>Genre</Text>
-					<ScrollView
-						contentContainerStyle={{
-							flexWrap: "wrap",
-							flexDirection: "row",
+					<RBSheet
+						ref={bottomSheetRef}
+						closeOnDragDown={true}
+						closeOnPressMask={true}
+						height={800}
+						customStyles={{
+							wrapper: {
+								backgroundColor: "rgba(0, 0, 0, 0.75)",
+							},
+							draggableIcon: {
+								backgroundColor: theme.colors.primary,
+							},
+							container: {
+								borderRadius: 30,
+								backgroundColor: theme.colors.background,
+							},
 						}}
 					>
-						{genres.map((genre) => (
-							<ToggleButton
-								title={genre}
-								filters={selectedGenres}
-								setFilters={setSelectedGenres}
-								value={genre}
-								key={genre}
-							/>
-						))}
-					</ScrollView>
-				</RBSheet>
-			</ScrollView>
+						<Text style={styles.filterTitleStyle}>Filter</Text>
+						<View style={styles.separatorStyle} />
+						<Text style={styles.filterSectionStyle}>Categories</Text>
+						<View style={{ flexWrap: "wrap", flexDirection: "row" }}>
+							{categories.map((category) => (
+								<ToggleButton
+									title={category.label}
+									filters={appliedFilters}
+									setFilters={setAppliedFilters}
+									value={category.key}
+									key={category.key}
+								/>
+							))}
+						</View>
+						<Text style={styles.filterSectionStyle}>Genre</Text>
+						<ScrollView
+							contentContainerStyle={{
+								flexWrap: "wrap",
+								flexDirection: "row",
+							}}
+						>
+							{genres.map((genre) => (
+								<ToggleButton
+									title={genre}
+									filters={selectedGenres}
+									setFilters={setSelectedGenres}
+									value={genre}
+									key={genre}
+								/>
+							))}
+						</ScrollView>
+					</RBSheet>
+				</ScrollView>
+			</SafeAreaView>
 		);
 	} else {
 		return <CentredActivityIndicator />;
