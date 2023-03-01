@@ -1,27 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { View } from "react-native";
+import React, { useState } from "react";
 import TrendingContentScreen from "./TrendingContentScreen";
 import { Storage } from "../components/Storage";
 import WatchlistScreen from "./WatchlistScreen";
 import * as FileSystem from "expo-file-system";
-import WebView from "react-native-webview";
-import { FASEL_EMAIL, FASEL_PASSWORD } from "@env";
 import SearchScreen from "./SearchScreen";
 import NewSettingsScreen from "./NewSettingsScreen";
-import {
-	BottomNavigation,
-	ActivityIndicator,
-	useTheme,
-} from "react-native-paper";
+import { BottomNavigation } from "react-native-paper";
+import CentredActivityIndicator from "../components/CentredActivityIndicator";
 
 const TabScreen = ({ navigation }) => {
 	let progress = 0;
 	const provider = Storage.getString("provider");
 	const common = require("../data/common.json");
 	const [contentUpdated, setContentUpdated] = useState(false);
-	const [loggedin, setLoggedin] = useState(provider == "fasel" ? false : true);
 	const [index, setIndex] = useState(0);
-	const theme = useTheme();
 
 	const fileUrls =
 		provider == "fasel" ? common.fileUrlsFasel : common.fileUrlsHdw;
@@ -67,16 +59,6 @@ const TabScreen = ({ navigation }) => {
 			return <NewSettingsScreen navigation={navigation} />;
 		},
 	});
-
-	const jsCode = `
-					if (document.getElementById('yorke_user_login')) {
-						document.getElementById('yorke_user_login').value='${FASEL_EMAIL}';
-						document.getElementById('yorke_user_pass').value='${FASEL_PASSWORD}';
-						document.getElementById('yorke_login_submit').click();
-					} else {
-						// pass
-					}
-					`;
 
 	const updateContent = () => {
 		fileUrls.forEach((url) => {
@@ -134,15 +116,7 @@ const TabScreen = ({ navigation }) => {
 		// pass
 	}
 
-	const handleNavigationChange = (webViewState) => {
-		if (webViewState.url === "https://www.faselhd.ac/") {
-			setLoggedin(true);
-		} else {
-			// pass
-		}
-	};
-
-	if (contentUpdated && loggedin) {
+	if (contentUpdated) {
 		return (
 			<BottomNavigation
 				navigationState={{ index, routes }}
@@ -152,27 +126,7 @@ const TabScreen = ({ navigation }) => {
 			/>
 		);
 	} else {
-		return (
-			<View
-				style={{
-					flex: 1,
-					justifyContent: "center",
-					backgroundColor: theme.colors.background,
-				}}
-			>
-				<ActivityIndicator size={50} />
-				{!loggedin && (
-					<View>
-						<WebView
-							source={{ uri: common.faselBaseUrl + "account/login" }}
-							injectedJavaScript={jsCode}
-							sharedCookiesEnabled={true}
-							onNavigationStateChange={handleNavigationChange}
-						/>
-					</View>
-				)}
-			</View>
-		);
+		return <CentredActivityIndicator />;
 	}
 };
 
