@@ -2,15 +2,15 @@
   "expo": {
     "name": "NoFasel",
     "slug": "no-fasel",
-    "version": "1.1.5",
+    "version": "1.1.6",
     "sdkVersion": "47.0.0",
     "jsEngine": "hermes",
     "platforms": [
       "android"
     ],
     "android": {
-      "runtimeVersion": "1.1.5",
-      "versionCode": 15
+      "runtimeVersion": "1.1.6",
+      "versionCode": 16
     },
     "extra": {
       "eas": {
