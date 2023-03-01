@@ -18,7 +18,6 @@ A streaming app with zero ads built in react native with [scrapers](https://gith
 
 ## 📖 Features:
 
-✅ Uses Fasel's Premium Servers ⭐  
 ✅ Pick Up Where You Left Off ⏩  
 ✅ Full Speed Download ⏬  
 ✅ Watchlist System 📃  
