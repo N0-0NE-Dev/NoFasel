@@ -6,7 +6,7 @@
 
 <div align="center">
 
-A streaming app with zero ads built in react native with [scrapers](https://github.com/N0-0NE-Dev/no-fasel-scrapers) built in python. No Fasel requires no premissons or accounts and is free to use forever.
+A streaming app with zero ads built in react native with [scrapers](https://github.com/N0-0NE-Dev/no-fasel-scrapers) built in python. No Fasel requires no extra premissons or accounts and is free to use forever.
 
 ![Github All Releases](https://img.shields.io/github/downloads/N0-0NE-Dev/NoFasel/total.svg?style=for-the-badge)
 ![GitHub Repo stars](https://img.shields.io/github/stars/N0-0NE-Dev/NoFasel?style=for-the-badge&color=gold)
@@ -44,6 +44,16 @@ A streaming app with zero ads built in react native with [scrapers](https://gith
 ## 🪲 Bugs:
 
 Please check the open and closed issues, update the app to the latest version and restart it at least twice before opening any issues.
+
+## 📄 DMCA:
+NoFasel does not own or operate any servers which contain DMCA-protected content, NoFasel scrapes all of its content from third-party websites mainly:
+
+1. [FaselHD](https://www.faselhd.ac/)
+2. [Akwam](https://akwam.to/)
+3. [HDwatched](https://www.hdwatched.xyz/)
+
+Please bring up any DMCA violation concerns with them not me. 
+
 
 ## ⬇️ Download:
 
