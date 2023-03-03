@@ -434,7 +434,7 @@ const NewSelectScreen = ({ navigation, route }) => {
 			Object.entries(rawEpisodes).forEach((episode) => {
 				episodes.push({
 					label: `Episode ${episode[1]["Episode Number"]}`,
-					key: episode[1]["Source"],
+					key: category == "hdwseries" ? episode[0] : episode[1]["Source"],
 				});
 			});
 			setEpisodes(episodes);
@@ -475,6 +475,11 @@ const NewSelectScreen = ({ navigation, route }) => {
 			(category == "hdwseries" && selectedEpisode)
 		) {
 			setShowLoading(true);
+			console.log(
+				`https://www.hdwatched.xyz/embed/${
+					category == "hdwmovies" ? id : selectedEpisode
+				}`
+			);
 			fetch(
 				`https://www.hdwatched.xyz/embed/${
 					category == "hdwmovies" ? id : selectedEpisode
@@ -508,13 +513,12 @@ const NewSelectScreen = ({ navigation, route }) => {
 					setSelectedEpisode(source);
 					setShowLoading(true);
 					setQualities(null);
-					if (
-						(category == "anime" || contentWithSeasons.includes(category)) &&
-						provider == "fasel"
-					) {
+					if (provider == "fasel" && !(category == "arabic-series")) {
 						setWebpageUrl(
 							`https://embed.scdn.to/video_player?uid=0&vid=${source}`
 						);
+					} else if (category == "arabic-series") {
+						setWebpageUrl(source);
 					} else {
 						// pass
 					}
