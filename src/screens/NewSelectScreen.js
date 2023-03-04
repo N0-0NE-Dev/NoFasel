@@ -167,7 +167,7 @@ const Buttons = ({ showModal, setType, theme, tmdbId, category, provider }) => {
 		},
 	];
 
-	if (provider == "hdw") {
+	if (provider == "hdw" || category.includes("arabic")) {
 		const downloadButtonData = {
 			mode: "outlined",
 			icon: "tray-arrow-down",
