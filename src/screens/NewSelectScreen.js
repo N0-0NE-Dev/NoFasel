@@ -310,6 +310,7 @@ const NewSelectScreen = ({ navigation, route }) => {
 	const [refresh, setRefresh] = useState(false);
 	const [snackbarVisible, setSnackbarVisible] = useState(false);
 	const orientation = useDeviceOrientation();
+	let jsCode = "";
 
 	const [showLoading, setShowLoading] = useState(
 		category == "movies" ? true : false
@@ -319,23 +320,30 @@ const NewSelectScreen = ({ navigation, route }) => {
 		watchlist.hasOwnProperty(id) ? true : false
 	);
 
-	const jsCode = `
-	let qualities = {};
-	const buttons = [...document.getElementsByClassName("hd_btn")];
+	if (provider == "fasel") {
+		jsCode = `
+			let qualities = {};
+			const buttons = [...document.getElementsByClassName("hd_btn")];
 
-	buttons.forEach((button) => {
-		const dataUrl = button.getAttribute("data-url");
+			buttons.forEach((button) => {
+				const dataUrl = button.getAttribute("data-url");
 
-		if (dataUrl.includes("master")) {
-			qualities["Auto"] = dataUrl;
-		} else {
-			const label = dataUrl.split("_").at(-2).split("d")[1].replace("b", "p");
-			qualities[label] = dataUrl;
-		}
-	})
+				if (dataUrl.includes("master")) {
+					qualities["Auto"] = dataUrl;
+				} else {
+					const label = dataUrl.split("_").at(-2).split("d")[1].replace("b", "p");
+					qualities[label] = dataUrl;
+				}
+			})
 
-	window.ReactNativeWebView.postMessage(JSON.stringify(qualities));
-	`;
+			window.ReactNativeWebView.postMessage(JSON.stringify(qualities));
+		`;
+	} else {
+		jsCode = `
+			const qualities = {"1080p": document.getElementById('vjsplayer_html5_api').src};
+			window.ReactNativeWebView.postMessage(JSON.stringify(qualities));
+			`;
+	}
 
 	useEffect(() => setRefresh(!refresh), [isFocused]);
 	useEffect(() => setRefresh(!refresh), [orientation]);
@@ -444,6 +452,12 @@ const NewSelectScreen = ({ navigation, route }) => {
 				seasons[`Season ${season[1]["Season Number"]}`] = season[0];
 			});
 			setSeasons(seasons);
+		} else if (category == "hdwmovies" && !webpageUrl) {
+			setShowLoading(true);
+			setTimeout(
+				() => setWebpageUrl(`https://www.hdwatched.xyz/embed/${id}`),
+				250
+			);
 		} else {
 			// pass
 		}
@@ -469,43 +483,6 @@ const NewSelectScreen = ({ navigation, route }) => {
 		}
 	}, [data]);
 
-	useEffect(() => {
-		if (
-			category == "hdwmovies" ||
-			(category == "hdwseries" && selectedEpisode)
-		) {
-			setShowLoading(true);
-			console.log(
-				`https://www.hdwatched.xyz/embed/${
-					category == "hdwmovies" ? id : selectedEpisode
-				}`
-			);
-			fetch(
-				`https://www.hdwatched.xyz/embed/${
-					category == "hdwmovies" ? id : selectedEpisode
-				}`,
-				{
-					credentials: "include",
-					headers: {
-						"User-Agent": userAgent,
-					},
-					method: "GET",
-					mode: "cors",
-				}
-			)
-				.then((resp) => resp.text())
-				.then((text) => {
-					let HTMLParser = require("fast-html-parser");
-					let root = HTMLParser.parse(text);
-					const source = root.querySelector("source").attributes.src;
-					setQualities({ "1080p": source });
-					setShowLoading(false);
-				});
-		} else {
-			// pass
-		}
-	}, [selectedEpisode]);
-
 	const EpisodeCard = ({ label, posterSource, source }) => {
 		return (
 			<Pressable
@@ -519,6 +496,8 @@ const NewSelectScreen = ({ navigation, route }) => {
 						);
 					} else if (category == "arabic-series") {
 						setWebpageUrl(source);
+					} else if (provider == "hdw") {
+						setWebpageUrl(`https://www.hdwatched.xyz/embed/${source}`);
 					} else {
 						// pass
 					}
@@ -683,6 +662,7 @@ const NewSelectScreen = ({ navigation, route }) => {
 						) : (
 							<WebView
 								source={{ uri: webpageUrl }}
+								userAgent={userAgent}
 								injectedJavaScript={jsCode}
 								onMessage={(event) => {
 									setShowLoading(false);
