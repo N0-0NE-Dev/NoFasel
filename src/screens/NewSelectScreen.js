@@ -662,7 +662,7 @@ const NewSelectScreen = ({ navigation, route }) => {
 						) : (
 							<WebView
 								source={{ uri: webpageUrl }}
-								userAgent={userAgent}
+								userAgent={provider == "hdw" ? userAgent : ""}
 								injectedJavaScript={jsCode}
 								onMessage={(event) => {
 									setShowLoading(false);
