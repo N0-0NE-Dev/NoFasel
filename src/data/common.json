@@ -1,0 +1,157 @@
+{
+	"userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",
+	"faselBaseUrl": "https://www.faselhd.ac/",
+	"categoriesFasel": [
+		{
+			"label": "Movies",
+			"key": "movies"
+		},
+		{
+			"label": "Series",
+			"key": "series"
+		},
+		{
+			"label": "Anime",
+			"key": "anime"
+		},
+		{
+			"label": "Asian Series",
+			"key": "asian-series"
+		},
+		{
+			"label": "Arabic Series",
+			"key": "arabic-series"
+		},
+		{
+			"label": "Arabic Movies",
+			"key": "arabic-movies"
+		},
+		{
+			"label": "TV Shows",
+			"key": "tvshows"
+		}
+	],
+	"categoriesHdw": [
+		{
+			"label": "Movies",
+			"key": "hdwmovies"
+		},
+		{
+			"label": "Series",
+			"key": "hdwseries"
+		},
+		{
+			"label": "Arabic Series",
+			"key": "arabic-series"
+		},
+		{
+			"label": "Arabic Movies",
+			"key": "arabic-movies"
+		}
+	],
+	"fileUrlsFasel": [
+		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/all-content.json",
+		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/anime.json",
+		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/asian-series.json",
+		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/movies.json",
+		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/series.json",
+		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/trending-content.json",
+		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/tvshows.json",
+		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/arabic-series.json",
+		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/arabic-movies.json",
+		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/featured-content.json",
+		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/last-scraped.txt"
+	],
+	"fileUrlsHdw": [
+		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/arabic-series.json",
+		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/arabic-movies.json",
+		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/last-scraped.txt",
+		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/hdw-featured-content.json",
+		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/hdw-trending-content.json",
+		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/hdw-all-content.json",
+		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/hdwmovies.json",
+		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/hdwseries.json"
+	],
+	"genresHdw": [
+		"Comedy",
+		"Music",
+		"Drama",
+		"Mystery",
+		"Ramadan",
+		"Crime",
+		"Horror",
+		"Action.Adventure",
+		"Comedy.Romance",
+		"Drime",
+		"Adcenture",
+		"Netflix",
+		"History",
+		"Biography",
+		"Kids",
+		"Short",
+		"Sports",
+		"Animation",
+		"Documentary",
+		"Science Fiction",
+		"Animated",
+		"Sci-Fi",
+		"Western",
+		"Fantasy",
+		"Adevnture",
+		"Musical",
+		"Romance",
+		"Action",
+		"War",
+		"Family",
+		"Sport",
+		"Dubbed",
+		"Adventure",
+		"Thriller"
+	],
+	"genresFasel": [
+		"Netflix",
+		"Ramadan",
+		"Fantasy",
+		"Music",
+		"Reality-tv",
+		"News",
+		"Youth",
+		"Psychological",
+		"Family",
+		"History",
+		"Crime",
+		"Sport",
+		"Life",
+		"Mystery",
+		"Drama",
+		"Biography",
+		"Science Fiction",
+		"Zombies",
+		"Animation",
+		"Adventure",
+		"Film-noir",
+		"Animated",
+		"Romance",
+		"School",
+		"Friendship",
+		"Comdey",
+		"Sports",
+		"Kids",
+		"Western",
+		"Musical",
+		"Talk-show",
+		"Melodrama",
+		"Dubbed",
+		"Game-show",
+		"Office",
+		"War",
+		"Comedy",
+		"Thriller",
+		"Horror",
+		"Documentary",
+		"Sci-fi",
+		"Short",
+		"Action",
+		"Supernatural"
+	]
+}
