@@ -7,6 +7,7 @@ import SettingsScreen from "./SettingsScreen";
 import { BottomNavigation } from "react-native-paper";
 import CentredActivityIndicator from "../components/CentredActivityIndicator";
 import ReactNativeBlobUtil from "react-native-blob-util";
+import EntireSeasonDownloadScreen from "./EntireSeasonDownloadScreen";
 
 const TabScreen = ({ navigation }) => {
 	let progress = 0;
@@ -38,6 +39,12 @@ const TabScreen = ({ navigation }) => {
 			unfocusedIcon: "bookmark-minus-outline",
 		},
 		{
+			key: "entireSeasonDownload",
+			title: "Season Download",
+			focusedIcon: "download",
+			unfocusedIcon: "download-outline",
+		},
+		{
 			key: "settings",
 			title: "Settings",
 			focusedIcon: "cog",
@@ -54,6 +61,9 @@ const TabScreen = ({ navigation }) => {
 		},
 		mylist: () => {
 			return <WatchlistScreen navigation={navigation} />;
+		},
+		entireSeasonDownload: () => {
+			return <EntireSeasonDownloadScreen navigation={navigation} />;
 		},
 		settings: () => {
 			return <SettingsScreen navigation={navigation} />;

@@ -46,14 +46,15 @@ A streaming app with zero ads built in react native with [scrapers](https://gith
 Please check the open and closed issues, update the app to the latest version and restart it at least twice before opening any issues.
 
 ## 📄 DMCA:
+
 NoFasel does not own or operate any servers which contain DMCA-protected content, NoFasel scrapes all of its content from third-party websites mainly:
 
 1. [FaselHD](https://www.faselhd.ac/)
 2. [Akwam](https://akwam.to/)
 3. [HDwatched](https://www.hdwatched.xyz/)
+4. [WeCima](https://wecima.tube/)
 
-Please bring up any DMCA violation concerns with them not me. 
-
+Please bring up any DMCA violation concerns with them not me.
 
 ## ⬇️ Download:
 

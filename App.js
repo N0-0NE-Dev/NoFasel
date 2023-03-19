@@ -10,6 +10,7 @@ import AboutScreen from "./src/screens/AboutScreen";
 import LoadingScreen from "./src/screens/LoadingScreen";
 import { Storage } from "./src/components/Storage";
 import StartupScreen from "./src/screens/StartupScreen";
+import WeCimaExtractionScreen from "./src/screens/WeCimaExtractionScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -58,6 +59,11 @@ const MyStack = () => {
 				name="Startup"
 				component={StartupScreen}
 				options={{ headerShown: false }}
+			/>
+			<Stack.Screen
+				name="WeCima Extraction"
+				component={WeCimaExtractionScreen}
+				options={{ headerShown: false, animation: "none" }}
 			/>
 			<Stack.Screen name="General Settings" component={GeneralSettingsScreen} />
 			<Stack.Screen name="About" component={AboutScreen} />

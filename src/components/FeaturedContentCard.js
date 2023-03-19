@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 		letterSpacing: 1.25,
 		backgroundColor: "transparent",
+		color: "white",
 	},
 	buttonsParentStyle: {
 		flexDirection: "row",
@@ -73,6 +74,7 @@ const styles = StyleSheet.create({
 		marginRight: 10,
 		fontSize: 16,
 		fontWeight: "200",
+		color: "white"
 	},
 	buttonStyle: {
 		marginLeft: 10,

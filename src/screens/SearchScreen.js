@@ -306,7 +306,6 @@ const styles = StyleSheet.create({
 	imageParentStyle: {
 		alignItems: "center",
 		flex: 1,
-		borderColor: "white",
 		justifyContent: "center",
 	},
 	notFoundTextStyle: {

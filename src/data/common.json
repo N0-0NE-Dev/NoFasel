@@ -60,7 +60,8 @@
 		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/arabic-series.json",
 		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/arabic-movies.json",
 		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/featured-content.json",
-		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/last-scraped.txt"
+		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/last-scraped.txt",
+		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/WeCima.json"
 	],
 	"fileUrlsHdw": [
 		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/arabic-series.json",
@@ -70,7 +71,8 @@
 		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/hdw-trending-content.json",
 		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/hdw-all-content.json",
 		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/hdwmovies.json",
-		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/hdwseries.json"
+		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/hdwseries.json",
+		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/WeCima.json"
 	],
 	"genresHdw": [
 		"Comedy",

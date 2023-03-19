@@ -18,20 +18,20 @@ const ContentCard = ({
 		<Pressable
 			style={{ width: width, margin: 5 }}
 			onPress={() =>
-				navigation.navigate("Select", { id: id, category: category })
-			}
-		>
+				navigation.navigate(
+					category == "WeCima" ? "WeCima Extraction" : "Select",
+					{ id: id, category: category },
+				)
+			}>
 			<ImageBackground
 				style={{ width: width, height: height }}
 				imageStyle={{ borderRadius: 15 }}
-				source={{ uri: imageSource }}
-			>
+				source={{ uri: imageSource }}>
 				<Text
 					style={{
 						...styles.ratingTextStyle,
 						backgroundColor: theme.colors.primary,
-					}}
-				>
+					}}>
 					{rating ? rating : "N/A"}
 				</Text>
 			</ImageBackground>
