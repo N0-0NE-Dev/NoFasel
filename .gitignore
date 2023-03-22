@@ -68,3 +68,6 @@ android/keystore.properties
 .expo
 dist
 .env
+.watchmanconfig
+.ruby-version
+.bundle
