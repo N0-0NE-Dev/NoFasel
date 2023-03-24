@@ -342,6 +342,7 @@ const SelectScreen = ({ navigation, route }) => {
 						style={{
 							flexDirection: "row",
 							justifyContent: "space-between",
+							width: Dimensions.get("window").width,
 						}}>
 						<View>
 							<Text style={{ fontSize: 26, margin: 10, fontWeight: "bold" }}>

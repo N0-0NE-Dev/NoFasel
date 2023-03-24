@@ -19,27 +19,25 @@ const GeneralSettingsScreen = ({ navigation }) => {
 			style={{
 				backgroundColor: theme.colors.background,
 				flex: 1,
-			}}
-		>
+			}}>
 			<Pressable
 				onPress={toggleUseProxy}
 				style={({ pressed }) => [
 					{
-						backgroundColor: pressed ? (theme.dark ? "#3a3b3c" : "#ddd") : null,
+						backgroundColor: pressed ? "111" : null,
 					},
 					{
 						flexDirection: "row",
 						justifyContent: "space-between",
 						padding: 25,
 					},
-				]}
-			>
+				]}>
 				<Text
 					style={{
 						fontSize: 18,
 						fontWeight: "bold",
-					}}
-				>
+						color: theme.colors.primary,
+					}}>
 					Use Proxy for Akwam
 				</Text>
 				<Switch value={useProxy} onValueChange={toggleUseProxy} />

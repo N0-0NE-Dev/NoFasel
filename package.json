@@ -10,6 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@assembless/react-native-material-you": "^1.0.0-beta.4",
     "@react-native-clipboard/clipboard": "^1.11.2",
     "@react-native-community/hooks": "^3.0.0",
     "@react-navigation/native": "^6.1.6",

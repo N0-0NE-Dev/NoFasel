@@ -4,13 +4,18 @@ import { NavigationContainer } from "@react-navigation/native";
 import TabScreen from "./src/screens/TabScreen";
 import WatchScreen from "./src/screens/WatchScreen";
 import SelectScreen from "./src/screens/SelectScreen";
-import { Provider as PaperProvider, useTheme } from "react-native-paper";
 import GeneralSettingsScreen from "./src/screens/GeneralSettingsScreen";
 import AboutScreen from "./src/screens/AboutScreen";
 import LoadingScreen from "./src/screens/LoadingScreen";
 import { Storage } from "./src/components/Storage";
 import StartupScreen from "./src/screens/StartupScreen";
 import WeCimaExtractionScreen from "./src/screens/WeCimaExtractionScreen";
+import { getPaletteSync } from "@assembless/react-native-material-you";
+import {
+	Provider as PaperProvider,
+	useTheme,
+	MD3DarkTheme as DefaultTheme,
+} from "react-native-paper";
 
 const Stack = createNativeStackNavigator();
 
@@ -72,8 +77,23 @@ const MyStack = () => {
 };
 
 const App = () => {
+	const palette = getPaletteSync();
+
+	const theme = {
+		...DefaultTheme,
+		colors: {
+			...DefaultTheme.colors,
+			primary: palette.system_accent1[5],
+			background: "black",
+			elevation: {
+				level4: palette.system_accent1[4] + "3C",
+			},
+			secondaryContainer: palette.system_accent1[4] + "3C",
+		},
+	};
+
 	return (
-		<PaperProvider>
+		<PaperProvider theme={theme}>
 			<NavigationContainer>
 				<MyStack />
 			</NavigationContainer>

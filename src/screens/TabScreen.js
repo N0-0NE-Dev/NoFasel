@@ -8,8 +8,10 @@ import { BottomNavigation } from "react-native-paper";
 import CentredActivityIndicator from "../components/CentredActivityIndicator";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import EntireSeasonDownloadScreen from "./EntireSeasonDownloadScreen";
+import { getPaletteSync } from "@assembless/react-native-material-you";
 
 const TabScreen = ({ navigation }) => {
+	const palette = getPaletteSync();
 	let progress = 0;
 	const provider = Storage.getString("provider");
 	const common = require("../data/common.json");
@@ -133,6 +135,7 @@ const TabScreen = ({ navigation }) => {
 				onIndexChange={setIndex}
 				renderScene={renderScene}
 				shifting={true}
+				activeColor={palette.system_accent1[5]}
 			/>
 		);
 	} else {

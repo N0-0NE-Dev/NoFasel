@@ -10,14 +10,16 @@ import ContentCard from "../components/ContentCard";
 import { Storage } from "../components/Storage";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ReactNativeBlobUtil from "react-native-blob-util";
+import { getPaletteSync } from "@assembless/react-native-material-you";
 
 const SearchScreen = ({ navigation }) => {
 	const provider = Storage.getString("provider");
 	const common = require("../data/common.json");
 	const genres = provider == "fasel" ? common.genresFasel : common.genresHdw;
-	const theme = useTheme();
 	let allContentPath = ReactNativeBlobUtil.fs.dirs.DocumentDir;
 	let featuredContentPath = ReactNativeBlobUtil.fs.dirs.DocumentDir;
+	const theme = useTheme();
+	const palette = getPaletteSync();
 
 	const [searchText, setSearchText] = useState("");
 	const [allData, setAllData] = useState(null);
@@ -123,12 +125,21 @@ const SearchScreen = ({ navigation }) => {
 						<TextInput
 							placeholder="Search"
 							mode="flat"
-							style={styles.searchBarStyle}
-							left={<TextInput.Icon icon="magnify" color="grey" />}
+							style={{
+								...styles.searchBarStyle,
+								backgroundColor: palette.system_accent1[4] + "3C",
+							}}
+							left={
+								<TextInput.Icon
+									icon="magnify"
+									iconColor={palette.system_accent1[6]}
+								/>
+							}
 							underlineColor="transparent"
 							activeUnderlineColor="transparent"
 							cursorColor="black"
 							onChangeText={text => setSearchText(text)}
+							placeholderTextColor={palette.system_accent1[4]}
 						/>
 						<Icon
 							name="sliders"
@@ -213,7 +224,7 @@ const SearchScreen = ({ navigation }) => {
 						ref={bottomSheetRef}
 						closeOnDragDown={true}
 						closeOnPressMask={true}
-						height={800}
+						height={Dimensions.get("window").height * 0.9}
 						customStyles={{
 							wrapper: {
 								backgroundColor: "rgba(0, 0, 0, 0.75)",

@@ -43,6 +43,7 @@ const WeCimaExtractionScreen = ({ route }) => {
 				{Object.entries(qualities).map(quality => {
 					return (
 						<Button
+							key={quality[0]}
 							mode="outlined"
 							style={{ marginTop: 10, borderWidth: 0 }}
 							labelStyle={{ fontSize: 18, padding: 10 }}

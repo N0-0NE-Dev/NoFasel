@@ -11,7 +11,7 @@ const DefaultSettingsButton = ({ label, onPress, iconName, fontSize = 18 }) => {
 			onPress={onPress}
 			style={({ pressed }) => [
 				{
-					backgroundColor: pressed ? (theme.dark ? "#3a3b3c" : "#ddd") : null,
+					backgroundColor: pressed ? "#111" : null,
 				},
 				{
 					flexDirection: "row",
@@ -19,12 +19,13 @@ const DefaultSettingsButton = ({ label, onPress, iconName, fontSize = 18 }) => {
 					alignItems: "center",
 				},
 			]}>
-			<Icon name={iconName} size={26} color={theme.dark ? "white" : "black"} />
+			<Icon name={iconName} size={26} color={theme.colors.primary} />
 			<Text
 				style={{
 					fontSize: fontSize,
 					paddingHorizontal: 25,
 					fontWeight: "bold",
+					color: theme.colors.primary,
 				}}>
 				{label}
 			</Text>
