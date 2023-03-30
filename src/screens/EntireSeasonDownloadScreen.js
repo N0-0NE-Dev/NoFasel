@@ -4,6 +4,7 @@ import { Text, TextInput, useTheme } from "react-native-paper";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import ContentCard from "../components/ContentCard";
 import CentredActivityIndicator from "../components/CentredActivityIndicator";
+import { getPaletteSync } from "@assembless/react-native-material-you";
 
 const EntireSeasonDownloadScreen = ({ navigation }) => {
 	const theme = useTheme();
@@ -12,6 +13,7 @@ const EntireSeasonDownloadScreen = ({ navigation }) => {
 	const [featured, setFeatured] = useState(null);
 	const [searchText, setSearchText] = useState("");
 	const [use, setUse] = useState([]);
+	const palette = getPaletteSync();
 
 	useEffect(() => {
 		ReactNativeBlobUtil.fs
@@ -65,8 +67,16 @@ const EntireSeasonDownloadScreen = ({ navigation }) => {
 					<TextInput
 						placeholder="Search"
 						mode="flat"
-						style={styles.searchBarStyle}
-						left={<TextInput.Icon icon="magnify" color="grey" />}
+						style={{
+							...styles.iconStyle,
+							backgroundColor: theme.colors.elevation.level4,
+						}}
+						left={
+							<TextInput.Icon
+								icon="magnify"
+								iconColor={palette.system_accent1[6]}
+							/>
+						}
 						underlineColor="transparent"
 						activeUnderlineColor="transparent"
 						cursorColor="black"
