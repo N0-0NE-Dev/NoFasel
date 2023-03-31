@@ -383,7 +383,7 @@ const SelectScreen = ({ navigation, route }) => {
 									theme={theme}
 									showModal={() => setVisible(true)}
 									setType={setType}
-									tmdbId={data["TMDb ID"]}
+									tmdbId={tmdbId}
 									category={category}
 									provider={provider}
 								/>
