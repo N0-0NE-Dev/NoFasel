@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, ScrollView, Image, Pressable } from "react-native";
+import { View, StyleSheet, ScrollView, Image } from "react-native";
 import { Text, TextInput, useTheme } from "react-native-paper";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import ContentCard from "../components/ContentCard";
@@ -68,7 +68,7 @@ const EntireSeasonDownloadScreen = ({ navigation }) => {
 						placeholder="Search"
 						mode="flat"
 						style={{
-							...styles.iconStyle,
+							...styles.searchBarStyle,
 							backgroundColor: theme.colors.elevation.level4,
 						}}
 						left={
