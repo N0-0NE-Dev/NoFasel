@@ -71,3 +71,6 @@ dist
 .watchmanconfig
 .ruby-version
 .bundle
+.node-version
+.prettierrc.js
+.eslintrc.js
