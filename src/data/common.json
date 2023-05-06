@@ -30,24 +30,6 @@
 			"key": "tvshows"
 		}
 	],
-	"categoriesHdw": [
-		{
-			"label": "Movies",
-			"key": "hdwmovies"
-		},
-		{
-			"label": "Series",
-			"key": "hdwseries"
-		},
-		{
-			"label": "Arabic Series",
-			"key": "arabic-series"
-		},
-		{
-			"label": "Arabic Movies",
-			"key": "arabic-movies"
-		}
-	],
 	"fileUrlsFasel": [
 		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/all-content.json",
 		"https://raw.githubusercontent.com/N0-0NE-Dev/no-fasel-scrapers/main/output/anime.json",

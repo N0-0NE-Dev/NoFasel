@@ -13,11 +13,15 @@ import ReactNativeBlobUtil from "react-native-blob-util";
 import { getPaletteSync } from "@assembless/react-native-material-you";
 
 const SearchScreen = ({ navigation }) => {
-	const provider = Storage.getString("provider");
 	const common = require("../data/common.json");
-	const genres = provider == "fasel" ? common.genresFasel : common.genresHdw;
-	let allContentPath = ReactNativeBlobUtil.fs.dirs.DocumentDir;
-	let featuredContentPath = ReactNativeBlobUtil.fs.dirs.DocumentDir;
+	const genres = common.genresFasel;
+
+	let allContentPath =
+		ReactNativeBlobUtil.fs.dirs.DocumentDir + "/all-content.json";
+
+	let featuredContentPath =
+		ReactNativeBlobUtil.fs.dirs.DocumentDir + "/featured-content.json";
+
 	const theme = useTheme();
 	const palette = getPaletteSync();
 
@@ -32,8 +36,7 @@ const SearchScreen = ({ navigation }) => {
 	const [end, setEnd] = useState(20);
 	const pageNumber = end / 20;
 
-	const categories =
-		provider == "fasel" ? common.categoriesFasel : common.categoriesHdw;
+	const categories = common.categoriesFasel;
 
 	const handleNext = () => {
 		setStart(end);
@@ -48,14 +51,6 @@ const SearchScreen = ({ navigation }) => {
 			// pass
 		}
 	};
-
-	if (provider == "fasel") {
-		allContentPath += "/all-content.json";
-		featuredContentPath += "/featured-content.json";
-	} else {
-		allContentPath += "/hdw-all-content.json";
-		featuredContentPath += "/hdw-featured-content.json";
-	}
 
 	useEffect(() => {
 		ReactNativeBlobUtil.fs

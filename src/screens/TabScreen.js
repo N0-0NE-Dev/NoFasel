@@ -13,7 +13,6 @@ import { getPaletteSync } from "@assembless/react-native-material-you";
 const TabScreen = ({ navigation }) => {
 	const palette = getPaletteSync();
 	let progress = 0;
-	const provider = Storage.getString("provider");
 	const common = require("../data/common.json");
 	const [contentUpdated, setContentUpdated] = useState(false);
 	const [index, setIndex] = useState(0);
