@@ -19,13 +19,14 @@ A streaming app with zero ads built in react native with [scrapers](https://gith
 ## 📖 Features:
 
 ✅ Pick Up Where You Left Off ⏩  
-✅ Full Speed Download ⏬  
+✅ Full Speed Download (use [1DM](https://play.google.com/store/apps/details?id=idm.internet.download.manager)) ⏬  
 ✅ Watchlist System 📃  
 ✅ Latest Movies, Series & Anime 🎬  
 ✅ Daily Content Updates 🆕  
 ✅ No Extra Permissions Needed 🚫  
 ✅ No Account Needed 🚫  
-✅ Light & Dark Themes ⬜⬛
+✅ Dark & AMOLED Themes ⬛  
+✅ Material You Support 🎨
 
 ## 📱 Screenshots:
 
@@ -51,8 +52,7 @@ NoFasel does not own or operate any servers which contain DMCA-protected content
 
 1. [FaselHD](https://www.faselhd.ac/)
 2. [Akwam](https://akwam.to/)
-3. [HDwatched](https://www.hdwatched.xyz/)
-4. [WeCima](https://wecima.tube/)
+3. [WeCima](https://wecima.tube/)
 
 Please bring up any DMCA violation concerns with them not me.
 

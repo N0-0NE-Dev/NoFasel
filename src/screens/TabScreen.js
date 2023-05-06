@@ -18,8 +18,7 @@ const TabScreen = ({ navigation }) => {
 	const [contentUpdated, setContentUpdated] = useState(false);
 	const [index, setIndex] = useState(0);
 
-	const fileUrls =
-		provider == "fasel" ? common.fileUrlsFasel : common.fileUrlsHdw;
+	const fileUrls = common.fileUrlsFasel;
 
 	const [routes] = useState([
 		{

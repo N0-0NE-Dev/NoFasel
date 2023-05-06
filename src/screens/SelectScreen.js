@@ -73,11 +73,10 @@ const getCast = async (tmdbId, category) => {
 const SelectScreen = ({ navigation, route }) => {
 	const provider = Storage.getString("provider");
 	const common = require("../data/common.json");
-	const userAgent = common.userAgent;
 	const { id, category } = route.params;
 	const theme = useTheme();
 	const useProxy = Storage.getBoolean("useProxy");
-	const contentWithSeasons = ["series", "tvshows", "asian-series", "hdwseries"];
+	const contentWithSeasons = ["series", "tvshows", "asian-series"];
 	const watchlist = JSON.parse(Storage.getString("watchlist"));
 	const resume = JSON.parse(Storage.getString("resume"));
 	const isFocused = useIsFocused();
@@ -97,7 +96,6 @@ const SelectScreen = ({ navigation, route }) => {
 	const [refresh, setRefresh] = useState(false);
 	const [snackbarVisible, setSnackbarVisible] = useState(false);
 	const orientation = useDeviceOrientation();
-	let jsCode = "";
 
 	const [showLoading, setShowLoading] = useState(
 		category == "movies" ? true : false,
@@ -107,8 +105,7 @@ const SelectScreen = ({ navigation, route }) => {
 		watchlist.hasOwnProperty(id) ? true : false,
 	);
 
-	if (provider == "fasel") {
-		jsCode = `
+	const jsCode = `
 			let qualities = {};
 			const buttons = [...document.getElementsByClassName("hd_btn")];
 
@@ -118,19 +115,14 @@ const SelectScreen = ({ navigation, route }) => {
 				if (dataUrl.includes("master")) {
 					qualities["Auto"] = dataUrl;
 				} else {
-					const label = dataUrl.split("_").at(-2).split("d")[1].replace("b", "p");
+					const dataUrlSplitted = dataUrl.split("_");
+					const label = dataUrlSplitted[dataUrlSplitted.length - 2].split("d")[1].replace("b", "p");
 					qualities[label] = dataUrl;
 				}
 			})
 
 			window.ReactNativeWebView.postMessage(JSON.stringify(qualities));
 		`;
-	} else {
-		jsCode = `
-			const qualities = {"1080p": document.getElementById('vjsplayer_html5_api').src};
-			window.ReactNativeWebView.postMessage(JSON.stringify(qualities));
-			`;
-	}
 
 	useEffect(() => setRefresh(!refresh), [isFocused]);
 	useEffect(() => setRefresh(!refresh), [orientation]);
@@ -197,7 +189,7 @@ const SelectScreen = ({ navigation, route }) => {
 		} else if (category.includes("arabic") && webpageUrl) {
 			fetch(
 				useProxy
-					? `https://api.codetabs.com/v1/proxy/?quest=${webpageUrl}`
+					? `https://api.codetabs.com/v1/proxy?quest=${webpageUrl}`
 					: webpageUrl,
 			)
 				.then(resp => resp.text())
@@ -229,7 +221,7 @@ const SelectScreen = ({ navigation, route }) => {
 			Object.entries(rawEpisodes).forEach(episode => {
 				episodes.push({
 					label: `Episode ${episode[1]["Episode Number"]}`,
-					key: category == "hdwseries" ? episode[0] : episode[1]["Source"],
+					key: episode[1]["Source"],
 				});
 			});
 			setEpisodes(episodes);
@@ -239,12 +231,6 @@ const SelectScreen = ({ navigation, route }) => {
 				seasons[`Season ${season[1]["Season Number"]}`] = season[0];
 			});
 			setSeasons(seasons);
-		} else if (category == "hdwmovies" && !webpageUrl) {
-			setShowLoading(true);
-			setTimeout(
-				() => setWebpageUrl(`https://www.hdwatched.xyz/embed/${id}`),
-				250,
-			);
 		} else {
 			// pass
 		}
@@ -262,9 +248,8 @@ const SelectScreen = ({ navigation, route }) => {
 
 	useEffect(() => {
 		if (data) {
-			const tmdbId = data["TMDb ID"];
-			getOverview(tmdbId, category).then(json => setOverview(json));
-			getCast(tmdbId, category).then(json => setCast(json));
+			getOverview(data["TMDb ID"], category).then(json => setOverview(json));
+			getCast(data["TMDb ID"], category).then(json => setCast(json));
 		} else {
 			// pass
 		}
@@ -383,7 +368,7 @@ const SelectScreen = ({ navigation, route }) => {
 									theme={theme}
 									showModal={() => setVisible(true)}
 									setType={setType}
-									tmdbId={tmdbId}
+									tmdbId={data["TMDb ID"]}
 									category={category}
 									provider={provider}
 								/>
@@ -393,7 +378,6 @@ const SelectScreen = ({ navigation, route }) => {
 										backgroundColor: theme.colors.background,
 									}}
 									source={{ uri: webpageUrl }}
-									userAgent={provider == "hdw" ? userAgent : ""}
 									injectedJavaScript={jsCode}
 									onMessage={event => {
 										setShowLoading(false);

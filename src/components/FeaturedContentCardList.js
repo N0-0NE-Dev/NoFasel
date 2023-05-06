@@ -8,13 +8,8 @@ const FeaturedContentCardList = ({ navigation }) => {
 	const [data, setData] = useState();
 	const [currentPosition, setCurrentPosition] = useState(0);
 	const scrollViewRef = useRef();
-	let filePath = ReactNativeBlobUtil.fs.dirs.DocumentDir;
-
-	if (Storage.getString("provider") == "fasel") {
-		filePath += "/featured-content.json";
-	} else {
-		filePath += "/hdw-featured-content.json";
-	}
+	let filePath =
+		ReactNativeBlobUtil.fs.dirs.DocumentDir + "/featured-content.json";
 
 	useEffect(() => {
 		ReactNativeBlobUtil.fs.readFile(filePath).then(data => {

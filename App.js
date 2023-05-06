@@ -8,7 +8,6 @@ import GeneralSettingsScreen from "./src/screens/GeneralSettingsScreen";
 import AboutScreen from "./src/screens/AboutScreen";
 import LoadingScreen from "./src/screens/LoadingScreen";
 import { Storage } from "./src/components/Storage";
-import StartupScreen from "./src/screens/StartupScreen";
 import WeCimaExtractionScreen from "./src/screens/WeCimaExtractionScreen";
 import { getPaletteSync } from "@assembless/react-native-material-you";
 import {
@@ -24,7 +23,7 @@ const MyStack = () => {
 
 	return (
 		<Stack.Navigator
-			initialRouteName={Storage.contains("provider") ? "Tab" : "Startup"}
+			initialRouteName={"Tab"}
 			screenOptions={{
 				statusBarColor: theme.dark ? "black" : "white",
 				statusBarStyle: theme.dark ? "light" : "dark",
@@ -61,11 +60,6 @@ const MyStack = () => {
 				options={{ headerShown: false }}
 			/>
 			<Stack.Screen
-				name="Startup"
-				component={StartupScreen}
-				options={{ headerShown: false }}
-			/>
-			<Stack.Screen
 				name="WeCima Extraction"
 				component={WeCimaExtractionScreen}
 				options={{ headerShown: false, animation: "none" }}
@@ -77,6 +71,12 @@ const MyStack = () => {
 };
 
 const App = () => {
+	if (!Storage.contains("pureBlack")) {
+		Storage.set("pureBlack", true);
+	} else {
+		// pass
+	}
+
 	const palette = getPaletteSync();
 
 	const theme = {
@@ -84,7 +84,9 @@ const App = () => {
 		colors: {
 			...DefaultTheme.colors,
 			primary: palette.system_accent1[5],
-			background: "black",
+			background: Storage.getBoolean("pureBlack")
+				? "black"
+				: "rgba(28, 27, 31, 1)",
 			elevation: {
 				level4: palette.system_accent1[4] + "3C",
 			},

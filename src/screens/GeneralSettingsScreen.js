@@ -1,17 +1,25 @@
 import React, { useState } from "react";
-import { View, Pressable } from "react-native";
-import { useTheme, Text, Switch } from "react-native-paper";
+import { View } from "react-native";
+import { useTheme } from "react-native-paper";
 import { Storage } from "../components/Storage";
 import DefaultSettingsButton from "../components/DefaultSettingsButton";
+import DefaultSettingsSwitch from "../components/DefaultSettingsSwitch";
 import RNRestart from "react-native-restart";
 
 const GeneralSettingsScreen = ({ navigation }) => {
 	const theme = useTheme();
 	const [useProxy, setUseProxy] = useState(Storage.getBoolean("useProxy"));
+	const [pureBlack, setPureBlack] = useState(Storage.getBoolean("pureBlack"));
 
 	const toggleUseProxy = () => {
 		Storage.set("useProxy", !useProxy);
 		setUseProxy(!useProxy);
+	};
+
+	const togglePureBlack = () => {
+		Storage.set("pureBlack", !pureBlack);
+		setPureBlack(!pureBlack);
+		RNRestart.restart();
 	};
 
 	return (
@@ -20,37 +28,17 @@ const GeneralSettingsScreen = ({ navigation }) => {
 				backgroundColor: theme.colors.background,
 				flex: 1,
 			}}>
-			<Pressable
-				onPress={toggleUseProxy}
-				style={({ pressed }) => [
-					{
-						backgroundColor: pressed ? "111" : null,
-					},
-					{
-						flexDirection: "row",
-						justifyContent: "space-between",
-						padding: 25,
-					},
-				]}>
-				<Text
-					style={{
-						fontSize: 18,
-						fontWeight: "bold",
-						color: theme.colors.primary,
-					}}>
-					Use Proxy for Akwam
-				</Text>
-				<Switch value={useProxy} onValueChange={toggleUseProxy} />
-			</Pressable>
-			<DefaultSettingsButton
-				label="Change Provider"
-				fontSize={18}
-				iconName="closed-caption"
-				onPress={() => {
-					Storage.delete("provider");
-					Storage.delete("preferedLanguage");
-					RNRestart.Restart();
-				}}
+			<DefaultSettingsSwitch
+				color={theme.colors.primary}
+				text="AMOLED Theme"
+				value={pureBlack}
+				onValueChange={togglePureBlack}
+			/>
+			<DefaultSettingsSwitch
+				color={theme.colors.primary}
+				text="Use Proxy for Akwam"
+				value={useProxy}
+				onValueChange={toggleUseProxy}
 			/>
 			<DefaultSettingsButton
 				label="Force Update Content"

@@ -16,7 +16,7 @@ const EpisodeCard = ({
 	theme,
 	resume,
 	category,
-	setWebpageUrl
+	setWebpageUrl,
 }) => {
 	return (
 		<Pressable
@@ -30,8 +30,6 @@ const EpisodeCard = ({
 					);
 				} else if (category == "arabic-series") {
 					setWebpageUrl(source);
-				} else if (provider == "hdw") {
-					setWebpageUrl(`https://www.hdwatched.xyz/embed/${source}`);
 				} else {
 					// pass
 				}

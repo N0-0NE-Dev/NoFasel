@@ -5,26 +5,16 @@ import FeaturedContentCardList from "../components/FeaturedContentCardList";
 import { useDeviceOrientation } from "@react-native-community/hooks";
 import CentredActivityIndicator from "../components/CentredActivityIndicator";
 import { isTablet } from "react-native-device-info";
-import { Storage } from "../components/Storage";
 import ReactNativeBlobUtil from "react-native-blob-util";
 
 const TrendingContentScreen = ({ navigation }) => {
 	const [data, setData] = useState(null);
 	const common = require("../data/common.json");
 	const orientation = useDeviceOrientation();
-	const provider = Storage.getString("provider");
-	let filePath = ReactNativeBlobUtil.fs.dirs.DocumentDir;
+	let filePath =
+		ReactNativeBlobUtil.fs.dirs.DocumentDir + "/trending-content.json";
 
-	const listData =
-		provider == "fasel"
-			? common.categoriesFasel.slice(0, 5)
-			: common.categoriesHdw;
-
-	if (provider == "fasel") {
-		filePath += "/trending-content.json";
-	} else {
-		filePath += "/hdw-trending-content.json";
-	}
+	const listData = common.categoriesFasel.slice(0, 5);
 
 	useEffect(() => {
 		ReactNativeBlobUtil.fs

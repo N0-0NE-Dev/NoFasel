@@ -7,8 +7,7 @@ const SettingsScreen = ({ navigation }) => {
 		<SafeAreaView
 			style={{
 				flex: 1,
-			}}
-		>
+			}}>
 			<DefaultSettingsButton
 				label="General Settings"
 				onPress={() => navigation.navigate("General Settings")}

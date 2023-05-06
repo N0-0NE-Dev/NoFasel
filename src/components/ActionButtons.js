@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "react-native-paper";
-import { FlatList } from "react-native";
+import { FlatList, Linking } from "react-native";
 
 const ActionButtons = ({
 	showModal,

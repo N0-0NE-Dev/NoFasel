@@ -1,16 +1,12 @@
 import React from "react";
 import RNRestart from "react-native-restart";
 import CentredActivityIndicator from "../components/CentredActivityIndicator";
-import { Storage } from "../components/Storage";
 import ReactNativeBlobUtil from "react-native-blob-util";
 
 const LoadingScreen = () => {
 	const common = require("../data/common.json");
 	let progress = 0;
-	const fileUrls =
-		Storage.getString("provider") == "fasel"
-			? common.fileUrlsFasel
-			: common.fileUrlsHdw;
+	const fileUrls = common.fileUrlsFasel;
 
 	fileUrls.forEach(url => {
 		const fileName = url.split("/").slice(-1)[0];
