@@ -37,7 +37,7 @@ const DefaultSelector = ({
 							style={({ pressed }) => [
 								{
 									backgroundColor: pressed
-										? theme.colors.elevation.level5
+										? 'rgba(50, 50, 50, 0.5)'
 										: null,
 								},
 								{

@@ -36,6 +36,8 @@ import ExpandableText from "../components/ExpandableText";
 import ActionButtons from "../components/ActionButtons";
 import CastList from "../components/CastList";
 
+const WINDOW_WIDTH = Dimensions.get("window").width;
+
 const getOverview = async (tmdbId, category) => {
 	return fetch(
 		`https://api.themoviedb.org/3/${
@@ -71,8 +73,6 @@ const getCast = async (tmdbId, category) => {
 };
 
 const SelectScreen = ({ navigation, route }) => {
-	const provider = Storage.getString("provider");
-	const common = require("../data/common.json");
 	const { id, category } = route.params;
 	const theme = useTheme();
 	const useProxy = Storage.getBoolean("useProxy");
@@ -305,7 +305,7 @@ const SelectScreen = ({ navigation, route }) => {
 							<ImageBackground
 								source={{ uri: data["Image Source"] }}
 								style={{
-									width: Dimensions.get("window").width,
+									width: WINDOW_WIDTH,
 									height: Dimensions.get("window").height * 0.4,
 								}}>
 								<LinearGradient
@@ -327,10 +327,16 @@ const SelectScreen = ({ navigation, route }) => {
 						style={{
 							flexDirection: "row",
 							justifyContent: "space-between",
-							width: Dimensions.get("window").width,
+							width: WINDOW_WIDTH,
 						}}>
 						<View>
-							<Text style={{ fontSize: 26, margin: 10, fontWeight: "bold" }}>
+							<Text
+								style={{
+									fontSize: 26,
+									margin: 10,
+									fontWeight: "bold",
+									width: WINDOW_WIDTH * 0.8,
+								}}>
 								{data["Title"]}
 							</Text>
 							<View style={{ flexDirection: "row" }}>
@@ -370,7 +376,6 @@ const SelectScreen = ({ navigation, route }) => {
 									setType={setType}
 									tmdbId={data["TMDb ID"]}
 									category={category}
-									provider={provider}
 								/>
 							) : (
 								<WebView
@@ -438,7 +443,6 @@ const SelectScreen = ({ navigation, route }) => {
 									selectedEpisode={selectedEpisode}
 									setShowLoading={setShowLoading}
 									setQualities={setQualities}
-									provider={provider}
 									theme={theme}
 									resume={resume}
 									category={category}

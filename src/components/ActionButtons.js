@@ -2,14 +2,7 @@ import React from "react";
 import { Button } from "react-native-paper";
 import { FlatList, Linking } from "react-native";
 
-const ActionButtons = ({
-	showModal,
-	setType,
-	theme,
-	tmdbId,
-	category,
-	provider,
-}) => {
+const ActionButtons = ({ showModal, setType, theme, tmdbId, category }) => {
 	const defaultBehaviour = label => {
 		showModal();
 		setType(label);
@@ -54,7 +47,7 @@ const ActionButtons = ({
 		},
 	];
 
-	if (provider == "hdw" || category.includes("arabic")) {
+	if (category.includes("arabic")) {
 		const downloadButtonData = {
 			mode: "outlined",
 			icon: "tray-arrow-down",

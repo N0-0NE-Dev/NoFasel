@@ -11,7 +11,6 @@ const EpisodeCard = ({
 	setSelectedEpisode,
 	setShowLoading,
 	setQualities,
-	provider,
 	selectedEpisode,
 	theme,
 	resume,
@@ -24,7 +23,7 @@ const EpisodeCard = ({
 				setSelectedEpisode(source);
 				setShowLoading(true);
 				setQualities(null);
-				if (provider == "fasel" && !(category == "arabic-series")) {
+				if (!(category == "arabic-series")) {
 					setWebpageUrl(
 						`https://embed.scdn.to/video_player?uid=0&vid=${source}`,
 					);
