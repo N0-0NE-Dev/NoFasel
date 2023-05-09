@@ -6,7 +6,7 @@
 
 <div align="center">
 
-A streaming app with zero ads built in react native with [scrapers](https://github.com/N0-0NE-Dev/no-fasel-scrapers) built in python. No Fasel requires no extra premissons or accounts and is free to use forever.
+A streaming app with zero ads built in react native with [scrapers](https://github.com/N0-0NE-Dev/no-fasel-scrapers) built in python. NoFasel requires no extra premissons or accounts and is free to use forever.
 
 ![Github All Releases](https://img.shields.io/github/downloads/N0-0NE-Dev/NoFasel/total.svg?style=for-the-badge)
 ![GitHub Repo stars](https://img.shields.io/github/stars/N0-0NE-Dev/NoFasel?style=for-the-badge&color=gold)
