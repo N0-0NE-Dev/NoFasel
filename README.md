@@ -19,7 +19,7 @@ A streaming app with zero ads built in react native with [scrapers](https://gith
 ## 📖 Features:
 
 ✅ Pick Up Where You Left Off ⏩  
-✅ Full Speed Download (use [1DM](https://play.google.com/store/apps/details?id=idm.internet.download.manager)) ⏬  
+✅ Full Speed Download (use [Seal](https://github.com/JunkFood02/Seal)) ⏬  
 ✅ Watchlist System 📃  
 ✅ Latest Movies, Series & Anime 🎬  
 ✅ Daily Content Updates 🆕  
