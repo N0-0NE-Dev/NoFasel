@@ -107,7 +107,7 @@ const SelectScreen = ({ navigation, route }) => {
 
 	const jsCode = `
 			let qualities = {};
-			const buttons = [...document.getElementsByClassName("hd_btn")];
+			const buttons = document.querySelectorAll("button.hd_btn");
 
 			buttons.forEach((button) => {
 				const dataUrl = button.getAttribute("data-url");
@@ -115,8 +115,7 @@ const SelectScreen = ({ navigation, route }) => {
 				if (dataUrl.includes("master")) {
 					qualities["Auto"] = dataUrl;
 				} else {
-					const dataUrlSplitted = dataUrl.split("_");
-					const label = dataUrlSplitted[dataUrlSplitted.length - 2].split("d")[1].replace("b", "p");
+					const label = button.textContent;
 					qualities[label] = dataUrl;
 				}
 			})
@@ -182,7 +181,7 @@ const SelectScreen = ({ navigation, route }) => {
 			setTimeout(
 				() =>
 					setWebpageUrl(
-						`https://embed.scdn.to/video_player?uid=0&vid=${data["Source"]}`,
+						`https://faselhd-embed.scdn.to/video_player?uid=0&vid=${data["Source"]}`,
 					),
 				250,
 			);
@@ -385,6 +384,7 @@ const SelectScreen = ({ navigation, route }) => {
 									source={{ uri: webpageUrl }}
 									injectedJavaScript={jsCode}
 									onMessage={event => {
+										console.log(event.nativeEvent.data);
 										setShowLoading(false);
 										setQualities(JSON.parse(event.nativeEvent.data));
 									}}
