@@ -25,7 +25,7 @@ const EpisodeCard = ({
 				setQualities(null);
 				if (!(category == "arabic-series")) {
 					setWebpageUrl(
-						`https://embed.scdn.to/video_player?uid=0&vid=${source}`,
+						`https://faselhd-embed.scdn.to/video_player?uid=0&vid=${source}`,
 					);
 				} else if (category == "arabic-series") {
 					setWebpageUrl(source);

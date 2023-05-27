@@ -108,8 +108,8 @@ android {
         applicationId "com.n00nedev.nofasel"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 24
-        versionName "1.2.4"
+        versionCode 25
+        versionName "1.2.5"
     }
 
     splits {
