@@ -74,3 +74,5 @@ dist
 .node-version
 .prettierrc.js
 .eslintrc.js
+
+src/consumet
